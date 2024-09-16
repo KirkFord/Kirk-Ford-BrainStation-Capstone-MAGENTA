@@ -1,0 +1,24 @@
+body {
+    background-color: $background-color;
+    color: $neutral-dark;
+    font-family: $primary-font;
+}
+
+a {
+    color: $emerald-complement;
+    text-decoration: none;
+
+    &:hover {
+        color: $emerald-dark;
+    }
+}
+
+button {
+    background-color: $magenta-primary;
+    color: $neutral-light;
+    @include transition(all);
+
+    &:hover {
+        background-color: $dark-magenta;
+    }
+}

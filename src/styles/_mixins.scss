@@ -1,0 +1,45 @@
+@use './colors' as *;
+
+// reusable elements
+
+// flex box
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin align-items-center {
+    display: flex;
+    align-items: center;
+}
+
+@mixin justify-content-center {
+    display: flex;
+    justify-content: center;
+}
+
+@mixin justifyContent-alignItems-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin justifyContent-alignContent-center {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+@mixin margin-padding($top: 0, $right: 0, $bottom: 0, $left: 0) {
+    margin: $top $right $bottom $left;
+    padding: $top $right $bottom $left;
+}
+
+@mixin transition($property, $duration: 0.3s, $timing-function: ease) {
+    transition: $property $duration $timing-function;
+}

@@ -1,0 +1,8 @@
+Model Information:
+* title:	VR Art Gallery 2020 L Baked + Max Scene
+* source:	https://sketchfab.com/3d-models/vr-art-gallery-2020-l-baked-max-scene-77b8c81fd81f43e69e9abf9beceb4d2b
+* author:	Marcin Lubecki (https://sketchfab.com/Lubus)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

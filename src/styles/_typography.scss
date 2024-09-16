@@ -1,0 +1,59 @@
+//MOBILE TEXT STYLES
+@mixin page-header {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+}
+@mixin sub-header {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+@mixin labels-links-buttons {
+    font-size: .8125rem;
+    line-height: 1.25rem;
+}
+@mixin table-header {
+    font-size: .6875rem;
+    line-height: 1rem;
+}
+@mixin body-large {
+    font-size: .9375rem;
+    line-height: 1.625rem;
+}
+@mixin body-medium {
+    font-size: .8125rem;
+    line-height: 1.25rem;
+}
+@mixin body-small {
+    font-size: .6875rem;
+    line-height: 1rem;
+}
+
+//DESKTOP AND TABLET TEXT STYLES
+@mixin dt-page-header {
+    font-size: 2rem;
+    line-height: 2.5rem;
+}
+@mixin dt-sub-header {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+@mixin dt-labels-links-buttons {
+    font-size: .875rem;
+    line-height: 1.375rem;
+}
+@mixin dt-table-header {
+    font-size: .75rem;
+    line-height: 1.125rem;
+}
+@mixin dt-body-large {
+    font-size: 1rem;
+    line-height: 1.75rem;
+}
+@mixin dt-body-medium {
+    font-size: .875rem;
+    line-height: 1.375rem;
+}
+@mixin dt-body-small {
+    font-size: .75rem;
+    line-height: 1.125rem;
+}
