@@ -102,43 +102,44 @@ const PlayerMovement = () => {
 
 
 const AsciiRenderer = () => {
-    const { gl, scene, camera, size } = useThree();
-    const effectRef = useRef();
-  
-    useEffect(() => {
-      // Set up ASCII effect
-      const asciiEffect = new AsciiEffect(gl, '.:-=+*#%@', { invert: true, resolution: 0.2 });
-      asciiEffect.setSize(size.width, size.height);
-  
-      // Hide the WebGL canvas (so only ASCII is visible)
-      // gl.domElement.style.display = 'none';
-  
-      // Add ASCII effect canvas to the DOM
-      const asciiCanvas = asciiEffect.domElement;
-      document.body.appendChild(asciiCanvas);
-  
-      // Handle resize events
-      const handleResize = () => {
-        asciiEffect.setSize(window.innerWidth, window.innerHeight);
-      };
-      window.addEventListener('resize', handleResize);
-  
-      // Render loop
-      const render = () => {
-        asciiEffect.render(scene, camera);
-      };
-      gl.setAnimationLoop(render);
-  
-      // Clean up on unmount
-      return () => {
-        asciiEffect.domElement.remove();
-        gl.setAnimationLoop(null);
-        window.removeEventListener('resize', handleResize);
-      };
-    }, [gl, scene, camera, size]);
-  
-    return null;
-  };
+  const { gl, scene, camera, size } = useThree();
+  const effectRef = useRef();
+
+  useEffect(() => {
+    // Set up ASCII effect
+    const asciiEffect = new AsciiEffect(gl, '.:-=+*#%@', { invert: true, resolution: 0.2 });
+    asciiEffect.setSize(size.width, size.height);
+
+    // Check to see if the ASCII canvas is being appended correctly
+    console.log('Appending ASCII canvas to the DOM');
+
+    const asciiCanvas = asciiEffect.domElement;
+    asciiCanvas.classList.add('ascii');  // Ensure class is added for styling
+    document.querySelector('.ascii-render').appendChild(asciiCanvas); // Append it to the right div
+
+    // Handle resize events
+    const handleResize = () => {
+      asciiEffect.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener('resize', handleResize);
+
+    // Render loop
+    const render = () => {
+      asciiEffect.render(scene, camera);
+    };
+    gl.setAnimationLoop(render);
+
+    // Clean up on unmount
+    return () => {
+      asciiEffect.domElement.remove();
+      gl.setAnimationLoop(null);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [gl, scene, camera, size]);
+
+  return null;
+};
+
   
   // Main ThreeGallery component with PointerLockControls
   const ThreeGallery = () => {
@@ -157,20 +158,25 @@ const AsciiRenderer = () => {
     }, []);
   
     return (
-      <div style={{ height: '100vh', width: '50vw'}}>
-        <Canvas>
-          <ambientLight intensity={1.0} />
-          {/* <pointLight position={[10, 10, 10]} /> */}
+      <div className="three-gallery-container">
+        {/* Normal Render */}
+        <div className="normal-render" style={{ backgroundColor: 'lightgray' }}>
+          <Canvas>
+            <ambientLight intensity={1.0} />
+            <GalleryModel />
+            <PlayerMovement />
+            <PointerLockControls ref={controlsRef} />
+          </Canvas>
+        </div>
   
-          <GalleryModel />
-  
-          {/* ASCII Renderer */}
-          <AsciiRenderer />
-  
-          {/* Pointer Lock Controls */}
-          <PlayerMovement></PlayerMovement>
-          <PointerLockControls ref={controlsRef} />
-        </Canvas>
+        {/* ASCII Render */}
+        <div className="ascii-render" style={{ backgroundColor: 'black' }}>
+  <Canvas>
+    <ambientLight intensity={1.0} />
+    <directionalLight position={[0, 10, 5]} intensity={1.5} />
+    <AsciiRenderer />
+  </Canvas>
+</div>
       </div>
     );
   };
