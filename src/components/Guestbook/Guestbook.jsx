@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import './Guestbook.scss';
+import React, { useState, useEffect, useRef } from 'react';
 import { MouseDraw } from '../../scripts/MouseDraw';
+import './Guestbook.scss';
 
 const Guestbook = () => {
     const [text, setText] = useState('');
-    const [drawing, setDrawing] = useState(''); // This will hold the drawing data
+    const drawingRef = useRef([]); // Use a ref to store the drawing data
     const [entries, setEntries] = useState([]);
+
+    // Function to handle the drawing and pass it to the ref
+    const handleDrawing = (newDrawing) => {
+        drawingRef.current = newDrawing;
+    };
 
     // Fetch guestbook entries when the component loads
     useEffect(() => {
@@ -25,8 +30,10 @@ const Guestbook = () => {
 
     // Function to handle form submission
     const handleSubmit = async () => {
-        if (!text && !drawing) {
-            alert('Please write something or draw to submit.');
+        const drawing = drawingRef.current; // Get the drawing from the ref
+
+        if (!text && drawing.length === 0) {
+            alert('Please provide text or a drawing.');
             return;
         }
 
@@ -42,14 +49,16 @@ const Guestbook = () => {
             });
 
             const data = await response.json();
-            console.log('Guestbook entry submitted:', data);
-
-            // Clear the form
-            setText('');
-            setDrawing('');
-
-            // Fetch updated entries
-            fetchEntries();
+            if (response.ok) {
+                alert(data.message);
+                // Clear the form
+                setText('');
+                drawingRef.current = [];
+                // Fetch updated entries
+                fetchEntries();
+            } else {
+                alert(data.error);
+            }
         } catch (error) {
             console.error('Error submitting guestbook entry:', error);
         }
@@ -69,11 +78,13 @@ const Guestbook = () => {
 
             <div className="drawing-container">
                 <svg width="500" height="300">
-                    <MouseDraw x={0} y={0} width={500} height={300} thickness={3} onDrawingComplete={setDrawing} />
+                    <MouseDraw onChange={handleDrawing} x={0} y={0} width={500} height={300} thickness={3} />
                 </svg>
             </div>
 
-            <button className="guestbook-submit" onClick={handleSubmit}>Submit</button>
+            <button className="guestbook-submit" onClick={handleSubmit}>
+                Submit
+            </button>
 
             <div className="guestbook-entries">
                 <h2>Previous Entries</h2>
@@ -81,7 +92,22 @@ const Guestbook = () => {
                     entries.map((entry, index) => (
                         <div key={index} className="entry">
                             <p>{entry.text}</p>
-                            {entry.drawing && <img src={entry.drawing} alt="User Drawing" />}
+                            {entry.drawing && entry.drawing.length > 0 && (
+                                <div>
+                                    {/* Render the drawing as an SVG or image */}
+                                    <svg width="500" height="300">
+                                        {entry.drawing.map((line, i) => (
+                                            <polyline
+                                                key={i}
+                                                points={line.points.map(point => `${point.x},${point.y}`).join(' ')}
+                                                stroke="black"
+                                                strokeWidth={line.thickness}
+                                                fill="none"
+                                            />
+                                        ))}
+                                    </svg>
+                                </div>
+                            )}
                         </div>
                     ))
                 ) : (

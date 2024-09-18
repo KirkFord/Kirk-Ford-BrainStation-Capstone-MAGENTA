@@ -18,13 +18,13 @@ const Line = ({ thickness, points }) => {
         strokeWidth: thickness,
         strokeLinejoin: "round",
         strokeLinecap: "round",
-        fill: "none"
+        fill: "none",
       }}
     />
   );
 };
 
-export const MouseDraw = ({ x, y, width, height, thickness }) => {
+export const MouseDraw = ({ x, y, width, height, thickness, onChange }) => {
   const [drawing, setDrawing] = useState(false);
   const [erasing, setErasing] = useState(false);
   const [currentLine, setCurrentLine] = useState({ thickness, points: [] });
@@ -38,35 +38,35 @@ export const MouseDraw = ({ x, y, width, height, thickness }) => {
       if (drawing) {
         setCurrentLine((line) => ({
           ...line,
-          points: [...line.points, { x: mouseX, y: mouseY }]
+          points: [...line.points, { x: mouseX, y: mouseY }],
         }));
-      } else if (erasing) {
+      } else if ( erasing) {
         setLines((prevLines) =>
           prevLines
             .map((line) => {
-              // Split the line into segments if the eraser touches it
               const newLineSegments = [];
               let currentSegment = [];
 
               line.points.forEach((point, i) => {
                 const distance = Math.hypot(point.x - mouseX, point.y - mouseY);
                 if (distance > eraserRadius) {
-                  // If the point is outside the eraser radius, add it to the current segment
                   currentSegment.push(point);
                 } else {
-                  // If the point is inside the eraser radius, finish the current segment and start a new one
                   if (currentSegment.length > 0) {
-                    newLineSegments.push({ thickness: line.thickness, points: currentSegment });
+                    newLineSegments.push({
+                      thickness: line.thickness,
+                      points: currentSegment,
+                    });
                   }
                   currentSegment = [];
                 }
-
-                // If we reach the last point, push any remaining segment
                 if (i === line.points.length - 1 && currentSegment.length > 0) {
-                  newLineSegments.push({ thickness: line.thickness, points: currentSegment });
+                  newLineSegments.push({
+                    thickness: line.thickness,
+                    points: currentSegment,
+                  });
                 }
               });
-
               return newLineSegments;
             })
             .flat()
@@ -88,9 +88,14 @@ export const MouseDraw = ({ x, y, width, height, thickness }) => {
   function disableDrawingOrErasing() {
     if (drawing) {
       setDrawing(false);
-      setLines((lines) => [...lines, currentLine]);
+      setLines((lines) => {
+        const updatedLines = [...lines, currentLine];
+        onChange(updatedLines); // Pass updated drawing to parent
+        return updatedLines;
+      });
     } else if (erasing) {
       setErasing(false);
+      onChange(lines); // Update the parent with new lines after erasing
     }
   }
 
@@ -112,7 +117,7 @@ export const MouseDraw = ({ x, y, width, height, thickness }) => {
         }
       }}
       onMouseUp={disableDrawingOrErasing}
-      onContextMenu={(e) => e.preventDefault()} // Disable the default right-click menu
+      onContextMenu={(e) => e.preventDefault()} // Disable right-click menu
     >
       <rect
         x={0}
@@ -124,7 +129,9 @@ export const MouseDraw = ({ x, y, width, height, thickness }) => {
       {lines.map((line, i) => (
         <Line thickness={line.thickness} points={line.points} key={i} />
       ))}
-      {drawing && <Line thickness={currentLine.thickness} points={currentLine.points} />}
+      {drawing && (
+        <Line thickness={currentLine.thickness} points={currentLine.points} />
+      )}
     </g>
   );
 };
