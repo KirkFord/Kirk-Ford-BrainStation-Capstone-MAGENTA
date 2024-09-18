@@ -1,24 +1,125 @@
-body {
-    background-color: $background-color;
-    color: $neutral-dark;
-    font-family: $primary-font;
+html, body {
+    
+    height: 100%;  // Ensure full height for the entire document
+    margin: 0;
+    padding: 0;
 }
-
-a {
-    color: $emerald-complement;
-    text-decoration: none;
-
-    &:hover {
-        color: $emerald-dark;
-    }
-}
-
-button {
-    background-color: $magenta-primary;
+.landing-page {
+    text-align: left;
+    background-color: $emerald-complement;
     color: $neutral-light;
-    @include transition(all);
+    font-family: $primary-font;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    overflow-y: auto; // Ensure scrolling works
 
-    &:hover {
-        background-color: $dark-magenta;
+    header, footer {
+        background: linear-gradient(90deg, $magenta-primary, $emerald-dark);
+        padding: 20px;
+        color: $neutral-light;
+        text-align: center;
+
+        .header-title {
+            @include dt-page-header;
+            margin: 0;
+            font-weight: 700;
+            font-family: $secondary-font;
+        }
+
+        footer p {
+            @include dt-sub-header;
+            margin: 0;
+        }
+    }
+
+    .magenta-animation {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        // margin-top: 50px;
+        text-align: left;
+        
+        // Increase font sizes for visibility
+        .letter-acronym {
+            display: flex;
+            align-items: center;        }
+
+        .magenta-letter {
+            font-size: 6rem; // Make the letters larger
+            opacity: 0;
+            transform: translateY(-100%);
+            animation: drop-in 0.5s ease forwards;
+            animation-delay: calc(var(--index) * 0.3s); // Apply cascading effect
+            margin-right: 20px;
+
+            span {
+                color: $magenta-primary;
+            }
+        }
+
+        .acronym {
+            font-size: 2.5rem; // Adjust acronym font size to match
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slide-in 0.5s ease forwards;
+            animation-delay: calc(var(--index) * 0.4s + 0.5s); // Add a slight delay after each letter
+
+            span {
+                color: $neutral-light;
+            }
+        }
+    }
+
+    @keyframes drop-in {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slide-in {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    main {
+        flex-grow: 1; // Make main take available space between header and footer
+        margin: 40px 20px;
+        // overflow-y: auto; // Ensure scrolling in case content exceeds the viewport
+
+
+        section {
+            margin-bottom: 40px;
+            text-align: left;
+
+            h2 {
+                @include dt-page-header;
+                margin-bottom: 10px;
+            }
+
+            p {
+                @include dt-body-large;
+                line-height: 1.8;
+            }
+        }
+
+        a {
+            display: block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            border: 2px solid $magenta-primary;
+            color: $neutral-light;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: $light-magenta;
+            }
+        }
     }
 }

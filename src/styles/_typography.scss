@@ -1,59 +1,141 @@
-//MOBILE TEXT STYLES
+// MOBILE TEXT STYLES
 @mixin page-header {
     font-size: 1.75rem;
     line-height: 2.25rem;
-}
-@mixin sub-header {
+  }
+  
+  @mixin sub-header {
     font-size: 1.25rem;
     line-height: 1.75rem;
-}
-@mixin labels-links-buttons {
+  }
+  
+  @mixin labels-links-buttons {
     font-size: .8125rem;
     line-height: 1.25rem;
-}
-@mixin table-header {
+  }
+  
+  @mixin table-header {
     font-size: .6875rem;
     line-height: 1rem;
-}
-@mixin body-large {
+  }
+  
+  @mixin body-large {
     font-size: .9375rem;
     line-height: 1.625rem;
-}
-@mixin body-medium {
+  }
+  
+  @mixin body-medium {
     font-size: .8125rem;
     line-height: 1.25rem;
-}
-@mixin body-small {
+  }
+  
+  @mixin body-small {
     font-size: .6875rem;
     line-height: 1rem;
-}
-
-//DESKTOP AND TABLET TEXT STYLES
-@mixin dt-page-header {
+  }
+  
+  // DESKTOP AND TABLET TEXT STYLES
+  @mixin dt-page-header {
     font-size: 2rem;
     line-height: 2.5rem;
-}
-@mixin dt-sub-header {
+  }
+  
+  @mixin dt-sub-header {
     font-size: 1.5rem;
     line-height: 2rem;
-}
-@mixin dt-labels-links-buttons {
+  }
+  
+  @mixin dt-labels-links-buttons {
     font-size: .875rem;
     line-height: 1.375rem;
-}
-@mixin dt-table-header {
+  }
+  
+  @mixin dt-table-header {
     font-size: .75rem;
     line-height: 1.125rem;
-}
-@mixin dt-body-large {
+  }
+  
+  @mixin dt-body-large {
     font-size: 1rem;
     line-height: 1.75rem;
-}
-@mixin dt-body-medium {
+  }
+  
+  @mixin dt-body-medium {
     font-size: .875rem;
     line-height: 1.375rem;
-}
-@mixin dt-body-small {
+  }
+  
+  @mixin dt-body-small {
     font-size: .75rem;
     line-height: 1.125rem;
-}
+  }
+  
+  // TYPOGRAPHY SETTINGS
+  body {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+  }
+  
+  h1 {
+    font-size: 3.5rem;
+  }
+  
+  h2 {
+    font-size: 3rem;
+  }
+  
+  h3 {
+    font-size: 2.5rem;
+  }
+  
+  h4 {
+    font-size: 2rem;
+  }
+  
+  h5 {
+    font-size: 1.75rem;
+  }
+  
+  h6 {
+    font-size: 1.5rem;
+  }
+  
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  a {
+    font-size: 1rem;
+    text-decoration: none;
+  
+    &:hover {
+      color: darken(#50C878, 10%); // Adjust hover color if needed
+    }
+  }
+  
+  button {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: darken(#FF00FF, 10%);
+    }
+  }
+  

@@ -1,0 +1,50 @@
+.guestbook {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+
+    h1, h2 {
+        font-family: $secondary-font;
+    }
+
+    .guestbook-textarea {
+        width: 100%;
+        height: 100px;
+        margin-bottom: 20px;
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    .drawing-container {
+        margin-bottom: 20px;
+    }
+
+    .guestbook-submit {
+        background-color: $magenta-primary;
+        color: $neutral-light;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: $light-magenta;
+        }
+    }
+
+    .guestbook-entries {
+        margin-top: 40px;
+        .entry {
+            padding: 10px;
+            border-bottom: 1px solid $neutral-light;
+
+            img {
+                max-width: 100%;
+                height: auto;
+                margin-top: 10px;
+            }
+        }
+    }
+}
