@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MouseDraw } from '../../scripts/MouseDraw';
 import './Guestbook.scss';
+import { MouseDraw } from '../../scripts/MouseDraw';
 
 const Guestbook = () => {
     const [text, setText] = useState('');
-    const drawingRef = useRef([]); // Use a ref to store the drawing data
     const [entries, setEntries] = useState([]);
+    const drawingRef = useRef([]); // Store the drawing data
+    const mouseDrawRef = useRef(); // Ref for MouseDraw component to clear canvas
 
     // Function to handle the drawing and pass it to the ref
     const handleDrawing = (newDrawing) => {
@@ -54,6 +55,7 @@ const Guestbook = () => {
                 // Clear the form
                 setText('');
                 drawingRef.current = [];
+                mouseDrawRef.current.clearCanvas(); // Clear the MouseDraw canvas
                 // Fetch updated entries
                 fetchEntries();
             } else {
@@ -78,7 +80,15 @@ const Guestbook = () => {
 
             <div className="drawing-container">
                 <svg width="500" height="300">
-                    <MouseDraw onChange={handleDrawing} x={0} y={0} width={500} height={300} thickness={3} />
+                    <MouseDraw
+                        ref={mouseDrawRef}
+                        x={0}
+                        y={0}
+                        width={500}
+                        height={300}
+                        thickness={3}
+                        onChange={handleDrawing}
+                    />
                 </svg>
             </div>
 
@@ -94,12 +104,14 @@ const Guestbook = () => {
                             <p>{entry.text}</p>
                             {entry.drawing && entry.drawing.length > 0 && (
                                 <div>
-                                    {/* Render the drawing as an SVG or image */}
+                                    {/* Render the drawing as an SVG */}
                                     <svg width="500" height="300">
                                         {entry.drawing.map((line, i) => (
                                             <polyline
                                                 key={i}
-                                                points={line.points.map(point => `${point.x},${point.y}`).join(' ')}
+                                                points={line.points
+                                                    .map(point => `${point.x},${point.y}`)
+                                                    .join(' ')}
                                                 stroke="black"
                                                 strokeWidth={line.thickness}
                                                 fill="none"

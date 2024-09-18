@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef, useEffect, useCallback } from "react";
+import React, { useMemo, useState, useRef, useEffect, useCallback, forwardRef, useImperativeHandle } from "react";
 import * as d3 from "d3";
 
 const Line = ({ thickness, points }) => {
@@ -24,7 +24,8 @@ const Line = ({ thickness, points }) => {
   );
 };
 
-export const MouseDraw = ({ x, y, width, height, thickness, onChange }) => {
+// Use forwardRef to allow the parent to control the canvas clearing
+export const MouseDraw = forwardRef(({ x, y, width, height, thickness, onChange }, ref) => {
   const [drawing, setDrawing] = useState(false);
   const [erasing, setErasing] = useState(false);
   const [currentLine, setCurrentLine] = useState({ thickness, points: [] });
@@ -40,7 +41,7 @@ export const MouseDraw = ({ x, y, width, height, thickness, onChange }) => {
           ...line,
           points: [...line.points, { x: mouseX, y: mouseY }],
         }));
-      } else if ( erasing) {
+      } else if (erasing) {
         setLines((prevLines) =>
           prevLines
             .map((line) => {
@@ -99,6 +100,17 @@ export const MouseDraw = ({ x, y, width, height, thickness, onChange }) => {
     }
   }
 
+  // Clear the canvas by resetting lines and currentLine
+  const clearCanvas = () => {
+    setLines([]);
+    setCurrentLine({ thickness, points: [] });
+  };
+
+  // Use useImperativeHandle to expose the clearCanvas function to the parent component
+  useImperativeHandle(ref, () => ({
+    clearCanvas,
+  }));
+
   useEffect(() => {
     const area = d3.select(drawingAreaRef.current);
     area.on("mousemove", mouseMove);
@@ -134,4 +146,4 @@ export const MouseDraw = ({ x, y, width, height, thickness, onChange }) => {
       )}
     </g>
   );
-};
+});
