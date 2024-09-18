@@ -1,20 +1,31 @@
-import { kv } from '@vercel/kv'; // Assuming you're using Vercel KV for data storage
+import { kv } from '@vercel/kv';
 
 export default async function handler(req, res) {
     const { method } = req;
 
     switch (method) {
         case 'POST': {
-            const { text, drawing } = req.body;
+            const { text, drawing, userToken } = req.body;
 
-            if (!text || !drawing) {
-                console.error('Validation Error: Text and drawing are required.');
-                return res.status(400).json({ error: 'Text and drawing are required.' });
+            // Validate that text, drawing, and userToken are provided
+            if (!userToken || (!text && drawing.length === 0)) {
+                console.error('Validation Error: User token, text, and drawing are required.');
+                return res.status(400).json({ error: 'User token, text, and drawing are required.' });
             }
 
             try {
+                // Check if the user already submitted within the last 24 hours
+                const existingEntry = await kv.get(`guestbook_${userToken}`);
+                if (existingEntry && (Date.now() - existingEntry.timestamp) < 24 * 60 * 60 * 1000) {
+                    console.error('User has already submitted an entry today.');
+                    return res.status(403).json({ error: 'You can only sign the guestbook once per day.' });
+                }
+
+                // Create a new entry with the userToken as the key
                 const entryId = `guestbook_${Date.now()}`;
-                await kv.set(entryId, { text, drawing });
+                const timestamp = Date.now();
+                await kv.set(`guestbook_${userToken}`, { text, drawing, timestamp });
+
                 console.log(`Guestbook entry saved with ID: ${entryId}`);
                 return res.status(201).json({ message: 'Guestbook entry saved.', entryId });
             } catch (error) {

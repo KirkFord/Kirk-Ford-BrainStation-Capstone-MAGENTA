@@ -2,16 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Guestbook.scss';
 import { MouseDraw } from '../../scripts/MouseDraw';
 
+const generateUserToken = () => {
+    let userToken = localStorage.getItem('userToken');
+    if (!userToken) {
+        userToken = `user_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+        localStorage.setItem('userToken', userToken);
+    }
+    return userToken;
+};
+
 const Guestbook = () => {
     const [text, setText] = useState('');
     const [entries, setEntries] = useState([]);
     const drawingRef = useRef([]); // Store the drawing data
     const mouseDrawRef = useRef(); // Ref for MouseDraw component to clear canvas
-
-    // Function to handle the drawing and pass it to the ref
-    const handleDrawing = (newDrawing) => {
-        drawingRef.current = newDrawing;
-    };
 
     // Fetch guestbook entries when the component loads
     useEffect(() => {
@@ -31,14 +35,18 @@ const Guestbook = () => {
 
     // Function to handle form submission
     const handleSubmit = async () => {
-        const drawing = drawingRef.current; // Get the drawing from the ref
+        const userToken = generateUserToken(); // Retrieve or generate userToken
 
-        if (!text && drawing.length === 0) {
-            alert('Please provide text or a drawing.');
+        if (!text && drawingRef.current.length === 0) {
+            alert('Please write something or draw to submit.');
             return;
         }
 
-        const submission = { text, drawing };
+        // Capture the current date as a string and append to the text
+        const currentDate = new Date().toLocaleString();
+        const submissionText = `${text}\n\nSubmitted on: ${currentDate}`; // Append date to text
+
+        const submission = { text: submissionText, drawing: drawingRef.current, userToken };
 
         try {
             const response = await fetch('/api/Guestbook-api', {
@@ -51,13 +59,13 @@ const Guestbook = () => {
 
             const data = await response.json();
             if (response.ok) {
-                alert(data.message);
-                // Clear the form
+                alert('Guestbook entry submitted: ' + data.message);
+                // Clear the form and canvas
                 setText('');
                 drawingRef.current = [];
                 mouseDrawRef.current.clearCanvas(); // Clear the MouseDraw canvas
-                // Fetch updated entries
-                fetchEntries();
+
+                fetchEntries(); // Fetch updated entries
             } else {
                 alert(data.error);
             }
@@ -87,7 +95,7 @@ const Guestbook = () => {
                         width={500}
                         height={300}
                         thickness={3}
-                        onChange={handleDrawing}
+                        onChange={(newDrawing) => (drawingRef.current = newDrawing)}
                     />
                 </svg>
             </div>
@@ -104,7 +112,6 @@ const Guestbook = () => {
                             <p>{entry.text}</p>
                             {entry.drawing && entry.drawing.length > 0 && (
                                 <div>
-                                    {/* Render the drawing as an SVG */}
                                     <svg width="500" height="300">
                                         {entry.drawing.map((line, i) => (
                                             <polyline
