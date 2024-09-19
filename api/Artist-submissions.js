@@ -10,7 +10,7 @@ export const config = {
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const form = new formidable.IncomingForm({
+        const form = formidable({
             multiples: false, // Handle one file at a time
             maxFileSize: 4.5 * 1024 * 1024, // Limit to 4.5 MB due to Vercel's limit
         });
@@ -22,17 +22,7 @@ export default async function handler(req, res) {
                 return res.status(500).json({ error: 'Error processing the form.' });
             }
 
-            const {
-                name,
-                email,
-                pronouns,
-                portfolio,
-                socialMedia,
-                accommodations,
-                aboutPractice,
-                accessibilityAdherence,
-                statementOfIntent,
-            } = fields;
+            const { name, email, pronouns, portfolio, socialMedia, accommodations, aboutPractice, accessibilityAdherence, statementOfIntent } = fields;
 
             // Check if all required fields are filled
             if (!name || !email || !aboutPractice || !accessibilityAdherence) {
@@ -62,7 +52,6 @@ export default async function handler(req, res) {
             const timestamp = Date.now();
             const entryId = `submission_${timestamp}`;
 
-            // Structure the submission data as per the form fields
             const submissionData = {
                 name,
                 email,
