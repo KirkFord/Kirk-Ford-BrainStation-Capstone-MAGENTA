@@ -1,211 +1,91 @@
-import React, { useState } from 'react';
-import './ArtistSubmissionForm.scss';
+import { kv } from '@vercel/kv';
+import { put } from '@vercel/blob';
+import formidable from 'formidable';
 
-const ArtistSubmissionForm = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        pronouns: '',
-        portfolio: '',
-        socialMedia: '',
-        accommodations: '',
-        cv: null, // CV file
-        aboutPractice: '',
-        accessibilityAdherence: '',
-        statementOfIntent: '',
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
-
-    // File size validation for CV upload
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file && file.size > 4.5 * 1024 * 1024) { // 4.5MB limit
-            alert('File size exceeds 4.5MB limit.');
-            setFormData({
-                ...formData,
-                cv: null, // Clear the file if it exceeds the limit
-            });
-        } else {
-            setFormData({
-                ...formData,
-                cv: file, // Set the file if valid
-            });
-        }
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const submissionData = new FormData();
-        for (const key in formData) {
-            submissionData.append(key, formData[key]);
-        }
-
-        try {
-            const response = await fetch('/api/artist-submissions', {
-                method: 'POST',
-                body: submissionData, // Send FormData with both text and file
-            });
-
-            const result = await response.json();
-            if (response.ok) {
-                alert('Submission successful!');
-                setFormData({
-                    name: '',
-                    email: '',
-                    pronouns: '',
-                    portfolio: '',
-                    socialMedia: '',
-                    accommodations: '',
-                    cv: null,
-                    aboutPractice: '',
-                    accessibilityAdherence: '',
-                    statementOfIntent: '',
-                });
-            } else {
-                alert(result.error || 'Submission failed.');
-            }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-        }
-    };
-
-    return (
-        <div className="artist-submission-form">
-            <h1>Artist Submission Form</h1>
-            <p>Please fill out the form below to submit your information.</p>
-
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="name">Full Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="pronouns">Preferred Pronouns</label>
-                    <input
-                        type="text"
-                        id="pronouns"
-                        name="pronouns"
-                        value={formData.pronouns}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="email">Email Address</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="portfolio">Website or Portfolio Link</label>
-                    <input
-                        type="url"
-                        id="portfolio"
-                        name="portfolio"
-                        value={formData.portfolio}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="socialMedia">Social Media Links</label>
-                    <textarea
-                        id="socialMedia"
-                        name="socialMedia"
-                        value={formData.socialMedia}
-                        onChange={handleChange}
-                        placeholder="Include links to relevant social media profiles"
-                    ></textarea>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="statementOfIntent">Statement of Intent</label>
-                    <textarea
-                        id="statementOfIntent"
-                        name="statementOfIntent"
-                        value={formData.statementOfIntent}
-                        onChange={handleChange}
-                        placeholder="Provide your artist statement or intent for this submission"
-                    ></textarea>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="cv">Upload CV (including Previous Exhibitions/Experience, max 4.5MB)</label>
-                    <input
-                        type="file"
-                        id="cv"
-                        name="cv"
-                        accept=".pdf,.doc,.docx"
-                        onChange={handleFileChange} // Use handleFileChange for file input
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="aboutPractice">Tell us about yourself and your practice</label>
-                    <textarea
-                        id="aboutPractice"
-                        name="aboutPractice"
-                        value={formData.aboutPractice}
-                        onChange={handleChange}
-                        placeholder="Provide details about your artistic journey, style, and mediums you work with"
-                        required
-                    ></textarea>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="accessibilityAdherence">
-                        How will your work adhere to W3 accessibility guidelines and practices? Be specific for your particular discipline/media.
-                    </label>
-                    <textarea
-                        id="accessibilityAdherence"
-                        name="accessibilityAdherence"
-                        value={formData.accessibilityAdherence}
-                        onChange={handleChange}
-                        placeholder="Explain how your submission will adhere to accessibility standards"
-                        required
-                    ></textarea>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="accommodations">Special Accommodations or Needs</label>
-                    <textarea
-                        id="accommodations"
-                        name="accommodations"
-                        value={formData.accommodations}
-                        onChange={handleChange}
-                        placeholder="Please describe any special accommodations or needs you have"
-                    ></textarea>
-                </div>
-
-                <button type="submit" className="submit-btn">
-                    Submit
-                </button>
-            </form>
-        </div>
-    );
+export const config = {
+    api: {
+        bodyParser: false, // Disable body parsing to handle file uploads with formidable
+    },
 };
 
-export default ArtistSubmissionForm;
+export default async function handler(req, res) {
+    if (req.method === 'POST') {
+        const form = new formidable.IncomingForm({
+            multiples: false, // Handle one file at a time
+            maxFileSize: 4.5 * 1024 * 1024, // Limit to 4.5 MB due to Vercel's limit
+        });
+
+        // Parse the incoming form data
+        form.parse(req, async (err, fields, files) => {
+            if (err) {
+                console.error('Error parsing form:', err);
+                return res.status(500).json({ error: 'Error processing the form.' });
+            }
+
+            const {
+                name,
+                email,
+                pronouns,
+                portfolio,
+                socialMedia,
+                accommodations,
+                aboutPractice,
+                accessibilityAdherence,
+                statementOfIntent,
+            } = fields;
+
+            // Check if all required fields are filled
+            if (!name || !email || !aboutPractice || !accessibilityAdherence) {
+                return res.status(400).json({
+                    error: 'Name, email, practice details, and accessibility adherence are required.',
+                });
+            }
+
+            let cvUrl = '';
+            if (files.cv) {
+                const file = files.cv; // Get the CV file
+                const filename = `uploads/${Date.now()}_${file.originalFilename}`; // Generate a unique filename
+
+                try {
+                    // Upload the file to Vercel Blob
+                    const { url } = await put(filename, file.filepath, {
+                        access: 'public', // Make the file public
+                    });
+
+                    cvUrl = url; // Store the uploaded file's URL
+                } catch (error) {
+                    console.error('Error uploading file to Blob:', error);
+                    return res.status(500).json({ error: 'Error uploading CV file.' });
+                }
+            }
+
+            const timestamp = Date.now();
+            const entryId = `submission_${timestamp}`;
+
+            // Structure the submission data as per the form fields
+            const submissionData = {
+                name,
+                email,
+                pronouns,
+                portfolio,
+                socialMedia,
+                accommodations,
+                aboutPractice,
+                accessibilityAdherence,
+                statementOfIntent,
+                cvUrl,
+                timestamp,
+            };
+
+            // Store submission in Vercel KV
+            await kv.set(entryId, submissionData);
+
+            return res.status(200).json({
+                message: 'Submission saved successfully!',
+                entryId,
+            });
+        });
+    } else {
+        return res.status(405).json({ error: 'Method not allowed.' });
+    }
+}

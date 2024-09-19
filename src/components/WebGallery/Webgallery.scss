@@ -1,84 +1,79 @@
 .web-gallery {
     padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-
-    .overview {
+  
+    /* Overview Section Styling */
+    .gallery-overview {
+      margin-bottom: 30px;
+  
+      h1, h2 {
+        margin: 0;
         text-align: center;
-        margin-bottom: 40px;
-
-        h1 {
-            font-size: 2.5rem;
-            color: #333;
-        }
-
-        h2 {
-            font-size: 2rem;
-            color: #666;
-        }
-
-        .artist-statement {
-            font-size: 1.2rem;
-            color: #444;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.5;
-        }
+      }
+  
+      p {
+        text-align: center;
+        max-width: 800px;
+        margin: 10px auto;
+        line-height: 1.6;
+      }
     }
-
-    .art-piece-list {
+  
+    /* Art Pieces Section */
+    .gallery-artpieces {
+      display: flex;
+      flex-direction: column;
+      gap: 20px; /* Space between each art piece */
+    }
+  
+    /* Each Art Piece */
+    .artpiece {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 20px; /* Space between content and description */
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+  
+      .art-content {
+        flex: 1;
+        max-width: 50%;
+        img, audio, video {
+          max-width: 100%;
+          height: auto;
+          border-radius: 8px;
+        }
+  
+        audio {
+          width: 50%;
+          min-width: 300px; /* Ensure a minimum width for audio player */
+          height: 40px; /* Set height for the audio bar to make sure it stays visible */
+          margin-top: 10px; /* Space between the audio player and other elements */
+        }
+      }
+  
+      .art-description {
+        flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 40px;
-
-        .art-piece {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-
-            .art-display {
-                display: flex;
-                gap: 20px;
-
-                .original-art, .accessible-art {
-                    max-width: 300px;
-                    border: 1px solid #ddd;
-                    padding: 10px;
-                    background-color: #f9f9f9;
-
-                    img, video, audio {
-                        width: 100%;
-                        height: auto;
-                    }
-
-                    p {
-                        font-size: 1rem;
-                        color: #333;
-                    }
-                }
-            }
-
-            .art-info {
-                max-width: 500px;
-
-                h3 {
-                    font-size: 1.5rem;
-                    color: #333;
-                    margin-bottom: 10px;
-                }
-
-                .description {
-                    font-size: 1.2rem;
-                    margin-bottom: 10px;
-                }
-
-                p {
-                    font-size: 1rem;
-                    line-height: 1.4;
-                    margin-bottom: 10px;
-                }
-            }
+        justify-content: center;
+        max-width: 50%;
+  
+        h3 {
+          margin-bottom: 10px;
+          font-size: 1.5rem;
         }
+  
+        p {
+          margin: 5px 0;
+          line-height: 1.5;
+  
+          strong {
+            font-weight: bold;
+          }
+        }
+      }
     }
-}
+  }
+  
