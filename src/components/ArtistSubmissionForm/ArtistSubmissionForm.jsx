@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { upload } from '@vercel/blob/client'; // Import the Vercel Blob client SDK
-import './ArtistSubmissionForm.scss';
 
 const ArtistSubmissionForm = () => {
     const [formData, setFormData] = useState({
@@ -43,36 +41,40 @@ const ArtistSubmissionForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.cv) {
-            alert('Please upload a valid CV file.');
-            return;
+        // Step 1: Upload the CV file to Vercel Blob first
+        let cvUrl = '';
+        if (formData.cv) {
+            try {
+                const uploadResponse = await fetch(`/api/blob-upload?filename=${formData.cv.name}`, {
+                    method: 'POST',
+                    body: formData.cv,
+                });
+                const blobData = await uploadResponse.json();
+                cvUrl = blobData.url; // Store the uploaded file's URL
+            } catch (error) {
+                alert('Error uploading CV file.');
+                return;
+            }
         }
 
+        // Step 2: Now submit the form data along with the CV URL to the backend
+        const submissionData = {
+            ...formData,
+            cvUrl, // Pass the CV URL
+        };
+
         try {
-            // Upload the CV to Vercel Blob
-            const newBlob = await upload(formData.cv.name, formData.cv, {
-                access: 'public', // Make the file publicly accessible
-            });
-
-            // Add the blob URL to the formData for submission
-            const submissionData = {
-                ...formData,
-                cvUrl: newBlob.url, // Store the uploaded file's URL
-            };
-
-            // Send the form data (including CV URL) to the backend
             const response = await fetch('/api/artist-submissions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(submissionData), // Send the form data as JSON
+                body: JSON.stringify(submissionData),
             });
 
             const result = await response.json();
             if (response.ok) {
                 alert('Submission successful!');
-                // Reset the form fields
                 setFormData({
                     name: '',
                     email: '',
@@ -174,7 +176,7 @@ const ArtistSubmissionForm = () => {
                         id="cv"
                         name="cv"
                         accept=".pdf,.doc,.docx"
-                        onChange={handleFileChange} // Handle file input for CV
+                        onChange={handleFileChange} // Use handleFileChange for file input
                         required
                     />
                 </div>

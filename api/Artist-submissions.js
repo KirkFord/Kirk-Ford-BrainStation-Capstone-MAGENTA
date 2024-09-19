@@ -1,5 +1,4 @@
 import { kv } from '@vercel/kv';
-import { put } from '@vercel/blob';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
@@ -14,7 +13,7 @@ export default async function handler(req, res) {
                 aboutPractice,
                 accessibilityAdherence,
                 statementOfIntent,
-                cvUrl // This is coming from the client-side after file upload
+                cvUrl, // This is coming from the client-side after file upload
             } = req.body;
 
             // Validate required fields
