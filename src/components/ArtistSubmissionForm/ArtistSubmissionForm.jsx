@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { upload } from '@vercel/blob/client';
 import './ArtistSubmissionForm.scss';
 
 const ArtistSubmissionForm = () => {
@@ -43,43 +42,20 @@ const ArtistSubmissionForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Ensure the CV file is provided
-        if (!formData.cv) {
-            alert('Please upload a valid CV file.');
-            return;
+        const submissionData = new FormData();
+        for (const key in formData) {
+            submissionData.append(key, formData[key]);
         }
 
         try {
-            console.log('Uploading CV to Vercel Blob...');
-
-            // Upload CV to Vercel Blob
-            const newBlob = await upload(formData.cv.name, formData.cv, {
-                access: 'public',
-            });
-
-            console.log('CV Uploaded:', newBlob.url);
-
-            // Add the blob URL to formData for submission
-            const submissionData = {
-                ...formData,
-                cvUrl: newBlob.url, // Store the uploaded file's URL
-            };
-
-            console.log('Submitting form data:', submissionData);
-
-            // Submit the form data to the backend
             const response = await fetch('/api/artist-submissions', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(submissionData), // Send as JSON payload
+                body: submissionData, // Send FormData to include file and text
             });
 
             const result = await response.json();
             if (response.ok) {
                 alert('Submission successful!');
-                console.log('Submission successful:', result);
                 setFormData({
                     name: '',
                     email: '',
@@ -93,7 +69,6 @@ const ArtistSubmissionForm = () => {
                     statementOfIntent: '',
                 });
             } else {
-                console.error('Submission failed:', result);
                 alert(result.error || 'Submission failed.');
             }
         } catch (error) {
