@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
 import ThreeGallery from './components/ThreeGallery/ThreeGallery';
 import Guestbook from './components/Guestbook/Guestbook';
-import ArtistSubmissionForm from './components/ArtistSubmissionForm/ArtistSubmissionForm'; // Import Artist Submission Form
-import WebGallery from './components/WebGallery/WebGallery'; // Import Web Gallery
+import ArtistSubmissionForm from './components/ArtistSubmissionForm/ArtistSubmissionForm'; 
+import WebGallery from './components/WebGallery/WebGallery'; 
 
 function App() {
   return (
@@ -13,8 +13,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/gallery" element={<ThreeGallery />} />
         <Route path="/guestbook" element={<Guestbook />} />
-        <Route path="/submit-artwork" element={<ArtistSubmissionForm />} /> {/* Route for Artist Submission Form */}
-        <Route path="/web-gallery" element={<WebGallery />} /> {/* Route for Web Gallery */}
+        <Route path="/submit-artwork" element={<ArtistSubmissionForm />} /> 
+        <Route path="/web-gallery" element={<WebGallery />} /> 
       </Routes>
     </Router>
   );

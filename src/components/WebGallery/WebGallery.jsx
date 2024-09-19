@@ -5,7 +5,6 @@ const WebGallery = () => {
     const [exhibit, setExhibit] = useState(null);
 
     useEffect(() => {
-        // Fetch exhibit data from the JSON file
         fetch('/assets/exhibits/exhibits.json')
             .then((response) => response.json())
             .then((data) => setExhibit(data))
@@ -16,14 +15,12 @@ const WebGallery = () => {
 
     return (
         <div className="web-gallery">
-            {/* Overview Section */}
             <div className="gallery-overview">
                 <h1>{exhibit.name}</h1>
                 <h2>{exhibit.artist}</h2>
                 <p>{exhibit.artistStatement}</p>
             </div>
 
-            {/* Art Pieces Section */}
             <div className="gallery-artpieces">
                 {exhibit.artworks.map((artwork, index) => (
                     <div key={index} className="artpiece">

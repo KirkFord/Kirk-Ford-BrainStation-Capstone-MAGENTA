@@ -7,18 +7,65 @@ const LandingPage = () => {
         const acronyms = document.querySelectorAll('.acronym span');
 
         letters.forEach((letter, index) => {
-            letter.style.animation = `drop-in 0.5s ease forwards ${index * 0.5}s`; // Cascading delay for each letter
+            letter.style.animation = `drop-in 0.5s ease forwards ${index * 0.5}s`; 
         });
 
         acronyms.forEach((acronym, index) => {
-            acronym.style.animation = `slide-in 0.5s ease forwards ${(index * 0.5) + 0.5}s`; // Slight delay for acronym after letter
+            acronym.style.animation = `slide-in 0.5s ease forwards ${(index * 0.5) + 0.5}s`; 
+        });
+
+        // Custom cursor blending effect
+        const pointer1 = document.getElementById("g-pointer-1");
+        const pointer2 = document.getElementById("g-pointer-2");
+        const body = document.querySelector("body");
+
+        let isHovering = false;
+
+        body.addEventListener("mousemove", (e) => {
+            window.requestAnimationFrame(() => setPosition(e.clientX, e.clientY));
+        });
+
+        function setPosition(x, y) {
+            pointer1.style.transform = `translate(${x - 6}px, ${y - 6}px)`;
+            if (!isHovering) {
+                pointer2.style.transform = `translate(${x - 20}px, ${y - 20}px)`;
+            }
+        }
+
+        window.addEventListener("mouseover", (event) => {
+            const target = event.target;
+            if (target.classList.contains("g-animation")) {
+                isHovering = true;
+
+                const rect = target.getBoundingClientRect();
+                const style = window.getComputedStyle(target);
+
+                pointer2.style.width = `${rect.width + 20}px`;
+                pointer2.style.height = `${rect.height + 20}px`;
+                pointer2.style.borderRadius = `${style.borderRadius}`;
+                pointer2.style.transform = `translate(${rect.left - 10}px, ${rect.top - 10}px)`;
+            }
+        });
+
+        window.addEventListener("mouseout", (event) => {
+            const target = event.target;
+            if (target.classList.contains("g-animation")) {
+                isHovering = false;
+                pointer2.style.width = `42px`;
+                pointer2.style.height = `42px`;
+                pointer2.style.borderRadius = `50%`;
+            }
         });
     }, []);
 
     return (
         <div className="landing-page">
-            <header>
-                <h1 className="header-title">Welcome to MAGENTA</h1>
+            {/* Custom cursors */}
+            <div id="g-pointer-1"></div>
+            <div id="g-pointer-2"></div>
+
+            <header className="g-animation" aria-label="Main Header">
+                <h1 className="header-title g-animation">Welcome to MAGENTA</h1>
             </header>
 
             <div className="magenta-animation">
@@ -39,17 +86,17 @@ const LandingPage = () => {
             </div>
 
             <main>
-                <section className="about">
+                <section className="about g-animation">
                     <h2>About MAGENTA</h2>
                     <p>MAGENTA is a virtual gallery designed with accessibility in mind...</p>
                 </section>
 
-                <section className="mission">
+                <section className="mission g-animation">
                     <h2>Mission Statement</h2>
                     <p>Our mission is to create an accessible platform for showcasing non-traditional and accessible art...</p>
                 </section>
 
-                <section className="who">
+                <section className="who g-animation">
                     <h2>Who Made This?</h2>
                     <p>Insert text here...</p>
                 </section>
@@ -60,7 +107,7 @@ const LandingPage = () => {
                 </nav>
             </main>
 
-            <footer>
+            <footer className="g-animation" aria-label="Main Footer">
                 <p>&copy; 2024 MAGENTA | All Rights Reserved</p>
             </footer>
         </div>

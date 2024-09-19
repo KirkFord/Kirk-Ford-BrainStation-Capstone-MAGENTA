@@ -24,7 +24,6 @@ const Line = ({ thickness, points }) => {
   );
 };
 
-// Use forwardRef to allow the parent to control the canvas clearing
 export const MouseDraw = forwardRef(({ x, y, width, height, thickness, onChange }, ref) => {
   const [drawing, setDrawing] = useState(false);
   const [erasing, setErasing] = useState(false);
@@ -91,22 +90,20 @@ export const MouseDraw = forwardRef(({ x, y, width, height, thickness, onChange 
       setDrawing(false);
       setLines((lines) => {
         const updatedLines = [...lines, currentLine];
-        onChange(updatedLines); // Pass updated drawing to parent
+        onChange(updatedLines); 
         return updatedLines;
       });
     } else if (erasing) {
       setErasing(false);
-      onChange(lines); // Update the parent with new lines after erasing
+      onChange(lines); 
     }
   }
 
-  // Clear the canvas by resetting lines and currentLine
   const clearCanvas = () => {
     setLines([]);
     setCurrentLine({ thickness, points: [] });
   };
 
-  // Use useImperativeHandle to expose the clearCanvas function to the parent component
   useImperativeHandle(ref, () => ({
     clearCanvas,
   }));
@@ -123,13 +120,13 @@ export const MouseDraw = forwardRef(({ x, y, width, height, thickness, onChange 
       ref={drawingAreaRef}
       onMouseDown={(event) => {
         if (event.button === 0) {
-          enableDrawing(); // Left click to draw
+          enableDrawing(); 
         } else if (event.button === 2) {
-          enableErasing(); // Right click to erase
+          enableErasing(); 
         }
       }}
       onMouseUp={disableDrawingOrErasing}
-      onContextMenu={(e) => e.preventDefault()} // Disable right-click menu
+      onContextMenu={(e) => e.preventDefault()} 
     >
       <rect
         x={0}

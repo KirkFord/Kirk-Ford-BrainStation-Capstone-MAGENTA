@@ -1,15 +1,12 @@
-// App.scss
 @forward './styles/colors';
 @forward './styles/fonts';
 @forward './styles/media-queries';
 @forward './styles/typography';
 @forward './styles/mixins';
-// Global reset styles
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    // overflow-y: auto; // Enable vertical scroll globally
 }
 
 html, body, #root {

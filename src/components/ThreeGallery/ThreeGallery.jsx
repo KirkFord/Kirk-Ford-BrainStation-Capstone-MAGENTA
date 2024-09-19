@@ -6,7 +6,6 @@ import { AsciiEffect } from 'three/examples/jsm/effects/AsciiEffect';
 import * as THREE from 'three';
 import './ThreeGallery.scss';
 
-// Extend AsciiEffect for usage in the canvas
 extend({ AsciiEffect });
 
 const GalleryModel = () => {
@@ -14,7 +13,6 @@ const GalleryModel = () => {
   return <primitive object={scene} />;
 };
 
-// Floor component to prevent falling through the ground
 const Floor = () => {
   const [ref] = usePlane(() => ({
     rotation: [-Math.PI / 2, 0, 0],
@@ -28,7 +26,6 @@ const Floor = () => {
   );
 };
 
-// Custom movement logic (WASD based on camera direction)
 const PlayerMovement = () => {
   const { camera } = useThree();
   const [movement, setMovement] = useState({
@@ -106,30 +103,25 @@ const AsciiRenderer = () => {
   const effectRef = useRef();
 
   useEffect(() => {
-    // Set up ASCII effect
     const asciiEffect = new AsciiEffect(gl, '.:-=+*#%@', { invert: true, resolution: 0.2 });
     asciiEffect.setSize(size.width, size.height);
 
-    // Check to see if the ASCII canvas is being appended correctly
     console.log('Appending ASCII canvas to the DOM');
 
     const asciiCanvas = asciiEffect.domElement;
-    asciiCanvas.classList.add('ascii');  // Ensure class is added for styling
-    document.querySelector('.ascii-render').appendChild(asciiCanvas); // Append it to the right div
+    asciiCanvas.classList.add('ascii');  
+    document.querySelector('.ascii-render').appendChild(asciiCanvas); 
 
-    // Handle resize events
     const handleResize = () => {
       asciiEffect.setSize(window.innerWidth, window.innerHeight);
     };
     window.addEventListener('resize', handleResize);
 
-    // Render loop
     const render = () => {
       asciiEffect.render(scene, camera);
     };
     gl.setAnimationLoop(render);
 
-    // Clean up on unmount
     return () => {
       asciiEffect.domElement.remove();
       gl.setAnimationLoop(null);
@@ -141,17 +133,15 @@ const AsciiRenderer = () => {
 };
 
   
-  // Main ThreeGallery component with PointerLockControls
   const ThreeGallery = () => {
     const controlsRef = useRef();
   
-    // PointerLock click handler
     useEffect(() => {
       const asciiCanvas = document.querySelector('canvas.ascii');
       if (asciiCanvas) {
         asciiCanvas.addEventListener('click', () => {
           if (controlsRef.current) {
-            controlsRef.current.lock(); // Lock the pointer when clicking the ASCII canvas
+            controlsRef.current.lock();
           }
         });
       }
@@ -159,7 +149,6 @@ const AsciiRenderer = () => {
   
     return (
       <div className="three-gallery-container">
-        {/* Normal Render */}
         <div className="normal-render" style={{ backgroundColor: 'lightgray' }}>
           <Canvas>
             <ambientLight intensity={1.0} />
@@ -169,7 +158,6 @@ const AsciiRenderer = () => {
           </Canvas>
         </div>
   
-        {/* ASCII Render */}
         <div className="ascii-render" style={{ backgroundColor: 'black' }}>
   <Canvas>
     <ambientLight intensity={1.0} />

@@ -121,7 +121,7 @@
     text-decoration: none;
   
     &:hover {
-      color: darken(#50C878, 10%); // Adjust hover color if needed
+      color: adjust(#50C878, -10%);
     }
   }
   
@@ -135,7 +135,7 @@
     transition: background-color 0.3s ease;
   
     &:hover {
-      background-color: darken(#FF00FF, 10%);
+      background-color: adjust(#FF00FF, -10%);
     }
   }
   

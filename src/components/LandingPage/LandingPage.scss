@@ -1,9 +1,37 @@
-html, body {
-    
-    height: 100%;  // Ensure full height for the entire document
+#g-pointer-1,
+#g-pointer-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Ensure events pass through */
+    z-index: 1000; /* Ensure these are always on top */
+}
+
+#g-pointer-1 {
+    width: 12px;
+    height: 12px;
+    background: #4caf50;
+    border-radius: 50%;
+    mix-blend-mode: exclusion; /* Blender effect */
+}
+
+#g-pointer-2 {
+    width: 42px;
+    height: 42px;
+    background: #fff;
+    border-radius: 50%;
+    mix-blend-mode: exclusion; /* Blender effect */
+    transition: 0.15s ease-out;
+}
+
+html,
+body {
+    height: 100%;
     margin: 0;
     padding: 0;
+    cursor: none; /* Hide the default cursor */
 }
+
 .landing-page {
     text-align: left;
     background-color: $emerald-complement;
@@ -14,13 +42,25 @@ html, body {
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
-    overflow-y: auto; // Ensure scrolling works
+    overflow-y: auto;
+    mix-blend-mode: difference; /* Blender effect applied globally */
 
-    header, footer {
+    header,
+    footer {
         background: linear-gradient(90deg, $magenta-primary, $emerald-dark);
         padding: 20px;
         color: $neutral-light;
         text-align: center;
+        position: relative;
+        z-index: 10; /* Ensure it's above content but below the cursor */
+        transition: all 0.3s ease; /* Smooth animation effect */
+
+        &.g-animation {
+            /* Apply hover animation to header and footer */
+            &:hover {
+                background: $light-magenta;
+            }
+        }
 
         .header-title {
             @include dt-page-header;
@@ -39,20 +79,19 @@ html, body {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        // margin-top: 50px;
         text-align: left;
-        
-        // Increase font sizes for visibility
+
         .letter-acronym {
             display: flex;
-            align-items: center;        }
+            align-items: center;
+        }
 
         .magenta-letter {
-            font-size: 6rem; // Make the letters larger
+            font-size: 6rem;
             opacity: 0;
             transform: translateY(-100%);
             animation: drop-in 0.5s ease forwards;
-            animation-delay: calc(var(--index) * 0.3s); // Apply cascading effect
+            animation-delay: calc(var(--index) * 0.3s);
             margin-right: 20px;
 
             span {
@@ -61,11 +100,11 @@ html, body {
         }
 
         .acronym {
-            font-size: 2.5rem; // Adjust acronym font size to match
+            font-size: 2.5rem;
             opacity: 0;
             transform: translateX(-20px);
             animation: slide-in 0.5s ease forwards;
-            animation-delay: calc(var(--index) * 0.4s + 0.5s); // Add a slight delay after each letter
+            animation-delay: calc(var(--index) * 0.4s + 0.5s);
 
             span {
                 color: $neutral-light;
@@ -88,10 +127,8 @@ html, body {
     }
 
     main {
-        flex-grow: 1; // Make main take available space between header and footer
+        flex-grow: 1;
         margin: 40px 20px;
-        // overflow-y: auto; // Ensure scrolling in case content exceeds the viewport
-
 
         section {
             margin-bottom: 40px;

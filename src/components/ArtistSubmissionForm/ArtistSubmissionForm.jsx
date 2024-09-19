@@ -10,7 +10,7 @@ const ArtistSubmissionForm = () => {
         portfolio: '',
         socialMedia: '',
         accommodations: '',
-        cv: null, // CV file
+        cv: null,
         aboutPractice: '',
         accessibilityAdherence: '',
         statementOfIntent: '',
@@ -30,12 +30,12 @@ const ArtistSubmissionForm = () => {
             alert('File size exceeds 4.5MB limit.');
             setFormData({
                 ...formData,
-                cv: null, // Clear the file if it exceeds the limit
+                cv: null,
             });
         } else {
             setFormData({
                 ...formData,
-                cv: file, // Set the file if valid
+                cv: file,
             });
         }
     };
@@ -44,7 +44,7 @@ const ArtistSubmissionForm = () => {
         try {
             const response = await fetch(`/api/blob-upload?filename=${file.name}`, {
                 method: 'POST',
-                body: file, // Send the file to the backend
+                body: file,
             });
 
             if (!response.ok) {
@@ -52,7 +52,7 @@ const ArtistSubmissionForm = () => {
             }
 
             const data = await response.json();
-            return data.url; // Return the blob URL
+            return data.url;
         } catch (error) {
             console.error('Error uploading file:', error);
             return null;
@@ -68,7 +68,6 @@ const ArtistSubmissionForm = () => {
         }
 
         try {
-            // First, upload the CV file
             const cvUrl = await uploadFile(formData.cv);
 
             if (!cvUrl) {
@@ -76,13 +75,11 @@ const ArtistSubmissionForm = () => {
                 return;
             }
 
-            // Prepare form submission data
             const submissionData = {
                 ...formData,
-                cvUrl, // Use the uploaded CV file URL
+                cvUrl, 
             };
 
-            // Submit the form data
             const response = await fetch('/api/artist-submissions', {
                 method: 'POST',
                 headers: {
@@ -196,7 +193,7 @@ const ArtistSubmissionForm = () => {
                         id="cv"
                         name="cv"
                         accept=".pdf,.doc,.docx"
-                        onChange={handleFileChange} // Use handleFileChange for file input
+                        onChange={handleFileChange}
                         required
                     />
                 </div>

@@ -14,15 +14,13 @@ const generateUserToken = () => {
 const Guestbook = () => {
     const [text, setText] = useState('');
     const [entries, setEntries] = useState([]);
-    const drawingRef = useRef([]); // Store the drawing data
-    const mouseDrawRef = useRef(); // Ref for MouseDraw component to clear canvas
+    const drawingRef = useRef([]); 
+    const mouseDrawRef = useRef(); 
 
-    // Fetch guestbook entries when the component loads
     useEffect(() => {
         fetchEntries();
     }, []);
 
-    // Function to fetch existing guestbook entries
     const fetchEntries = async () => {
         try {
             const response = await fetch('/api/Guestbook-api');
@@ -33,18 +31,16 @@ const Guestbook = () => {
         }
     };
 
-    // Function to handle form submission
     const handleSubmit = async () => {
-        const userToken = generateUserToken(); // Retrieve or generate userToken
+        const userToken = generateUserToken(); 
 
         if (!text && drawingRef.current.length === 0) {
             alert('Please write something or draw to submit.');
             return;
         }
 
-        // Capture the current date as a string and append to the text
         const currentDate = new Date().toLocaleString();
-        const submissionText = `${text}\n\nSubmitted on: ${currentDate}`; // Append date to text
+        const submissionText = `${text}\n\nSubmitted on: ${currentDate}`; 
 
         const submission = { text: submissionText, drawing: drawingRef.current, userToken };
 
@@ -60,12 +56,11 @@ const Guestbook = () => {
             const data = await response.json();
             if (response.ok) {
                 alert('Guestbook entry submitted: ' + data.message);
-                // Clear the form and canvas
                 setText('');
                 drawingRef.current = [];
-                mouseDrawRef.current.clearCanvas(); // Clear the MouseDraw canvas
+                mouseDrawRef.current.clearCanvas(); 
 
-                fetchEntries(); // Fetch updated entries
+                fetchEntries(); 
             } else {
                 alert(data.error);
             }

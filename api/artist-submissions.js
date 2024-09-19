@@ -13,17 +13,17 @@ export default async function handler(req, res) {
                 aboutPractice,
                 accessibilityAdherence,
                 statementOfIntent,
-                cvUrl // This URL comes from the client after the file upload
+                cvUrl 
             } = req.body;
 
-            // Validate required fields
+            
             if (!name || !email || !aboutPractice || !accessibilityAdherence || !cvUrl) {
                 return res.status(400).json({
                     error: 'Name, email, practice details, accessibility adherence, and CV are required.',
                 });
             }
 
-            // Prepare data for KV storage
+            
             const timestamp = Date.now();
             const entryId = `submission_${timestamp}`;
 
@@ -37,11 +37,11 @@ export default async function handler(req, res) {
                 aboutPractice,
                 accessibilityAdherence,
                 statementOfIntent,
-                cvUrl, // CV URL is coming from Blob upload
+                cvUrl, 
                 timestamp,
             };
 
-            // Store submission data in Vercel KV
+            
             await kv.set(entryId, submissionData);
 
             return res.status(200).json({

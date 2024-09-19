@@ -9,12 +9,10 @@ export default async function handler(req, res) {
                 return res.status(400).json({ error: 'Filename is required' });
             }
 
-            // Upload the file body directly to Vercel Blob
             const blob = await put(filename, req, {
-                access: 'public', // Ensure public access for uploaded files
+                access: 'public',
             });
 
-            // Return the uploaded blob URL
             return res.status(200).json(blob);
         } catch (error) {
             console.error('Error uploading file:', error);
