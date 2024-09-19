@@ -1,0 +1,99 @@
+/* ArtistSubmissionForm.scss */
+
+.artist-submission-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2rem;
+        color: #333;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+
+        &:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    input[type="file"] {
+        padding: 5px;
+        border: none;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        font-size: 1.2rem;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+
+    .error {
+        color: red;
+        font-size: 0.875rem;
+        margin-bottom: 10px;
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+        padding: 15px;
+
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        button {
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        padding: 10px;
+
+        h1 {
+            font-size: 1.25rem;
+        }
+
+        button {
+            font-size: 0.9rem;
+        }
+    }
+}

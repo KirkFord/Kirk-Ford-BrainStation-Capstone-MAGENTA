@@ -1,0 +1,84 @@
+.web-gallery {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .overview {
+        text-align: center;
+        margin-bottom: 40px;
+
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #666;
+        }
+
+        .artist-statement {
+            font-size: 1.2rem;
+            color: #444;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+    }
+
+    .art-piece-list {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        .art-piece {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .art-display {
+                display: flex;
+                gap: 20px;
+
+                .original-art, .accessible-art {
+                    max-width: 300px;
+                    border: 1px solid #ddd;
+                    padding: 10px;
+                    background-color: #f9f9f9;
+
+                    img, video, audio {
+                        width: 100%;
+                        height: auto;
+                    }
+
+                    p {
+                        font-size: 1rem;
+                        color: #333;
+                    }
+                }
+            }
+
+            .art-info {
+                max-width: 500px;
+
+                h3 {
+                    font-size: 1.5rem;
+                    color: #333;
+                    margin-bottom: 10px;
+                }
+
+                .description {
+                    font-size: 1.2rem;
+                    margin-bottom: 10px;
+                }
+
+                p {
+                    font-size: 1rem;
+                    line-height: 1.4;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}

@@ -10,7 +10,7 @@ import './ThreeGallery.scss';
 extend({ AsciiEffect });
 
 const GalleryModel = () => {
-  const { scene } = useGLTF('/models/scene.gltf');
+  const { scene } = useGLTF('/assets/models/scene.gltf');
   return <primitive object={scene} />;
 };
 

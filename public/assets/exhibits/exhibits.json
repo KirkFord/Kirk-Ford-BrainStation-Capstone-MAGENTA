@@ -1,0 +1,35 @@
+{
+  "id": "exhibit-1",
+  "name": "Abstract Visions",
+  "artist": "Jane Doe",
+  "artistStatement": "An exploration of abstract forms in nature...",
+  "artworks": [
+    {
+      "type": "image",
+      "file": "image1.jpg",
+      "title": "Sunset Over Waves",
+      "medium": "Oil on Canvas",
+      "description": "A vibrant representation of a sunset over the ocean.",
+      "altText": "An orange and red sunset over waves crashing on a shore.",
+      "artsyAltText": "A dramatic and fiery expression of the sun’s final moments over the ocean’s tumultuous waves."
+    },
+    {
+      "type": "audio",
+      "file": "audio1.mp3",
+      "title": "Ocean Sounds",
+      "medium": "Field Recording",
+      "description": "The calming sound of waves crashing on the shore.",
+      "altText": "Audio of gentle ocean waves.",
+      "artsyAltText": "A soft, immersive blend of water caressing the sand, a lullaby from the ocean."
+    },
+    {
+      "type": "video",
+      "file": "video1.mp4",
+      "title": "Wave Motion",
+      "medium": "Video",
+      "description": "Slow-motion video of waves crashing on rocks.",
+      "altText": "A video showing waves crashing on rocks in slow motion.",
+      "artsyAltText": "A surreal, fluid dance of water embracing stone, frozen in time."
+    }
+  ]
+}
