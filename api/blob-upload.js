@@ -10,11 +10,8 @@ export async function POST(request) {
             return NextResponse.json({ error: 'Filename is required' }, { status: 400 });
         }
 
-        // Convert the request body into a Buffer (for handling files)
-        const fileBuffer = await request.arrayBuffer();
-
-        // Upload the file buffer to Vercel Blob
-        const blob = await put(filename, Buffer.from(fileBuffer), {
+        // Upload the file body directly to Vercel Blob
+        const blob = await put(filename, request.body, {
             access: 'public', // Ensure public access for uploaded files
         });
 
