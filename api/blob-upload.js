@@ -10,9 +10,10 @@ export default async function handler(req, res) {
                 return res.status(400).json({ error: 'Filename is required' });
             }
 
-            const fileBuffer = await req.arrayBuffer();
+            // Read the request body as a stream and convert it to a buffer
+            const fileBuffer = Buffer.from(await req.arrayBuffer());
 
-            // Upload the file body directly to Vercel Blob
+            // Upload the file buffer to Vercel Blob
             const blob = await put(filename, fileBuffer, {
                 access: 'public', // Ensure public access for uploaded files
             });
