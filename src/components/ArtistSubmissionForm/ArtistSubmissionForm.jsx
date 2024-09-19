@@ -38,32 +38,50 @@ const ArtistSubmissionForm = () => {
         }
     };
 
+    const uploadFile = async (file) => {
+        try {
+            const response = await fetch(`/api/blob-upload?filename=${file.name}`, {
+                method: 'POST',
+                body: file,
+            });
+
+            if (!response.ok) {
+                throw new Error('Error uploading file.');
+            }
+
+            const data = await response.json();
+            return data.url; // Return the blob URL
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            return null;
+        }
+    };
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Step 1: Upload the CV file to Vercel Blob first
-        let cvUrl = '';
-        if (formData.cv) {
-            try {
-                const uploadResponse = await fetch(`/api/blob-upload?filename=${formData.cv.name}`, {
-                    method: 'POST',
-                    body: formData.cv,
-                });
-                const blobData = await uploadResponse.json();
-                cvUrl = blobData.url; // Store the uploaded file's URL
-            } catch (error) {
-                alert('Error uploading CV file.');
-                return;
-            }
+        if (!formData.cv) {
+            alert('Please upload a valid CV file.');
+            return;
         }
 
-        // Step 2: Now submit the form data along with the CV URL to the backend
-        const submissionData = {
-            ...formData,
-            cvUrl, // Pass the CV URL
-        };
-
         try {
+            // First, upload the CV file
+            const cvUrl = await uploadFile(formData.cv);
+
+            if (!cvUrl) {
+                alert('Error uploading CV.');
+                return;
+            }
+
+            // Prepare form submission data
+            const submissionData = {
+                ...formData,
+                cvUrl, // Use the uploaded CV file URL
+            };
+
+            // Submit the form data
             const response = await fetch('/api/artist-submissions', {
                 method: 'POST',
                 headers: {
@@ -82,10 +100,10 @@ const ArtistSubmissionForm = () => {
                     portfolio: '',
                     socialMedia: '',
                     accommodations: '',
-                    cv: null,
                     aboutPractice: '',
                     accessibilityAdherence: '',
                     statementOfIntent: '',
+                    cv: null,
                 });
             } else {
                 alert(result.error || 'Submission failed.');
@@ -94,6 +112,7 @@ const ArtistSubmissionForm = () => {
             console.error('Error submitting form:', error);
         }
     };
+
 
     return (
         <div className="artist-submission-form">
