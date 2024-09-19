@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { upload } from '@vercel/blob/client';
 import './ArtistSubmissionForm.scss';
 
 const ArtistSubmissionForm = () => {
@@ -23,10 +24,9 @@ const ArtistSubmissionForm = () => {
         });
     };
 
-    // File size validation for CV upload
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        if (file && file.size > 4.5 * 1024 * 1024) { // 4.5MB limit
+        if (file && file.size > 4.5 * 1024 * 1024) {
             alert('File size exceeds 4.5MB limit.');
             setFormData({
                 ...formData,
@@ -43,15 +43,30 @@ const ArtistSubmissionForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const submissionData = new FormData();
-        for (const key in formData) {
-            submissionData.append(key, formData[key]);
+        if (!formData.cv) {
+            alert('Please upload a valid CV file.');
+            return;
         }
 
         try {
-            const response = await fetch('/api/Artist-submissions', {
+            // Upload CV to Vercel Blob
+            const newBlob = await upload(formData.cv.name, formData.cv, {
+                access: 'public',
+            });
+
+            // Add the blob URL to formData for submission
+            const submissionData = {
+                ...formData,
+                cvUrl: newBlob.url, // Store the uploaded file's URL
+            };
+
+            // Submit the form data to the backend
+            const response = await fetch('/api/artist-submissions', {
                 method: 'POST',
-                body: submissionData, // Send FormData with both text and file
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(submissionData), // Send as JSON payload
             });
 
             const result = await response.json();

@@ -1,47 +1,28 @@
 import { kv } from '@vercel/kv';
 import { put } from '@vercel/blob';
-import formidable from 'formidable';
-
-export const config = {
-    api: {
-        bodyParser: false, // Disable body parsing to handle file uploads with formidable
-    },
-};
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const form = formidable({
-            multiples: false, // Handle one file at a time
-            maxFileSize: 4.5 * 1024 * 1024, // Limit to 4.5 MB due to Vercel's limit
-        });
+        try {
+            const { name, email, pronouns, portfolio, socialMedia, accommodations, aboutPractice, accessibilityAdherence, statementOfIntent, cv } = req.body;
 
-        // Parse the incoming form data
-        form.parse(req, async (err, fields, files) => {
-            if (err) {
-                console.error('Error parsing form:', err);
-                return res.status(500).json({ error: 'Error processing the form.' });
-            }
-
-            const { name, email, pronouns, portfolio, socialMedia, accommodations, aboutPractice, accessibilityAdherence, statementOfIntent } = fields;
-
-            // Check if all required fields are filled
-            if (!name || !email || !aboutPractice || !accessibilityAdherence) {
+            // Validate required fields
+            if (!name || !email || !aboutPractice || !accessibilityAdherence || !cv) {
                 return res.status(400).json({
-                    error: 'Name, email, practice details, and accessibility adherence are required.',
+                    error: 'Name, email, practice details, accessibility adherence, and CV are required.',
                 });
             }
 
+            // Handle CV file upload from the client-side
             let cvUrl = '';
-            if (files.cv) {
-                const file = files.cv; // Get the CV file
-                const filename = `uploads/${Date.now()}_${file.originalFilename}`; // Generate a unique filename
-
+            if (cv) {
+                const filename = `uploads/${Date.now()}_${cv.name}`; // Generate a unique filename
+                
                 try {
                     // Upload the file to Vercel Blob
-                    const { url } = await put(filename, file.filepath, {
+                    const { url } = await put(filename, cv, {
                         access: 'public', // Make the file public
                     });
-
                     cvUrl = url; // Store the uploaded file's URL
                 } catch (error) {
                     console.error('Error uploading file to Blob:', error);
@@ -49,6 +30,7 @@ export default async function handler(req, res) {
                 }
             }
 
+            // Prepare data for KV storage
             const timestamp = Date.now();
             const entryId = `submission_${timestamp}`;
 
@@ -66,14 +48,17 @@ export default async function handler(req, res) {
                 timestamp,
             };
 
-            // Store submission in Vercel KV
+            // Store submission data in Vercel KV
             await kv.set(entryId, submissionData);
 
             return res.status(200).json({
                 message: 'Submission saved successfully!',
                 entryId,
             });
-        });
+        } catch (error) {
+            console.error('Error saving submission:', error);
+            return res.status(500).json({ error: 'Error processing submission.' });
+        }
     } else {
         return res.status(405).json({ error: 'Method not allowed.' });
     }
