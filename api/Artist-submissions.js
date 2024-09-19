@@ -13,7 +13,7 @@ export default async function handler(req, res) {
                 aboutPractice,
                 accessibilityAdherence,
                 statementOfIntent,
-                cvUrl // This is coming from the client-side after file upload
+                cvUrl
             } = req.body;
 
             // Validate required fields
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
                 aboutPractice,
                 accessibilityAdherence,
                 statementOfIntent,
-                cvUrl, // Already uploaded by the client
+                cvUrl,
                 timestamp,
             };
 
