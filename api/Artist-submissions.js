@@ -4,30 +4,24 @@ import { put } from '@vercel/blob';
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
-            const { name, email, pronouns, portfolio, socialMedia, accommodations, aboutPractice, accessibilityAdherence, statementOfIntent, cv } = req.body;
+            const {
+                name,
+                email,
+                pronouns,
+                portfolio,
+                socialMedia,
+                accommodations,
+                aboutPractice,
+                accessibilityAdherence,
+                statementOfIntent,
+                cvUrl // This is coming from the client-side after file upload
+            } = req.body;
 
             // Validate required fields
-            if (!name || !email || !aboutPractice || !accessibilityAdherence || !cv) {
+            if (!name || !email || !aboutPractice || !accessibilityAdherence || !cvUrl) {
                 return res.status(400).json({
                     error: 'Name, email, practice details, accessibility adherence, and CV are required.',
                 });
-            }
-
-            // Handle CV file upload from the client-side
-            let cvUrl = '';
-            if (cv) {
-                const filename = `uploads/${Date.now()}_${cv.name}`; // Generate a unique filename
-                
-                try {
-                    // Upload the file to Vercel Blob
-                    const { url } = await put(filename, cv, {
-                        access: 'public', // Make the file public
-                    });
-                    cvUrl = url; // Store the uploaded file's URL
-                } catch (error) {
-                    console.error('Error uploading file to Blob:', error);
-                    return res.status(500).json({ error: 'Error uploading CV file.' });
-                }
             }
 
             // Prepare data for KV storage
@@ -44,7 +38,7 @@ export default async function handler(req, res) {
                 aboutPractice,
                 accessibilityAdherence,
                 statementOfIntent,
-                cvUrl,
+                cvUrl, // Already uploaded by the client
                 timestamp,
             };
 

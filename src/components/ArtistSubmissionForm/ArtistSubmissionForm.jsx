@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { upload } from '@vercel/blob/client'; // Import the Vercel Blob client SDK
 import './ArtistSubmissionForm.scss';
 
 const ArtistSubmissionForm = () => {
@@ -42,20 +43,36 @@ const ArtistSubmissionForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const submissionData = new FormData();
-        for (const key in formData) {
-            submissionData.append(key, formData[key]);
+        if (!formData.cv) {
+            alert('Please upload a valid CV file.');
+            return;
         }
 
         try {
+            // Upload the CV to Vercel Blob
+            const newBlob = await upload(formData.cv.name, formData.cv, {
+                access: 'public', // Make the file publicly accessible
+            });
+
+            // Add the blob URL to the formData for submission
+            const submissionData = {
+                ...formData,
+                cvUrl: newBlob.url, // Store the uploaded file's URL
+            };
+
+            // Send the form data (including CV URL) to the backend
             const response = await fetch('/api/artist-submissions', {
                 method: 'POST',
-                body: submissionData, // Send FormData to include file and text
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(submissionData), // Send the form data as JSON
             });
 
             const result = await response.json();
             if (response.ok) {
                 alert('Submission successful!');
+                // Reset the form fields
                 setFormData({
                     name: '',
                     email: '',
@@ -157,7 +174,7 @@ const ArtistSubmissionForm = () => {
                         id="cv"
                         name="cv"
                         accept=".pdf,.doc,.docx"
-                        onChange={handleFileChange} // Use handleFileChange for file input
+                        onChange={handleFileChange} // Handle file input for CV
                         required
                     />
                 </div>
