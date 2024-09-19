@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './ArtistSubmissionForm.scss';
+
 
 const ArtistSubmissionForm = () => {
     const [formData, setFormData] = useState({
