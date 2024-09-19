@@ -42,7 +42,7 @@ const ArtistSubmissionForm = () => {
         try {
             const response = await fetch(`/api/blob-upload?filename=${file.name}`, {
                 method: 'POST',
-                body: file,
+                body: file, // Send the file to the backend
             });
 
             if (!response.ok) {
@@ -56,7 +56,6 @@ const ArtistSubmissionForm = () => {
             return null;
         }
     };
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -100,10 +99,10 @@ const ArtistSubmissionForm = () => {
                     portfolio: '',
                     socialMedia: '',
                     accommodations: '',
+                    cv: null,
                     aboutPractice: '',
                     accessibilityAdherence: '',
                     statementOfIntent: '',
-                    cv: null,
                 });
             } else {
                 alert(result.error || 'Submission failed.');
