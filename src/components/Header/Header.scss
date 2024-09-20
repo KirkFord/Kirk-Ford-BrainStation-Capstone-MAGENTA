@@ -1,0 +1,40 @@
+.main-header {
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(90deg, $emerald-dark, $magenta-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: $neutral-light;
+
+        a {
+            text-decoration: none;
+            color: inherit;
+
+            &:hover {
+                color: $light-magenta;
+            }
+        }
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 20px;
+
+        a {
+            color: $neutral-light;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: $light-magenta;
+            }
+        }
+    }
+}

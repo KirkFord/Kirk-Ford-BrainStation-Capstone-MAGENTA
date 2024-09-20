@@ -4,6 +4,8 @@ import { PointerLockControls, useGLTF } from '@react-three/drei';
 import { Physics, usePlane } from '@react-three/cannon';
 import { AsciiEffect } from 'three/examples/jsm/effects/AsciiEffect';
 import * as THREE from 'three';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import './ThreeGallery.scss';
 
 extend({ AsciiEffect });
@@ -98,75 +100,36 @@ const PlayerMovement = () => {
 };
 
 
-const AsciiRenderer = () => {
-  const { gl, scene, camera, size } = useThree();
-  const effectRef = useRef();
+const ThreeGallery = () => {
+  const controlsRef = useRef();
 
   useEffect(() => {
-    const asciiEffect = new AsciiEffect(gl, '.:-=+*#%@', { invert: true, resolution: 0.2 });
-    asciiEffect.setSize(size.width, size.height);
+    const asciiCanvas = document.querySelector('canvas.ascii');
+    if (asciiCanvas) {
+      asciiCanvas.addEventListener('click', () => {
+        if (controlsRef.current) {
+          controlsRef.current.lock();
+        }
+      });
+    }
+  }, []);
 
-    console.log('Appending ASCII canvas to the DOM');
+  return (
+    <div className="three-gallery-container">
 
-    const asciiCanvas = asciiEffect.domElement;
-    asciiCanvas.classList.add('ascii');  
-    document.querySelector('.ascii-render').appendChild(asciiCanvas); 
-
-    const handleResize = () => {
-      asciiEffect.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', handleResize);
-
-    const render = () => {
-      asciiEffect.render(scene, camera);
-    };
-    gl.setAnimationLoop(render);
-
-    return () => {
-      asciiEffect.domElement.remove();
-      gl.setAnimationLoop(null);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [gl, scene, camera, size]);
-
-  return null;
+      <div className="normal-render" style={{ backgroundColor: 'lightgray' }}>
+      <Header />
+        <Canvas>
+          <ambientLight intensity={1.0} />
+          <GalleryModel />
+          <PlayerMovement />
+          {/* <Floor /> */}
+          <PointerLockControls ref={controlsRef} />
+        </Canvas>
+        <Footer />
+      </div>
+    </div>
+  );
 };
 
-  
-  const ThreeGallery = () => {
-    const controlsRef = useRef();
-  
-    useEffect(() => {
-      const asciiCanvas = document.querySelector('canvas.ascii');
-      if (asciiCanvas) {
-        asciiCanvas.addEventListener('click', () => {
-          if (controlsRef.current) {
-            controlsRef.current.lock();
-          }
-        });
-      }
-    }, []);
-  
-    return (
-      <div className="three-gallery-container">
-        <div className="normal-render" style={{ backgroundColor: 'lightgray' }}>
-          <Canvas>
-            <ambientLight intensity={1.0} />
-            <GalleryModel />
-            <PlayerMovement />
-            <PointerLockControls ref={controlsRef} />
-          </Canvas>
-        </div>
-  
-        <div className="ascii-render" style={{ backgroundColor: 'black' }}>
-  <Canvas>
-    <ambientLight intensity={1.0} />
-    <directionalLight position={[0, 10, 5]} intensity={1.5} />
-    <AsciiRenderer />
-  </Canvas>
-</div>
-      </div>
-    );
-  };
-  
-  export default ThreeGallery;
+export default ThreeGallery;

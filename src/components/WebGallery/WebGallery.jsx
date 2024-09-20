@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import './WebGallery.scss';
 
 const WebGallery = () => {
@@ -15,6 +17,7 @@ const WebGallery = () => {
 
     return (
         <div className="web-gallery">
+            <Header />
             <div className="gallery-overview">
                 <h1>{exhibit.name}</h1>
                 <h2>{exhibit.artist}</h2>
@@ -49,6 +52,7 @@ const WebGallery = () => {
                     </div>
                 ))}
             </div>
+            <Footer />
         </div>
     );
 };

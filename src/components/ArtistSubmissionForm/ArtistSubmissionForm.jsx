@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import './ArtistSubmissionForm.scss';
 
 
@@ -77,7 +79,7 @@ const ArtistSubmissionForm = () => {
 
             const submissionData = {
                 ...formData,
-                cvUrl, 
+                cvUrl,
             };
 
             const response = await fetch('/api/artist-submissions', {
@@ -114,6 +116,7 @@ const ArtistSubmissionForm = () => {
 
     return (
         <div className="artist-submission-form">
+            <Header />
             <h1>Artist Submission Form</h1>
             <p>Please fill out the form below to submit your information.</p>
 
@@ -239,6 +242,7 @@ const ArtistSubmissionForm = () => {
                     Submit
                 </button>
             </form>
+            <Footer />
         </div>
     );
 };

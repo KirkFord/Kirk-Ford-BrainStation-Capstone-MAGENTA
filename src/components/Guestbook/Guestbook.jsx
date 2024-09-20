@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Guestbook.scss';
 import { MouseDraw } from '../../scripts/MouseDraw';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 const generateUserToken = () => {
     let userToken = localStorage.getItem('userToken');
@@ -14,8 +16,8 @@ const generateUserToken = () => {
 const Guestbook = () => {
     const [text, setText] = useState('');
     const [entries, setEntries] = useState([]);
-    const drawingRef = useRef([]); 
-    const mouseDrawRef = useRef(); 
+    const drawingRef = useRef([]);
+    const mouseDrawRef = useRef();
 
     useEffect(() => {
         fetchEntries();
@@ -32,7 +34,7 @@ const Guestbook = () => {
     };
 
     const handleSubmit = async () => {
-        const userToken = generateUserToken(); 
+        const userToken = generateUserToken();
 
         if (!text && drawingRef.current.length === 0) {
             alert('Please write something or draw to submit.');
@@ -40,7 +42,7 @@ const Guestbook = () => {
         }
 
         const currentDate = new Date().toLocaleString();
-        const submissionText = `${text}\n\nSubmitted on: ${currentDate}`; 
+        const submissionText = `${text}\n\nSubmitted on: ${currentDate}`;
 
         const submission = { text: submissionText, drawing: drawingRef.current, userToken };
 
@@ -58,9 +60,9 @@ const Guestbook = () => {
                 alert('Guestbook entry submitted: ' + data.message);
                 setText('');
                 drawingRef.current = [];
-                mouseDrawRef.current.clearCanvas(); 
+                mouseDrawRef.current.clearCanvas();
 
-                fetchEntries(); 
+                fetchEntries();
             } else {
                 alert(data.error);
             }
@@ -71,6 +73,7 @@ const Guestbook = () => {
 
     return (
         <div className="guestbook">
+            <Header />
             <h1>Guestbook</h1>
             <p>Leave your mark! You can write or draw something below:</p>
 
@@ -100,6 +103,7 @@ const Guestbook = () => {
             </button>
 
             <div className="guestbook-entries">
+
                 <h2>Previous Entries</h2>
                 {entries.length > 0 ? (
                     entries.map((entry, index) => (
@@ -128,7 +132,9 @@ const Guestbook = () => {
                     <p>No entries yet. Be the first to sign the guestbook!</p>
                 )}
             </div>
+            <Footer />
         </div>
+
     );
 };
 

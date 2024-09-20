@@ -1,0 +1,13 @@
+.main-footer {
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(90deg, $emerald-dark, $magenta-primary);
+    text-align: center;
+    color: $neutral-light;
+    box-sizing: border-box;
+    
+    p {
+        margin: 0;
+        font-size: 1rem;
+    }
+}

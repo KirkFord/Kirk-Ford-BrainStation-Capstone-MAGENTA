@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import './LandingPage.scss';
 
 const LandingPage = () => {
@@ -7,11 +9,11 @@ const LandingPage = () => {
         const acronyms = document.querySelectorAll('.acronym span');
 
         letters.forEach((letter, index) => {
-            letter.style.animation = `drop-in 0.5s ease forwards ${index * 0.5}s`; 
+            letter.style.animation = `drop-in 0.5s ease forwards ${index * 0.5}s`;
         });
 
         acronyms.forEach((acronym, index) => {
-            acronym.style.animation = `slide-in 0.5s ease forwards ${(index * 0.5) + 0.5}s`; 
+            acronym.style.animation = `slide-in 0.5s ease forwards ${(index * 0.5) + 0.5}s`;
         });
 
         // Custom cursor blending effect
@@ -64,9 +66,7 @@ const LandingPage = () => {
             <div id="g-pointer-1"></div>
             <div id="g-pointer-2"></div>
 
-            <header className="g-animation" aria-label="Main Header">
-                <h1 className="header-title g-animation">Welcome to MAGENTA</h1>
-            </header>
+            <Header />
 
             <div className="magenta-animation">
                 {[
@@ -106,10 +106,7 @@ const LandingPage = () => {
                     <a href="/accessible-exhibit">Enter Accessible Exhibit Page</a>
                 </nav>
             </main>
-
-            <footer className="g-animation" aria-label="Main Footer">
-                <p>&copy; 2024 MAGENTA | All Rights Reserved</p>
-            </footer>
+            <Footer />
         </div>
     );
 };
