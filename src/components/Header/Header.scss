@@ -1,39 +1,31 @@
-.main-header {
-    width: 100%;
-    padding: 20px;
-    background: linear-gradient(90deg, $emerald-dark, $magenta-primary);
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-sizing: border-box;
+    background: linear-gradient(90deg, $emerald-dark, $magenta-primary);
+    padding: 20px;
+    color: #fff;
+    position: relative; /* Position the header relative to place the modal */
 
     .logo {
         font-size: 1.5rem;
         font-weight: bold;
-        color: $neutral-light;
-
         a {
             text-decoration: none;
-            color: inherit;
-
-            &:hover {
-                color: $light-magenta;
-            }
+            color: #fff;
         }
     }
 
-    .nav-links {
+    .navigation {
         display: flex;
         gap: 20px;
 
         a {
-            color: $neutral-light;
             text-decoration: none;
+            color: #fff;
             font-size: 1.2rem;
-            transition: color 0.3s ease;
-
             &:hover {
-                color: $light-magenta;
+                color: #ccc;
             }
         }
     }

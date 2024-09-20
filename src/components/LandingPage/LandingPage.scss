@@ -3,8 +3,10 @@
     position: absolute;
     top: 0;
     left: 0;
-    pointer-events: none; /* Ensure events pass through */
-    z-index: 1000; /* Ensure these are always on top */
+    pointer-events: none;
+    /* Ensure events pass through */
+    z-index: 1000;
+    /* Ensure these are always on top */
 }
 
 #g-pointer-1 {
@@ -12,7 +14,8 @@
     height: 12px;
     background: #4caf50;
     border-radius: 50%;
-    mix-blend-mode: exclusion; /* Blender effect */
+    mix-blend-mode: exclusion;
+    /* Blender effect */
 }
 
 #g-pointer-2 {
@@ -20,7 +23,8 @@
     height: 42px;
     background: #fff;
     border-radius: 50%;
-    mix-blend-mode: exclusion; /* Blender effect */
+    mix-blend-mode: exclusion;
+    /* Blender effect */
     transition: 0.15s ease-out;
 }
 
@@ -29,7 +33,8 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-    cursor: none; /* Hide the default cursor */
+    // cursor: none;
+    /* Hide the default cursor */
 }
 
 .landing-page {
@@ -41,9 +46,12 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 20px;
+    // padding: 20px;
     overflow-y: auto;
-    mix-blend-mode: difference; /* Blender effect applied globally */
+    mix-blend-mode: difference;
+    /* Blender effect applied globally */
+    // position: relative;
+
 
     header,
     footer {
@@ -52,10 +60,13 @@ body {
         color: $neutral-light;
         text-align: center;
         position: relative;
-        z-index: 10; /* Ensure it's above content but below the cursor */
-        transition: all 0.3s ease; /* Smooth animation effect */
+        z-index: 10;
+        /* Ensure it's above content but below the cursor */
+        transition: all 0.3s ease;
+        /* Smooth animation effect */
 
         &.g-animation {
+
             /* Apply hover animation to header and footer */
             &:hover {
                 background: $light-magenta;
@@ -80,19 +91,23 @@ body {
         flex-direction: column;
         align-items: flex-start;
         text-align: left;
+        margin-left: 2rem;
 
         .letter-acronym {
             display: flex;
             flex-direction: row;
             align-items: center;
-            margin-bottom: -30px; /* Adjust this value to reduce spacing between items */
+            margin-bottom: -30px;
+            /* Adjust this value to reduce spacing between items */
 
         }
 
         .magenta-letter {
             display: flex;
-            justify-content: center; /* Center the letter horizontally */
-            align-items: center;     /* Center the letter vertically */
+            justify-content: center;
+            /* Center the letter horizontally */
+            align-items: center;
+            /* Center the letter vertically */
             font-size: 6rem;
             opacity: 0;
             transform: translateY(-100%);
@@ -101,7 +116,8 @@ body {
             margin-right: 20px;
 
             span {
-                width: 100%;          /* Ensure the letter is centered within the width */
+                width: 100%;
+                /* Ensure the letter is centered within the width */
                 color: $magenta-primary;
             }
         }

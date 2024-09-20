@@ -1,0 +1,177 @@
+/* AccessibilityModal.scss */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Darker background for better focus */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* Ensure it's on top of everything */
+    opacity: 0; /* Initially hidden */
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease; /* Smooth transition */
+}
+
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible; /* Show when the modal is open */
+}
+
+.accessibility-modal {
+    background-color: #f9f9f9; /* Light background for readability */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2); /* Softer shadow for depth */
+    z-index: 3000;
+    width: 90vw;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    display: block;
+    transform: translateY(-50px); /* Start position for animation */
+    opacity: 0; /* Initially hidden */
+    transition: transform 0.4s ease, opacity 0.4s ease; /* Smooth transition for appearance */
+
+    @media (min-width: 768px) {
+        width: 50vw; /* Wider on larger screens */
+    }
+}
+
+.accessibility-modal.show {
+    transform: translateY(0); /* Slide in to the center */
+    opacity: 1; /* Fade in */
+}
+
+/* Header styling inside modal */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #333; /* Darker color for the title */
+        margin: 0;
+    }
+
+    .close-button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: #333; /* Darker on hover */
+        }
+    }
+}
+
+/* Main modal content */
+.modal-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    padding-bottom: 20px; /* Some padding at the bottom */
+}
+
+section {
+    margin-bottom: 20px;
+
+    h3 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+        color: #444; /* Darker heading */
+    }
+
+    button, select {
+        padding: 10px 15px;
+        font-size: 1rem;
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: #e6e6e6;
+        }
+
+        &:focus {
+            outline: 2px solid #3b82f6; /* Focus outline for accessibility */
+        }
+    }
+
+    select {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    button + button {
+        margin-left: 10px; /* Space between buttons */
+    }
+}
+
+/* Footer section for apply/cancel buttons */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+
+    button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        margin-left: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        transition: background-color 0.2s ease;
+        color: white;
+
+        &.apply-button {
+            background-color: #4caf50; /* Green for apply */
+        }
+
+        &.cancel-button {
+            background-color: #f44336; /* Red for cancel */
+        }
+
+        &:hover {
+            opacity: 0.9;
+        }
+
+        &:focus {
+            outline: 2px solid #3b82f6;
+        }
+    }
+}
+
+/* Keyframes animation for modal slide-in */
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Keyframes animation for modal slide-out */
+@keyframes slideOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+}

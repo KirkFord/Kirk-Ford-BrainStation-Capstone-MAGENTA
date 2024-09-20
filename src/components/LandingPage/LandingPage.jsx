@@ -16,7 +16,6 @@ const LandingPage = () => {
             acronym.style.animation = `slide-in 0.5s ease forwards ${(index * 0.5) + 0.5}s`;
         });
 
-        // Custom cursor blending effect
         const pointer1 = document.getElementById("g-pointer-1");
         const pointer2 = document.getElementById("g-pointer-2");
         const body = document.querySelector("body");
@@ -62,7 +61,6 @@ const LandingPage = () => {
 
     return (
         <div className="landing-page">
-            {/* Custom cursors */}
             <div id="g-pointer-1"></div>
             <div id="g-pointer-2"></div>
 
@@ -85,7 +83,7 @@ const LandingPage = () => {
                 ))}
             </div>
 
-            <main>
+            <main className="main-content">
                 <section className="about g-animation">
                     <h2 className="g-animation">About MAGENTA</h2>
                     <p className="g-animation">MAGENTA is a virtual gallery designed with accessibility in mind...</p>
