@@ -66,7 +66,7 @@ const LandingPage = () => {
             <div id="g-pointer-1"></div>
             <div id="g-pointer-2"></div>
 
-            <Header />
+            <Header className="g-animation"/>
 
             <div className="magenta-animation">
                 {[
@@ -79,26 +79,26 @@ const LandingPage = () => {
                     { letter: 'A', acronym: 'rt' }
                 ].map((item, index) => (
                     <div className="letter-acronym" key={index} style={{ '--index': index }}>
-                        <div className="magenta-letter"><span>{item.letter}</span></div>
-                        <div className="acronym"><span>{item.acronym}</span></div>
+                        <div className="magenta-letter"><span className="g-animation">{item.letter}</span></div>
+                        <div className="acronym"><span className="g-animation">{item.acronym}</span></div>
                     </div>
                 ))}
             </div>
 
             <main>
                 <section className="about g-animation">
-                    <h2>About MAGENTA</h2>
-                    <p>MAGENTA is a virtual gallery designed with accessibility in mind...</p>
+                    <h2 className="g-animation">About MAGENTA</h2>
+                    <p className="g-animation">MAGENTA is a virtual gallery designed with accessibility in mind...</p>
                 </section>
 
                 <section className="mission g-animation">
-                    <h2>Mission Statement</h2>
-                    <p>Our mission is to create an accessible platform for showcasing non-traditional and accessible art...</p>
+                    <h2 className="g-animation">Mission Statement</h2>
+                    <p className="g-animation">Our mission is to create an accessible platform for showcasing non-traditional and accessible art...</p>
                 </section>
 
                 <section className="who g-animation">
-                    <h2>Who Made This?</h2>
-                    <p>Insert text here...</p>
+                    <h2 className="g-animation">Who Made This?</h2>
+                    <p className="g-animation">Insert text here...</p>
                 </section>
 
                 <nav>
@@ -106,7 +106,7 @@ const LandingPage = () => {
                     <a href="/accessible-exhibit">Enter Accessible Exhibit Page</a>
                 </nav>
             </main>
-            <Footer />
+            <Footer className="g-animation"/>
         </div>
     );
 };
