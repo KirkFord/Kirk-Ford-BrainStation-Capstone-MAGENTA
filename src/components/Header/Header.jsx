@@ -22,24 +22,29 @@ const Header = () => {
         setAccessibilityModalOpen(!isAccessibilityModalOpen);
         console.log("Accessibility modal open state:", !isAccessibilityModalOpen); // Debug
     };
-    
+
 
     return (
-        <header className="header">
+        <header className="header" role="banner">
             <div className="logo">
-                <Link to="/">Magenta Home Page</Link>
+                <a href="/" aria-label="Return to Home Page">MAGENTA Home Page</a>
             </div>
-            <nav className="navigation">
-                <Link to="/gallery">Virtual Gallery</Link>
-                <Link to="/web-gallery">Web Gallery</Link>
-                <Link to="/guestbook">Guestbook</Link>
-                <Link to="/submit-artwork">Submit Work</Link>
-            </nav>
+            <nav className="navigation" role="navigation" aria-label="Primary Navigation">
 
-            <button onClick={toggleAccessibilityModal} aria-haspopup="dialog">
+                <a href="/gallery" aria-label="Navigate to Virtual Gallery">Virtual Gallery</a>
+                <a href="/web-gallery" aria-label="Navigate to Web Gallery">Web Gallery</a>
+                <a href="/guestbook" aria-label="Navigate to Guestbook">Guestbook</a>
+                <a href="/submit-artwork" aria-label="Submit Artwork">Submit Work</a>
+            </nav>
+            <button
+                className="accessibility-settings"
+                onClick={toggleAccessibilityModal}
+                aria-haspopup="dialog"
+                aria-expanded={isAccessibilityModalOpen}
+                aria-label="Open Accessibility Settings"
+            >
                 Accessibility Settings
             </button>
-
             <AccessibilityModal
                 isOpen={isAccessibilityModalOpen}
                 closeModal={toggleAccessibilityModal}

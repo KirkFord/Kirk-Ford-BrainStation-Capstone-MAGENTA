@@ -1,121 +1,375 @@
-/* _accessibility.scss */
+/* High-contrast Mode */
+.high-contrast {
+    background-color: #000;
+    color: #fff;
 
-/* Base accessibility class applied conditionally */
-.accessibility-active {
+    a {
+        color: #ff0;  // High contrast yellow links
+    }
 
-    /* High-contrast Mode */
-    .high-contrast {
-        background-color: #000;
+    button {
+        background-color: #222;
         color: #fff;
-
-        a {
-            color: #ff0;
-        }
-
-        button {
-            background-color: #222;
-            color: #fff;
-        }
     }
 
-    /* Color Schemes */
-    .default-scheme {
-        --background-color: #fff;
-        --text-color: #000;
+    .header, .footer {
+        background-color: #333;
+        border-color: #fff;  // Borders for clarity
     }
 
-    .colorblind-friendly {
-        --background-color: #eaeaea;
-        --text-color: #333;
-
-        a {
-            color: #0055ff;
-        }
+    .main-content, .sidebars, .nav, .footer-content {
+        background-color: #111;  // Ensure all sections are covered
+        color: #fff;  // Apply text color universally
     }
+}
 
-    /* Apply variables globally based on scheme */
+/* Color Schemes */
+.default-scheme {
+    --background-color: #fff;
+    --text-color: #000;
+
     body {
         background-color: var(--background-color);
         color: var(--text-color);
     }
 
-    /* Simplified Mode */
-    .simplified-mode {
-
-        /* Hide complex UI components */
-        .complex-component,
-        .decorative-elements {
-            display: none;
-        }
-
-        /* Make essential content full width */
-        .main-content {
-            width: 100%;
-        }
-
-        /* Remove all animations and transitions */
-        * {
-            animation: none !important;
-            transition: none !important;
-        }
-    }
-
-    /* Screen Reader Hints */
-    .screen-reader-hints [aria-hidden="true"] {
-        display: none;
-    }
-
-    .screen-reader-hints [role="alert"] {
-        display: block;
-    }
-
-    /* Adjustments for keyboard navigation */
-    .keyboard-navigation-disabled [tabindex="-1"],
-    .keyboard-navigation-disabled button {
-        pointer-events: none;
-    }
-
-    /* Simplified contrast for essential elements */
-    .simplified-mode .essential-element {
-        background-color: #fafafa;
-        border: 1px solid #ccc;
-    }
-}
-// High Contrast Theme
-.high-contrast {
-    background-color: #000;
-    color: #fff;
     a, button {
-        color: #00ffff; // Adjust contrast-friendly link and button color
+        color: #000;
     }
-    .header, .footer {
-        background-color: #333;
-    }
-}
 
-// Colorblind-Friendly Theme
-.colorblind-friendly {
-    background-color: #fff;
-    color: #000;
-    a, button {
-        color: #ff9900;
-    }
     .header, .footer {
         background-color: #f5f5f5;
     }
 }
 
-// Disable Animations
-.disable-animations * {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-}
+.colorblind-friendly {
+    --background-color: #eaeaea;
+    --text-color: #333;
 
-// Simplified Mode
-.simplified-mode {
-    * {
-        background: none !important;
-        box-shadow: none !important;
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+
+    a {
+        color: #0055ff;  // Blue links for colorblind accessibility
+    }
+
+    button {
+        background-color: #333;
+        color: #fff;
+    }
+
+    .header, .footer {
+        background-color: #f5f5f5;
+    }
+
+    .main-content, .sidebars, .nav, .footer-content {
+        background-color: var(--background-color);
+        color: var(--text-color);
     }
 }
+
+/* Simplified Mode */
+/* Simplified Mode */
+.simplified-mode {
+
+    /* Remove complex or decorative UI components */
+    .complex-component,
+    .decorative-elements,
+    .sidebars {
+        display: none;  // These elements should be hidden for simplicity
+    }
+
+    /* Make essential content full width */
+    .main-content {
+        width: 100%;
+        padding: 20px;
+        background-color: #f5f5f5;  // Light gray to reduce glare
+        // background: grey;
+        color: #000;  // Black text for high contrast
+    }
+
+    /* Ensure high contrast for important elements */
+    body, .essential-element {
+        background-color: #fafafa;  // Light gray for better contrast (not white)
+        // background: grey;
+        color: #000;  // Black text for readability
+        font-size: 1.2em;  // Slightly larger font size for readability
+    }
+
+    /* Apply simplified styling to buttons, inputs, and links */
+    button, input, a {
+        background-color: #333;  // Dark background for buttons/inputs
+        color: #fff !important;  // White text for high contrast
+        border: none;
+    }
+
+    /* Disable all animations and transitions globally */
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    /* Adjust text elements to ensure readability */
+    h1, h2, h3, p {
+        color:#000 !important;
+        line-height: 1.5;  // Add spacing between lines for readability
+    }
+
+
+}
+
+/* Screen Reader Hints */
+.screen-reader-hints [aria-hidden="true"] {
+    display: none;
+}
+
+.screen-reader-hints [role="alert"] {
+    display: block;
+}
+
+/* Adjustments for keyboard navigation */
+.keyboard-navigation-disabled [tabindex="-1"],
+.keyboard-navigation-disabled button {
+    pointer-events: none;
+}
+
+/* High Contrast Theme */
+.high-contrast {
+    background-color: #000;  // Black background for high contrast
+    color: #fff;  // White text for readability
+
+    /* Links and buttons */
+    a, button {
+        color: #00ffff;  // Cyan for links and buttons
+        background-color: #333;  // Dark gray background for buttons
+        border: 1px solid #00ffff;  // Cyan border for buttons/links
+        padding: 10px;  // Adding padding for better button appearance
+        text-decoration: none;  // Remove underline from links
+    }
+
+    /* Div elements */
+    div {
+        background-color: #222;  // Dark background for divs
+        color: #fff;  // White text for readability
+    }
+
+    /* Paragraph elements */
+    p {
+        color: #fff;  // White text for paragraphs
+        font-size: 1em;  // Default size
+        line-height: 1.5;  // Increase line height for readability
+    }
+
+    /* Headers */
+    h1, h2, h3, h4, h5, h6 {
+        color: #ffcc00;  // Yellow for headers to distinguish from body text
+    }
+
+    /* Input and text area elements */
+    input, textarea {
+        background-color: #333;  // Dark background for inputs
+        color: #00ffff;  // Cyan text for inputs
+        border: 2px solid #fff;  // White border for input fields
+        padding: 5px;
+    }
+
+    /* Lists (ul, ol) */
+    ul, ol {
+        color: #fff;  // White text for lists
+        list-style-type: disc;
+        margin-left: 20px;  // Add margin for proper indentation
+    }
+
+    /* Header and Footer elements */
+    .header, .footer {
+        background: none;
+        background-color: #333;  // Dark gray background for header and footer
+        color: #fff;  // White text
+        border-top: 1px solid #fff;  // White top border for distinction
+    }
+
+    /* Tables */
+    table {
+        background-color: #222;  // Dark background for tables
+        color: #fff;  // White text
+        border-collapse: collapse;  // Simplified borders
+        width: 100%;  // Full width
+    }
+
+    th, td {
+        border: 1px solid #fff;  // White borders for table cells
+        padding: 8px;  // Add padding inside cells
+        text-align: left;  // Align text to the left for readability
+    }
+
+    th {
+        background-color: #333;  // Darker header row
+        color: #ffcc00;  // Yellow text for table headers
+    }
+
+    /* Form elements */
+    label {
+        color: #ffcc00;  // Yellow for labels to stand out
+    }
+
+    select {
+        background-color: #333;  // Dark background
+        color: #00ffff;  // Cyan text
+        border: 2px solid #fff;  // White border
+        padding: 5px;
+    }
+
+    /* Ensure all body content has high contrast */
+    body, .main-content, .nav, .footer-content {
+        background-color: #000;  // Black background
+        color: #fff;  // White text for all content
+    }
+
+    /* Buttons in forms */
+    button {
+        background-color: #444;  // Darker background for buttons
+        color: #00ffff;  // Cyan text
+        border: 2px solid #00ffff;  // Cyan border
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 1em;
+    }
+
+    /* Focus States */
+    :focus {
+        outline: 2px solid #ffcc00;  // Yellow outline for focused elements
+    }
+
+    /* Textarea and input focus states */
+    input:focus, textarea:focus {
+        outline: 2px solid #ffcc00;  // Yellow focus for input fields
+        background-color: #222;  // Dark background
+        color: #fff;  // White text
+    }
+}
+
+
+.colorblind-friendly {
+    background-color: #ffffff;  // White background for simplicity
+    color: #000000;  // Black text for clarity
+
+    /* Links and buttons */
+    a, button {
+        background-color: #56B4E9;  // Sky Blue from the palette
+        color: #ffffff;  // White text for high contrast
+        border: 1px solid #0072B2;  // Blue border for buttons/links
+        padding: 10px;  // Spacing for buttons
+        text-decoration: none;  // Remove underline from links
+        cursor: pointer;
+    }
+
+    /* Div elements */
+    div {
+        background-color: #E69F00;  // Orange background for divs
+        color: #000;  // Black text for readability
+    }
+
+    /* Main element */
+    main {
+        background-color: #009E73;  // Green background for the main content area
+        color: #ffffff;  // White text for high contrast
+        padding: 20px;  // Padding for readability
+    }
+
+    /* Paragraph elements */
+    p {
+        color: #0072B2;  // Blue text for paragraphs
+        font-size: 1em;  // Default size
+        line-height: 1.5;  // Better readability
+    }
+
+    /* Headers */
+    h1, h2, h3, h4, h5, h6 {
+        color: #D55E00;  // Red text for headers
+    }
+
+    /* Input and text area elements */
+    input, textarea {
+        background-color: #F0E442;  // Yellow background for inputs
+        color: #000000;  // Black text for readability
+        border: 1px solid #333;  // Dark border for input fields
+        padding: 5px;
+    }
+
+    /* Lists (ul, ol) */
+    ul, ol {
+        color: #CC79A7;  // Purple text for lists
+        list-style-type: disc;  // Default bullet points
+        margin-left: 20px;  // Proper indentation
+    }
+
+    /* Header and Footer elements */
+    .header, .footer {
+        background: none;
+        background-color: #F0E442;  // Yellow background for distinction
+        color: #000000;  // Black text
+        border-top: 2px solid #D55E00;  // Red top border for distinction
+    }
+
+    /* Tables */
+    table {
+        background-color: #E69F00;  // Orange background for tables
+        color: #000000;  // Black text for readability
+        border-collapse: collapse;  // Simplified borders
+        width: 100%;  // Full-width table
+    }
+
+    th, td {
+        border: 1px solid #0072B2;  // Blue borders for table cells
+        padding: 8px;  // Padding inside table cells
+        text-align: left;  // Left-align table content
+    }
+
+    th {
+        background-color: #56B4E9;  // Sky Blue for table headers
+        color: #ffffff;  // White text for contrast in headers
+    }
+
+    /* Form elements */
+    label {
+        color: #D55E00;  // Red text for labels
+    }
+
+    select {
+        background-color: #009E73;  // Green background for select dropdowns
+        color: #ffffff;  // White text for contrast
+        border: 1px solid #0072B2;  // Blue border
+        padding: 5px;
+    }
+
+    /* Buttons in forms */
+    button {
+        background-color: #0072B2;  // Blue background for buttons
+        color: #ffffff;  // White text for high contrast
+        border: 2px solid #0072B2;  // Blue border
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 1em;
+    }
+
+    /* Focus States */
+    :focus {
+        outline: 2px solid #CC79A7;  // Purple outline for focusable elements
+    }
+
+    /* Textarea and input focus states */
+    input:focus, textarea:focus {
+        outline: 2px solid #CC79A7;  // Purple focus for inputs
+        background-color: #009E73;  // Green background
+        color: #ffffff;  // White text
+    }
+
+    /* Apply to entire body */
+    body, .main-content, .nav, .footer-content {
+        background-color: #ffffff;  // White body background
+        color: #000000;  // Black text for high readability
+    }
+}
+

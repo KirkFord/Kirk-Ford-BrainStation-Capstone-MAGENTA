@@ -3,7 +3,7 @@ import './Footer.scss';
 
 const Footer = () => {
     return (
-        <footer className="main-footer">
+        <footer className="footer">
             <p>&copy; 2024 MAGENTA | All Rights Reserved</p>
         </footer>
     );
