@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import './ArtistSubmissionForm.scss';
+import { useCursor } from '../../scripts/UseCursor';  // Adjust the path accordingly
+
 
 
 const ArtistSubmissionForm = () => {
+    useCursor();
     const [formData, setFormData] = useState({
         name: '',
         email: '',

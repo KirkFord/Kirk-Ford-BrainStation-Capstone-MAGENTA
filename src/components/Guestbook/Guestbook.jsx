@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Guestbook.scss';
 import { MouseDraw } from '../../scripts/MouseDraw';
+import { useCursor } from '../../scripts/UseCursor';  // Adjust the path accordingly
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
@@ -14,6 +15,7 @@ const generateUserToken = () => {
 };
 
 const Guestbook = () => {
+    useCursor();
     const [text, setText] = useState('');
     const [entries, setEntries] = useState([]);
     const drawingRef = useRef([]);

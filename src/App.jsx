@@ -12,6 +12,8 @@ function App() {
   return (
     <Router>
       {/* <Header /> */}
+      <div id="g-pointer-1" className="custom-cursor"></div>
+      <div id="g-pointer-2" className="custom-cursor"></div>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/gallery" element={<ThreeGallery />} />

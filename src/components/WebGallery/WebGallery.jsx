@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import { useCursor } from '../../scripts/UseCursor';  // Adjust the path accordingly
 import './WebGallery.scss';
 
 const WebGallery = () => {
+    useCursor();
+
     const [exhibit, setExhibit] = useState(null);
 
     useEffect(() => {
@@ -16,28 +19,29 @@ const WebGallery = () => {
     if (!exhibit) return <div>Loading...</div>;
 
     return (
-        <div className="web-gallery">
+        
+        <div className="web-gallery" aria-labelledby="gallery-heading">
             <Header />
-            <div className="gallery-overview">
-                <h1>{exhibit.name}</h1>
+            <div className="gallery-overview" role="region" aria-labelledby="overview-heading">
+                <h1 id="gallery-heading">{exhibit.name}</h1>
                 <h2>{exhibit.artist}</h2>
                 <p>{exhibit.artistStatement}</p>
             </div>
 
-            <div className="gallery-artpieces">
+            <div className="gallery-artpieces" role="list">
                 {exhibit.artworks.map((artwork, index) => (
-                    <div key={index} className="artpiece">
+                    <div key={index} className="artpiece" role="listitem">
                         <div className="art-content">
                             {artwork.type === 'image' && (
                                 <img src={`/assets/exhibits/${exhibit.id}/${artwork.file}`} alt={artwork.altText} />
                             )}
                             {artwork.type === 'audio' && (
-                                <audio controls>
+                                <audio controls aria-label={`Audio artwork: ${artwork.title}`}>
                                     <source src={`/assets/exhibits/${exhibit.id}/${artwork.file}`} type="audio/mpeg" />
                                 </audio>
                             )}
                             {artwork.type === 'video' && (
-                                <video controls>
+                                <video controls aria-label={`Video artwork: ${artwork.title}`}>
                                     <source src={`/assets/exhibits/${exhibit.id}/${artwork.file}`} type="video/mp4" />
                                 </video>
                             )}

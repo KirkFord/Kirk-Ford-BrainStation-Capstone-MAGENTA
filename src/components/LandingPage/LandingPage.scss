@@ -3,35 +3,35 @@ html {
 }
 
 // Landing Page Styles
-#g-pointer-1,
-#g-pointer-2 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    /* Ensure events pass through */
-    z-index: 1000;
-    /* Ensure these are always on top */
-}
+// #g-pointer-1,
+// #g-pointer-2 {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     pointer-events: none;
+//     /* Ensure events pass through */
+//     z-index: 1000;
+//     /* Ensure these are always on top */
+// }
 
-#g-pointer-1 {
-    width: 12px;
-    height: 12px;
-    background: #4caf50;
-    border-radius: 50%;
-    mix-blend-mode: exclusion;
-    /* Blender effect */
-}
+// #g-pointer-1 {
+//     width: 12px;
+//     height: 12px;
+//     background: #4caf50;
+//     border-radius: 50%;
+//     mix-blend-mode: exclusion;
+//     /* Blender effect */
+// }
 
-#g-pointer-2 {
-    width: 42px;
-    height: 42px;
-    background: #fff;
-    border-radius: 50%;
-    mix-blend-mode: exclusion;
-    /* Blender effect */
-    transition: 0.15s ease-out;
-}
+// #g-pointer-2 {
+//     width: 42px;
+//     height: 42px;
+//     background: #fff;
+//     border-radius: 50%;
+//     mix-blend-mode: exclusion;
+//     /* Blender effect */
+//     transition: 0.15s ease-out;
+// }
 
 .magenta-animation {
     margin-bottom: 0px;

@@ -29,12 +29,13 @@ const Header = () => {
             <div className="logo">
                 <a href="/" aria-label="Return to Home Page">MAGENTA Home Page</a>
             </div>
-            <nav className="navigation" role="navigation" aria-label="Primary Navigation">
+            <nav className="navigation cl-effect-12" role="navigation" aria-label="Primary Navigation">
 
                 <a href="/gallery" aria-label="Navigate to Virtual Gallery">Virtual Gallery</a>
                 <a href="/web-gallery" aria-label="Navigate to Web Gallery">Web Gallery</a>
                 <a href="/guestbook" aria-label="Navigate to Guestbook">Guestbook</a>
                 <a href="/submit-artwork" aria-label="Submit Artwork">Submit Work</a>
+
             </nav>
             <button
                 className="accessibility-settings"
