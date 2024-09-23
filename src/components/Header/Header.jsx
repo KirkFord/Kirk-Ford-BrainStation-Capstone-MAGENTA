@@ -1,4 +1,3 @@
-// Header.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AccessibilityModal from '../AccessibilityModal/AccessibilityModal';
@@ -20,7 +19,7 @@ const Header = () => {
 
     const toggleAccessibilityModal = () => {
         setAccessibilityModalOpen(!isAccessibilityModalOpen);
-        console.log("Accessibility modal open state:", !isAccessibilityModalOpen); // Debug
+        // console.log("Accessibility modal open state:", !isAccessibilityModalOpen);
     };
 
 

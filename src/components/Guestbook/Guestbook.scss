@@ -1,5 +1,5 @@
-:root{
-    // background: linear-gradient(90deg, $emerald-dark, $magenta-primary);
+.overall-container{
+    background: linear-gradient(90deg, $emerald-dark, $magenta-primary);
 
 }
 .guestbook {
@@ -7,6 +7,8 @@
     margin: 0 auto;
     padding: 20px;
     text-align: center;
+    // text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+
 
     h1, h2 {
         font-family: $secondary-font;
@@ -18,12 +20,18 @@
         margin-bottom: 20px;
         padding: 10px;
         font-size: 1rem;
+        background-color: $accent-color;
+        box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.25);
+
     }
 
     .drawing-container {
         margin-bottom: 20px;
     }
-
+    
+    .drawing-container svg{
+        box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.25);
+    }
     .guestbook-submit {
         background-color: $magenta-primary;
         color: $neutral-light;

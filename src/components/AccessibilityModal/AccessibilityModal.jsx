@@ -6,7 +6,6 @@ const AccessibilityModal = ({ isOpen, closeModal, settings, setSettings }) => {
     const [initialLoad, setInitialLoad] = useState(true);
 
     useEffect(() => {
-        // On component mount, check if settings exist in localStorage
         const savedSettings = JSON.parse(localStorage.getItem('accessibilitySettings'));
         if (savedSettings) {
             setSettings(savedSettings);
@@ -14,60 +13,56 @@ const AccessibilityModal = ({ isOpen, closeModal, settings, setSettings }) => {
         }
     }, []);
 
-    // Update localStorage whenever the settings change
     useEffect(() => {
         if (!initialLoad) {
             localStorage.setItem('accessibilitySettings', JSON.stringify(settings));
-            applySettings(settings); // Apply the settings to the DOM
+            applySettings(settings);
         } else {
-            setInitialLoad(false); // Skip the first load to prevent redundant updates
+            setInitialLoad(false);
         }
     }, [settings]);
 
-    // Apply the settings to the DOM
     const applySettings = (settings) => {
-        // Debugging console logs to verify application of settings
-        console.log('Applying settings:', settings);
+        // console.log('Applying settings:', settings);
 
         // Mouse and Effects
         document.body.style.cursor = settings.cursorOn ? 'default' : 'none';
         document.body.classList.toggle('disable-animations', !settings.animationsOn);
-        console.log('Animations disabled:', !settings.animationsOn);
+        // console.log('Animations disabled:', !settings.animationsOn);
 
         // Apply fontSize globally
-        const defaultFontSize = 16; // default font size (in px)
+        const defaultFontSize = 16;
         const newFontSize = settings.fontSize ? settings.fontSize / 10 : defaultFontSize;
         document.documentElement.style.fontSize = `${newFontSize}px`;
-        console.log('Font size set to:', newFontSize);
+        // console.log('Font size set to:', newFontSize);
 
         // Screen Reader Hints
         document.body.setAttribute('aria-hidden', settings.screenReaderHints ? 'false' : 'true');
-        console.log('Screen reader hints enabled:', settings.screenReaderHints);
+        // console.log('Screen reader hints enabled:', settings.screenReaderHints);
 
         // Simplified Mode
         document.body.classList.toggle('simplified-mode', settings.simplifiedMode);
-        console.log('Simplified mode:', settings.simplifiedMode);
+        // console.log('Simplified mode:', settings.simplifiedMode);
 
         // Autoplay
         document.querySelectorAll('video, audio').forEach(media => {
             media.autoplay = settings.autoPlayOn;
         });
-        console.log('Autoplay media:', settings.autoPlayOn);
+        // console.log('Autoplay media:', settings.autoPlayOn);
 
         // Color Scheme
         document.body.classList.remove('default-scheme', 'colorblind-friendly', 'high-contrast'); // Reset any previous scheme
         document.body.classList.add(settings.colorScheme);
-        console.log('Color scheme applied:', settings.colorScheme);
+        // console.log('Color scheme applied:', settings.colorScheme);
     };
 
-    // Prevent the modal from jumping to the top when changing settings
     const handleSettingChange = (callback) => {
         const modal = document.querySelector('.accessibility-modal'); 
-        const scrollPosition = modal.scrollTop; // Get the current scroll position of the modal
-        callback(); // Update the settings
+        const scrollPosition = modal.scrollTop;
+        callback();
         setTimeout(() => {
-            modal.scrollTop = scrollPosition; // Restore the modal's scroll position
-        }, 0); // Apply immediately
+            modal.scrollTop = scrollPosition;
+        }, 0);
     };
 
     useEffect(() => {
@@ -106,10 +101,10 @@ const AccessibilityModal = ({ isOpen, closeModal, settings, setSettings }) => {
                 document.addEventListener('keydown', handleKeyDown);
                 document.addEventListener('keydown', handleFocusTrap);
                 firstFocusableElement.focus();
-                document.body.style.overflow = 'hidden'; // Disable scrolling outside modal
+                document.body.style.overflow = 'hidden'; 
             }
         } else {
-            document.body.style.overflow = 'auto'; // Re-enable scrolling when modal closes
+            document.body.style.overflow = 'auto';
         }
 
         return () => {

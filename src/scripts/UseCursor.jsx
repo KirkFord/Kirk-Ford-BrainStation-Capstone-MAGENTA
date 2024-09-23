@@ -1,4 +1,4 @@
-import { useEffect } from 'react';  // Ensure proper import of useEffect
+import { useEffect } from 'react';
 
 export const useCursor = () => {
     useEffect(() => {
@@ -48,7 +48,6 @@ export const useCursor = () => {
         window.addEventListener("mouseover", handleMouseOver);
         window.addEventListener("mouseout", handleMouseOut);
 
-        // Clean up event listeners on component unmount
         return () => {
             body.removeEventListener("mousemove", handleMouseMove);
             window.removeEventListener("mouseover", handleMouseOver);

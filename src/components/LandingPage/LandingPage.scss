@@ -2,39 +2,9 @@ html {
     overflow-y: auto;
 }
 
-// Landing Page Styles
-// #g-pointer-1,
-// #g-pointer-2 {
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     pointer-events: none;
-//     /* Ensure events pass through */
-//     z-index: 1000;
-//     /* Ensure these are always on top */
-// }
-
-// #g-pointer-1 {
-//     width: 12px;
-//     height: 12px;
-//     background: #4caf50;
-//     border-radius: 50%;
-//     mix-blend-mode: exclusion;
-//     /* Blender effect */
-// }
-
-// #g-pointer-2 {
-//     width: 42px;
-//     height: 42px;
-//     background: #fff;
-//     border-radius: 50%;
-//     mix-blend-mode: exclusion;
-//     /* Blender effect */
-//     transition: 0.15s ease-out;
-// }
-
 .magenta-animation {
-    margin-bottom: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -45,16 +15,13 @@ html {
         flex-direction: column;
         align-items: center;
         margin-bottom: -50px;
-        /* Adjust this value to reduce spacing between items */
 
     }
 
     .magenta-letter {
         display: flex;
         justify-content: center;
-        /* Center the letter horizontally */
         align-items: center;
-        /* Center the letter vertically */
         font-size: 6rem;
         opacity: 0;
         transform: translateY(-100%);
@@ -64,7 +31,6 @@ html {
 
         span {
             width: 100%;
-            /* Ensure the letter is centered within the width */
             color: $dark-magenta;
         }
     }
@@ -99,11 +65,12 @@ html {
 }
 
 .landing-page {
+    width: 100%;
+    height: 100%;
     overflow-y: auto;
-    background: linear-gradient(0deg,$emerald-dark,$emerald-light); // Using $emerald-light for background
-    color: $neutral-dark; // Using $neutral-dark to make the text visible on green background
+    background: linear-gradient(0deg, $emerald-dark, $emerald-light);
+    color: $neutral-dark;
 
-    // Main content
     .main-content {
         text-align: center;
         padding: 20px;
@@ -113,13 +80,13 @@ html {
 
             h2 {
                 font-size: 2rem;
-                color: $magenta-primary; // Using $magenta-primary for section headers
+                color: $magenta-primary;
                 margin-bottom: 10px;
             }
 
             p {
                 font-size: 1.2rem;
-                color: $neutral-dark; // Keeping paragraph text in $neutral-dark for contrast
+                color: $neutral-dark;
             }
         }
 
@@ -129,21 +96,20 @@ html {
             gap: 15px;
 
             a {
-                background-color: $emerald-complement; // Using $emerald-complement for buttons
-                color: $neutral-dark; // Text color for buttons
+                background-color: $emerald-complement;
+                color: $neutral-dark;
                 padding: 10px 20px;
                 text-decoration: none;
                 border-radius: 8px;
                 transition: background-color 0.3s ease;
 
                 &:hover {
-                    background-color: $dark-magenta; // Darken on hover
+                    background-color: $dark-magenta;
                 }
             }
         }
     }
 
-    // Media Queries
     @include tablet {
         .magenta-animation {
             justify-content: space-between;
@@ -185,13 +151,6 @@ html {
     }
 }
 
-// LandingPage.scss
-.landing-page {
-    width: 100%;
-    height: 100%;
-}
-
-// Fade-in animation for the hero content
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -205,57 +164,57 @@ html {
 }
 
 .hero-banner {
+    margin-top: 40px;
     position: relative;
     width: 100%;
-    height: 400px; // Adjust as needed for your design
+    height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    z-index: 1; // Ensure it's on top of background content
-  
-    // Hero Banner SVG
+    z-index: 1;
+
     .hero-banner-image {
-      position: absolute;
-      top: 60px;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover; // Ensure it covers the entire hero area
-      z-index: 0;
-      border: none; // Remove any border
-      border: 0;    // Ensure no border is shown
-      outline: none; // Also remove any outline if present
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+        z-index: 0;
+        border: none; 
+        border: 0;
+        outline: none;
     }
-  
+
     .hero-content {
-      position: relative;
-      z-index: 2; // Ensures content is on top of the SVG
-      text-align: center;
-  
-      h1, p {
-        color: $dark-magenta; // Using the colors from _colors.scss
-      }
-  
-      // Ensure text scales nicely on smaller devices
-      @include tablet {
-        h1 {
-          font-size: 2.5rem;
-        }
+        position: relative;
+        z-index: 2;
+        text-align: center;
+
+        h1,
         p {
-          font-size: 1.2rem;
+            color: $dark-magenta;
         }
-      }
-  
-      @include desktop {
-        h1 {
-          font-size: 3.5rem;
+
+        @include tablet {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
         }
-        p {
-          font-size: 1.5rem;
+
+        @include desktop {
+            h1 {
+                font-size: 3.5rem;
+            }
+
+            p {
+                font-size: 1.5rem;
+            }
         }
-      }
     }
-  }
-  
-  
+}

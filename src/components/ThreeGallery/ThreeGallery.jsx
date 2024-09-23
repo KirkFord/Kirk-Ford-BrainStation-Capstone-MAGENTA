@@ -6,8 +6,8 @@ import { AsciiEffect } from 'three/examples/jsm/effects/AsciiEffect';
 import * as THREE from 'three';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import { useCursor } from '../../scripts/UseCursor';
 import './ThreeGallery.scss';
-
 extend({ AsciiEffect });
 
 const GalleryModel = () => {
@@ -101,6 +101,11 @@ const PlayerMovement = () => {
 
 
 const ThreeGallery = () => {
+  useEffect(() => {
+    console.log("ThreeGallery Page rendered");
+  }, []);
+  
+  useCursor();
   const controlsRef = useRef();
 
   useEffect(() => {

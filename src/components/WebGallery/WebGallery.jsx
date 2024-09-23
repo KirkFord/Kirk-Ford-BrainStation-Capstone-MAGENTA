@@ -5,6 +5,10 @@ import { useCursor } from '../../scripts/UseCursor';  // Adjust the path accordi
 import './WebGallery.scss';
 
 const WebGallery = () => {
+    useEffect(() => {
+        console.log("WebGallery Page rendered");
+      }, []);
+      
     useCursor();
 
     const [exhibit, setExhibit] = useState(null);

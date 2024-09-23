@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import { useCursor } from '../../scripts/UseCursor';  // Adjust the path accordingly
+import { useCursor } from '../../scripts/UseCursor';
 import './LandingPage.scss';
 
 
 const LandingPage = () => {
     useCursor();
+
+    useEffect(() => {
+        console.log("Landing Page rendered");
+    }, []);
+
+
     useEffect(() => {
         const letters = document.querySelectorAll('.magenta-letter span');
         const acronyms = document.querySelectorAll('.acronym span');

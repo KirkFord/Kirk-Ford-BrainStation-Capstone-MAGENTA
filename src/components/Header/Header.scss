@@ -5,7 +5,7 @@
     background: linear-gradient(90deg, $emerald-dark, $magenta-primary);
     padding: 25px;
     color: #fff;
-    position: relative; /* Position the header relative to place the modal */
+    position: relative;
 
     .logo {
         font-size: 1.5rem;
@@ -49,7 +49,6 @@ nav a {
 	outline: none;
 	color: #fff;
 	text-decoration: none;
-	// text-transform: uppercase;
 	letter-spacing: 1px;
 	font-weight: 400;
 	text-shadow: 0 0 1px rgba(255,255,255,0.3);
@@ -60,7 +59,6 @@ nav a:hover,
 nav a:focus {
 	outline: none;
 }
-/* Effect 12: circle */
 .cl-effect-12 a::before,
 .cl-effect-12 a::after {
 	position: absolute;

@@ -19,9 +19,7 @@ html, body, #root {
     top: 0;
     left: 0;
     pointer-events: none;
-    /* Ensure events pass through */
     z-index: 1000;
-    /* Ensure these are always on top */
 }
 
 #g-pointer-1 {
@@ -30,7 +28,6 @@ html, body, #root {
     background: #4caf50;
     border-radius: 50%;
     mix-blend-mode: exclusion;
-    /* Blender effect */
 }
 
 #g-pointer-2 {
@@ -39,6 +36,5 @@ html, body, #root {
     background: #fff;
     border-radius: 50%;
     mix-blend-mode: exclusion;
-    /* Blender effect */
     transition: 0.15s ease-out;
 }

@@ -1,10 +1,15 @@
+.overall-container{
+    background: linear-gradient(90deg, $emerald-dark, $magenta-primary);
+
+}
+
 .artist-submission-form {
     max-width: 800px;
     margin: 0 auto;
     padding: 30px;
-    background-color: #f9f9f9;
+    background-color: $neutral-light;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.25);
 
     h1 {
         text-align: center;
@@ -15,7 +20,6 @@
 
     p {
         text-align: center;
-        // color: #666;
         margin-bottom: 30px;
         font-size: 16px;
     }
@@ -43,6 +47,7 @@
             border-radius: 5px;
             box-sizing: border-box;
             transition: border-color 0.3s ease;
+            background-color: white;
 
             &:focus {
                 border-color: #007bff;
@@ -81,7 +86,6 @@
         }
     }
 
-    /* Error message styling */
     .error-message {
         color: red;
         font-size: 14px;
@@ -89,7 +93,6 @@
         margin-bottom: 10px;
     }
 
-    /* Responsive styling */
     @media (max-width: 600px) {
         padding: 20px;
 

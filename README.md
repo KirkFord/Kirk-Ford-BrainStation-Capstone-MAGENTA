@@ -1,5 +1,7 @@
 # MAGENTA (Museum of Accessible Gallery Exhibitions and Non-Traditional Art)
 
+Right now the site is deployed at https://themagenta.ca/
+
 ## Overview
 
 MAGENTA is a web-based virtual gallery focused on accessibility and inclusivity in art. The gallery provides an immersive 3D experience for users through first-person navigation, rendered using ASCII shaders via Three.js. In addition to the virtual experience, MAGENTA offers an accessible web interface that showcases the same artwork in a more traditional format, adhering to W3C Accessibility Guidelines. The gallery will feature a wide variety of non-traditional artworks, providing a unique and inclusive space for both artists and audiences.

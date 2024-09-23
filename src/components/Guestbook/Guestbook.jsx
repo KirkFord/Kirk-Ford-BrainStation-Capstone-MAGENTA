@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Guestbook.scss';
 import { MouseDraw } from '../../scripts/MouseDraw';
-import { useCursor } from '../../scripts/UseCursor';  // Adjust the path accordingly
+import { useCursor } from '../../scripts/UseCursor';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
@@ -74,69 +74,71 @@ const Guestbook = () => {
     };
 
     return (
-        <div className="guestbook">
+        <div className='overall-container'>
             <Header />
-            <h1>Guestbook</h1>
-            <p>Leave your mark! You can write or draw something below:</p>
+            <div className="guestbook">
 
-            <textarea
-                className="guestbook-textarea"
-                placeholder="Write something here..."
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-            ></textarea>
+                <h1>Guestbook</h1>
+                <p>Leave your mark! You can write or draw something below:</p>
 
-            <div className="drawing-container">
-                <svg width="500" height="300">
-                    <MouseDraw
-                        ref={mouseDrawRef}
-                        x={0}
-                        y={0}
-                        width={500}
-                        height={300}
-                        thickness={3}
-                        onChange={(newDrawing) => (drawingRef.current = newDrawing)}
-                    />
-                </svg>
-            </div>
+                <textarea
+                    className="guestbook-textarea"
+                    placeholder="Write something here..."
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                ></textarea>
 
-            <button className="guestbook-submit" onClick={handleSubmit}>
-                Submit
-            </button>
+                <div className="drawing-container">
+                    <svg width="500" height="300">
+                        <MouseDraw
+                            ref={mouseDrawRef}
+                            x={0}
+                            y={0}
+                            width={500}
+                            height={300}
+                            thickness={3}
+                            onChange={(newDrawing) => (drawingRef.current = newDrawing)}
+                        />
+                    </svg>
+                </div>
 
-            <div className="guestbook-entries">
+                <button className="guestbook-submit" onClick={handleSubmit}>
+                    Submit
+                </button>
 
-                <h2>Previous Entries</h2>
-                {entries.length > 0 ? (
-                    entries.map((entry, index) => (
-                        <div key={index} className="entry">
-                            <p>{entry.text}</p>
-                            {entry.drawing && entry.drawing.length > 0 && (
-                                <div>
-                                    <svg width="500" height="300">
-                                        {entry.drawing.map((line, i) => (
-                                            <polyline
-                                                key={i}
-                                                points={line.points
-                                                    .map(point => `${point.x},${point.y}`)
-                                                    .join(' ')}
-                                                stroke="black"
-                                                strokeWidth={line.thickness}
-                                                fill="none"
-                                            />
-                                        ))}
-                                    </svg>
-                                </div>
-                            )}
-                        </div>
-                    ))
-                ) : (
-                    <p>No entries yet. Be the first to sign the guestbook!</p>
-                )}
+                <div className="guestbook-entries">
+
+                    <h2>Previous Entries</h2>
+                    {entries.length > 0 ? (
+                        entries.map((entry, index) => (
+                            <div key={index} className="entry">
+                                <p>{entry.text}</p>
+                                {entry.drawing && entry.drawing.length > 0 && (
+                                    <div>
+                                        <svg width="500" height="300">
+                                            {entry.drawing.map((line, i) => (
+                                                <polyline
+                                                    key={i}
+                                                    points={line.points
+                                                        .map(point => `${point.x},${point.y}`)
+                                                        .join(' ')}
+                                                    stroke="black"
+                                                    strokeWidth={line.thickness}
+                                                    fill="none"
+                                                />
+                                            ))}
+                                        </svg>
+                                    </div>
+                                )}
+                            </div>
+                        ))
+                    ) : (
+                        <p>No entries yet. Be the first to sign the guestbook!</p>
+                    )}
+                </div>
             </div>
             <Footer />
         </div>
-
     );
 };
 

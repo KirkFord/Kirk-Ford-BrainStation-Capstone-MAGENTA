@@ -1,38 +1,6 @@
-// #g-pointer-1,
-// #g-pointer-2 {
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     pointer-events: none;
-//     /* Ensure events pass through */
-//     z-index: 1000;
-//     /* Ensure these are always on top */
-// }
-
-// #g-pointer-1 {
-//     width: 12px;
-//     height: 12px;
-//     background: #4caf50;
-//     border-radius: 50%;
-//     mix-blend-mode: exclusion;
-//     /* Blender effect */
-// }
-
-// #g-pointer-2 {
-//     width: 42px;
-//     height: 42px;
-//     background: #fff;
-//     border-radius: 50%;
-//     mix-blend-mode: exclusion;
-//     /* Blender effect */
-//     transition: 0.15s ease-out;
-// }
-
 .web-gallery {
-    // padding: 40px;
     background: linear-gradient(90deg, $emerald-dark, $magenta-primary);
 
-    /* Overview Section Styling */
     .gallery-overview {
         margin-top: 40px;
         margin-bottom: 40px;
@@ -58,7 +26,6 @@
         }
     }
 
-    /* Art Pieces Section */
     .gallery-artpieces {
         margin: 40px;
         display: flex;
@@ -66,18 +33,18 @@
         gap: 30px;
     }
 
-    /* Each Art Piece */
     .artpiece {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         gap: 30px;
         padding: 20px;
-        // border: 1px solid $neutral-light;
-        border-radius: 10px;
-        background-color: $neutral-light;
+        background-color: transparent;
 
         .art-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             flex: 1;
             max-width: 50%;
 
