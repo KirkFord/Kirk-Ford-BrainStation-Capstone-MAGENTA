@@ -1,6 +1,6 @@
 # MAGENTA (Museum of Accessible Gallery Exhibitions and Non-Traditional Art)
 
-Right now the site is deployed at https://themagenta.ca/
+Currently still a work in progress (I am implementing a full exhibit soon), but right now the site is deployed at https://themagenta.ca/
 
 ## Overview
 
