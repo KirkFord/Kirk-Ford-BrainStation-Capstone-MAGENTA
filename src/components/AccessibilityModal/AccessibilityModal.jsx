@@ -23,41 +23,34 @@ const AccessibilityModal = ({ isOpen, closeModal, settings, setSettings }) => {
     }, [settings]);
 
     const applySettings = (settings) => {
-        // console.log('Applying settings:', settings);
-
         // Mouse and Effects
         document.body.style.cursor = settings.cursorOn ? 'default' : 'none';
-        document.body.classList.toggle('disable-animations', !settings.animationsOn);
-        // console.log('Animations disabled:', !settings.animationsOn);
+        document.body.classList.toggle('disable-animations', settings.animationsDisabled); // Updated
 
         // Apply fontSize globally
         const defaultFontSize = 16;
         const newFontSize = settings.fontSize ? settings.fontSize / 10 : defaultFontSize;
         document.documentElement.style.fontSize = `${newFontSize}px`;
-        // console.log('Font size set to:', newFontSize);
 
-        // Screen Reader Hints
-        document.body.setAttribute('aria-hidden', settings.screenReaderHints ? 'false' : 'true');
-        // console.log('Screen reader hints enabled:', settings.screenReaderHints);
+        // Screen Reader Hints (Remove aria-hidden on <body>)
+        const screenReaderElements = document.querySelectorAll('[data-screen-reader-hints]');
+        screenReaderElements.forEach(el => el.setAttribute('aria-hidden', settings.screenReaderHints ? 'false' : 'true')); // Apply aria-hidden selectively
 
         // Simplified Mode
         document.body.classList.toggle('simplified-mode', settings.simplifiedMode);
-        // console.log('Simplified mode:', settings.simplifiedMode);
 
         // Autoplay
         document.querySelectorAll('video, audio').forEach(media => {
             media.autoplay = settings.autoPlayOn;
         });
-        // console.log('Autoplay media:', settings.autoPlayOn);
 
         // Color Scheme
-        document.body.classList.remove('default-scheme', 'colorblind-friendly', 'high-contrast'); // Reset any previous scheme
+        document.body.classList.remove('default-scheme', 'colorblind-friendly', 'high-contrast');
         document.body.classList.add(settings.colorScheme);
-        // console.log('Color scheme applied:', settings.colorScheme);
     };
 
     const handleSettingChange = (callback) => {
-        const modal = document.querySelector('.accessibility-modal'); 
+        const modal = document.querySelector('.accessibility-modal');
         const scrollPosition = modal.scrollTop;
         callback();
         setTimeout(() => {
@@ -101,7 +94,7 @@ const AccessibilityModal = ({ isOpen, closeModal, settings, setSettings }) => {
                 document.addEventListener('keydown', handleKeyDown);
                 document.addEventListener('keydown', handleFocusTrap);
                 firstFocusableElement.focus();
-                document.body.style.overflow = 'hidden'; 
+                document.body.style.overflow = 'hidden';
             }
         } else {
             document.body.style.overflow = 'auto';
@@ -116,7 +109,7 @@ const AccessibilityModal = ({ isOpen, closeModal, settings, setSettings }) => {
 
     return (
         <div className={`modal-overlay ${isOpen ? 'show' : ''}`} aria-modal="true" role="dialog">
-            <div className={`accessibility-modal ${isOpen ? 'show' : ''}`} role="document" aria-labelledby="accessibility-title">
+            <div className="accessibility-modal show" role="document" aria-labelledby="accessibility-title">
                 <div className="modal-header">
                     <h2 id="accessibility-title">Accessibility Settings</h2>
                     <button onClick={closeModal} aria-label="Close accessibility settings">Close</button>
@@ -132,10 +125,10 @@ const AccessibilityModal = ({ isOpen, closeModal, settings, setSettings }) => {
                             {settings.cursorOn ? 'Turn Cursor Off' : 'Turn Cursor On'}
                         </button>
                         <button
-                            onClick={() => handleSettingChange(() => setSettings((prev) => ({ ...prev, animationsOn: !settings.animationsOn })))}
+                            onClick={() => handleSettingChange(() => setSettings((prev) => ({ ...prev, animationsDisabled: !settings.animationsDisabled })))}
                             aria-label="Toggle Animations"
                         >
-                            {settings.animationsOn ? 'Turn Animations Off' : 'Turn Animations On'}
+                            {settings.animationsDisabled ? 'Enable Animations' : 'Disable Animations'}
                         </button>
                     </section>
 

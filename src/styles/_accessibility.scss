@@ -1,3 +1,9 @@
+.disable-animations * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+}
+
 /* Color Schemes */
 .default-scheme {
     --background-color: #fff;
@@ -28,7 +34,7 @@
 
     .main-content {
         width: 100%;
-        padding: 20px;
+        padding: 1.25rem;
         background-color: #f5f5f5;
         color: #000;
     }
@@ -36,7 +42,7 @@
     body, .essential-element {
         background-color: #fafafa; 
         color: #000;  
-        font-size: 1.2em; 
+        font-size: 1.2rem; 
     }
 
     button, input, a {
@@ -48,6 +54,8 @@
     * {
         animation: none !important;
         transition: none !important;
+        background: none !important;
+        box-shadow: none !important;
     }
 
     h1, h2, h3, p {
@@ -81,8 +89,8 @@
     a, button {
         color: #00ffff;  
         background-color: #333;  
-        border: 1px solid #00ffff;
-        padding: 10px;
+        border: 0.0625rem solid #00ffff;
+        padding: 0.625rem;
         text-decoration: none;
     }
 
@@ -94,7 +102,7 @@
 
     p, label {
         color: #fff !important;  
-        font-size: 1em;  
+        font-size: 1rem;  
         line-height: 1.5;  
     }
 
@@ -105,21 +113,21 @@
     input, textarea {
         background-color: #333;  
         color: #00ffff;  
-        border: 2px solid #fff;  
-        padding: 5px;
+        border: 0.125rem solid #fff;  
+        padding: 0.3125rem;
     }
 
     ul, ol {
         color: #fff;  
         list-style-type: disc;
-        margin-left: 20px;  
+        margin-left: 1.25rem;  
     }
 
     .header, .footer {
         background: none;
         background-color: #333; 
         color: #fff; 
-        border-top: 1px solid #fff; 
+        border-top: 0.0625rem solid #fff; 
     }
 
     table {
@@ -130,8 +138,8 @@
     }
 
     th, td {
-        border: 1px solid #fff;  
-        padding: 8px; 
+        border: 0.0625rem solid #fff;  
+        padding: 0.5rem; 
         text-align: left; 
     }
 
@@ -147,8 +155,8 @@
     select {
         background-color: #333;
         color: #00ffff;  
-        border: 2px solid #fff;
-        padding: 5px;
+        border: 0.125rem solid #fff;
+        padding: 0.3125rem;
     }
 
     body, .main-content, .nav, .footer-content {
@@ -159,17 +167,17 @@
     button {
         background-color: #444;
         color: #00ffff;
-        border: 2px solid #00ffff;
+        border: 0.125rem solid #00ffff;
         cursor: pointer;
-        font-size: 1em;
+        font-size: 1rem;
     }
 
     :focus {
-        outline: 2px solid #ffcc00;
+        outline: 0.125rem solid #ffcc00;
     }
 
     input:focus, textarea:focus {
-        outline: 2px solid #ffcc00;  
+        outline: 0.125rem solid #ffcc00;  
         background-color: #222;
         color: #fff;
     }
@@ -183,8 +191,8 @@
     a, button {
         background-color: #56B4E9; 
         color: #ffffff;  
-        border: 1px solid #0072B2; 
-        padding: 10px;  
+        border: 0.0625rem solid #0072B2; 
+        padding: 0.625rem;  
         text-decoration: none; 
         cursor: pointer;
     }
@@ -198,12 +206,12 @@
     main {
         background-color: #009E73;
         color: #ffffff; 
-        padding: 20px; 
+        padding: 1.25rem; 
     }
 
     p {
         color: #0072B2; 
-        font-size: 1em; 
+        font-size: 1rem; 
         line-height: 1.5;  
     }
 
@@ -214,14 +222,14 @@
     input, textarea {
         background-color: #F0E442; 
         color: #000000;  
-        border: 1px solid #333; 
-        padding: 5px;
+        border: 0.0625rem solid #333; 
+        padding: 0.3125rem;
     }
 
     ul, ol {
         color: #CC79A7;
         list-style-type: disc;  
-        margin-left: 20px;  
+        margin-left: 1.25rem;  
     }
 
     span{
@@ -232,10 +240,9 @@
         background: none;
         background-color: #F0E442;  
         color: #000000;  
-        border-top: 2px solid #D55E00;
+        border-top: 0.125rem solid #D55E00;
     }
 
-    /* Tables */
     table {
         background-color: #E69F00;
         color: #000000; 
@@ -244,8 +251,8 @@
     }
 
     th, td {
-        border: 1px solid #0072B2; 
-        padding: 8px;  
+        border: 0.0625rem solid #0072B2; 
+        padding: 0.5rem;  
         text-align: left;  
     }
 
@@ -261,25 +268,25 @@
     select {
         background-color: #009E73; 
         color: #ffffff; 
-        border: 1px solid #0072B2;  
-        padding: 5px;
+        border: 0.0625rem solid #0072B2;  
+        padding: 0.3125rem;
     }
 
     button {
         background-color: #0072B2; 
         color: #ffffff;  
-        border: 2px solid #0072B2;  
-        padding: 10px 20px;
+        border: 0.125rem solid #0072B2;  
+        padding: 0.625rem 1.25rem;
         cursor: pointer;
-        font-size: 1em;
+        font-size: 1rem;
     }
 
     :focus {
-        outline: 2px solid #CC79A7; 
+        outline: 0.125rem solid #CC79A7; 
     }
 
     input:focus, textarea:focus {
-        outline: 2px solid #CC79A7; 
+        outline: 0.125rem solid #CC79A7; 
         background-color: #009E73;  
         color: #ffffff; 
     }

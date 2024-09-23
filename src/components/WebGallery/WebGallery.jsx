@@ -7,8 +7,8 @@ import './WebGallery.scss';
 const WebGallery = () => {
     useEffect(() => {
         console.log("WebGallery Page rendered");
-      }, []);
-      
+    }, []);
+
     useCursor();
 
     const [exhibit, setExhibit] = useState(null);
@@ -23,7 +23,7 @@ const WebGallery = () => {
     if (!exhibit) return <div>Loading...</div>;
 
     return (
-        
+
         <div className="web-gallery" aria-labelledby="gallery-heading">
             <Header />
             <div className="gallery-overview" role="region" aria-labelledby="overview-heading">
@@ -54,8 +54,8 @@ const WebGallery = () => {
                             <h3>{artwork.title}</h3>
                             <p><strong>Medium/Tools:</strong> {artwork.medium}</p>
                             <p><strong>Description:</strong> {artwork.description}</p>
-                            <p><strong>Alt Text:</strong> {artwork.altText}</p>
-                            <p><strong>Artsy Alt Text:</strong> {artwork.artsyAltText}</p>
+                            <p><strong>Literal Description:</strong> {artwork.altText}</p>
+                            <p><strong>Artist's Description:</strong> {artwork.artsyAltText}</p>
                         </div>
                     </div>
                 ))}

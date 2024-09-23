@@ -68,17 +68,17 @@ const LandingPage = () => {
             <main className="main-content" role="main" aria-labelledby="main-content-heading">
                 <section className="about g-animation" aria-labelledby="about-heading">
                     <h2 id="about-heading" className="g-animation">About MAGENTA</h2>
-                    <p className="g-animation">MAGENTA is a virtual gallery designed with accessibility in mind...</p>
+                    <p className="g-animation">MAGENTA is a pioneering virtual gallery designed to be accessible and inclusive for all audiences. It offers a unique blend of immersive 3D experiences and a fully accessible web interface, ensuring that everyone, regardless of ability, can engage with a diverse range of non-traditional artworks. Through innovative use of Three.js and strict adherence to W3C Accessibility Guidelines, MAGENTA creates a platform where artists and audiences can connect in both virtual and traditional web formats. Our goal is to make art a more inclusive space for everyone to explore, enjoy, and contribute to.</p>
                 </section>
 
                 <section className="mission g-animation" aria-labelledby="mission-heading">
                     <h2 id="mission-heading" className="g-animation">Mission Statement</h2>
-                    <p className="g-animation">Our mission is to create an accessible platform for showcasing non-traditional and accessible art...</p>
+                    <p className="g-animation">Our mission is to break down the barriers that prevent people from experiencing art. We believe that art should be for everyone, which is why we are committed to making our gallery accessible to users with visual, auditory, or motor impairments. Through thoughtful design, accessible features like keyboard navigation, high-contrast mode, and adaptable viewing options, we aim to create a space where all individuals can explore and appreciate non-traditional and innovative art forms. Our focus is on fostering inclusivity, allowing artists to showcase their work in a space that embraces diversity in both medium and audience.</p>
                 </section>
 
                 <section className="who g-animation" aria-labelledby="who-heading">
                     <h2 id="who-heading" className="g-animation">Who Made This?</h2>
-                    <p className="g-animation">Insert text here...</p>
+                    <p className="g-animation">MAGENTA was created by Kirk Ford (He/Him/il), a Canadian artist and software developer based in Saskatoon, SK – Treaty 6 Territory. MAGENTA was born from a desire to create an inclusive, accessible space within the online art community. Driven by Kirk’s personal experiences and commitment to inclusivity, MAGENTA ensures that artists and audiences alike can experience and contribute to the gallery regardless of their abilities.</p>
                 </section>
 
                 <nav aria-label="Main Navigation" role="navigation">

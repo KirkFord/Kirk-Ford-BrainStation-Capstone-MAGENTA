@@ -3,27 +3,27 @@ html {
 }
 
 .magenta-animation {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     text-align: left;
 
-    @include tablet{
-        flex-direction: row;
+    // @include tablet{
+    //     flex-direction: row;
 
-    }
+    // }
 
-    @include desktop{
-        flex-direction: row;
-    }
+    // @include desktop{
+    //     flex-direction: row;
+    // }
 
     .letter-acronym {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: -50px;
+        // margin-bottom: -3.125rem;
 
     }
 
@@ -36,7 +36,7 @@ html {
         transform: translateY(-100%);
         animation: drop-in 0.5s ease forwards;
         animation-delay: calc(var(--index) * 0.3s);
-        margin-right: 20px;
+        margin-right: 1.25rem;
 
         span {
             width: 100%;
@@ -47,7 +47,7 @@ html {
     .acronym {
         font-size: 2.5rem;
         opacity: 0;
-        transform: translateX(-20px);
+        transform: translateX(-1.25rem);
         animation: slide-in 0.5s ease forwards;
         animation-delay: calc(var(--index) * 0.4s + 0.5s);
 
@@ -82,15 +82,15 @@ html {
 
     .main-content {
         text-align: center;
-        padding: 20px;
+        padding: 1.25rem;
 
         section {
-            margin-bottom: 40px;
+            margin-bottom: 2.5rem;
 
             h2 {
                 font-size: 2rem;
                 color: $magenta-primary;
-                margin-bottom: 10px;
+                margin-bottom: 0.625rem;
             }
 
             p {
@@ -102,14 +102,14 @@ html {
         nav {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 0.9375rem;
 
             a {
                 background-color: $emerald-complement;
                 color: $neutral-dark;
-                padding: 10px 20px;
+                padding: 0.625rem 1.25rem;
                 text-decoration: none;
-                border-radius: 8px;
+                border-radius: 0.5rem;
                 transition: background-color 0.3s ease;
 
                 &:hover {
@@ -125,7 +125,7 @@ html {
         }
 
         .main-content {
-            padding: 30px;
+            padding: 1.875rem;
 
             section {
                 h2 {
@@ -145,7 +145,7 @@ html {
         }
 
         .main-content {
-            padding: 50px;
+            padding: 3.125rem;
 
             section {
                 h2 {
@@ -163,7 +163,7 @@ html {
 @keyframes fadeIn {
     0% {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(-0.625rem);
     }
 
     100% {
@@ -173,10 +173,10 @@ html {
 }
 
 .hero-banner {
-    margin-top: 40px;
+    margin-top: -2.5rem;
     position: relative;
     width: 100%;
-    height: 400px;
+    height: 25rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -185,7 +185,7 @@ html {
 
     .hero-banner-image {
         position: absolute;
-        top: 60px;
+        top: 3.75rem;
         left: 0;
         width: 100%;
         height: 100%;
