@@ -5,8 +5,12 @@
   "artistStatement": "An exploration of abstract forms in nature...",
   "artworks": [
     {
-      "type": "image",
-      "file": "image1.jpg",
+      "original_type": "image",
+      "transformed_type": "audio",
+      "file": {
+        "original": "image1.jpg",
+        "transformed": "audio1.mp3"
+      },
       "title": "Sunset Over Waves",
       "medium": "Oil on Canvas",
       "description": "A vibrant representation of a sunset over the ocean.",
@@ -14,8 +18,10 @@
       "artsyAltText": "A dramatic and fiery expression of the sun’s final moments over the ocean’s tumultuous waves."
     },
     {
-      "type": "audio",
-      "file": "audio1.mp3",
+      "original_type": "audio",
+      "file": {
+        "original": "audio2.mp3"
+      },
       "title": "Ocean Sounds",
       "medium": "Field Recording",
       "description": "The calming sound of waves crashing on the shore.",
@@ -23,8 +29,10 @@
       "artsyAltText": "A soft, immersive blend of water caressing the sand, a lullaby from the ocean."
     },
     {
-      "type": "video",
-      "file": "video1.mp4",
+      "original_type": "video",
+      "file": {
+        "original": "video1.mp4"
+      },
       "title": "Wave Motion",
       "medium": "Video",
       "description": "Slow-motion video of waves crashing on rocks.",

@@ -42,11 +42,14 @@
         background-color: transparent;
 
         .art-content {
+            border-top: solid 2px $accent-color;
+            padding-top: 2rem;
             display: flex;
-            justify-content: center;
+            justify-content: space-evenly;
             align-items: center;
             flex: 1;
             max-width: 50%;
+            flex-direction: column;
 
             img,
             audio,
@@ -63,9 +66,16 @@
                 height: 2.5rem;
                 margin-top: 0.625rem;
             }
+
+            h4{
+                margin: 2rem 0;
+                color: $accent-color;
+            }
         }
 
         .art-description {
+            border-top: solid 2px $accent-color;
+            padding-top: 2rem;
             flex: 1;
             display: flex;
             flex-direction: column;
