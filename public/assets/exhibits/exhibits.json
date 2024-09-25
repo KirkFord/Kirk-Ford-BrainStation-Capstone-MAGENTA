@@ -1,43 +1,62 @@
 {
   "id": "exhibit-1",
   "name": "Abstract Visions",
-  "artist": "Jane Doe",
-  "artistStatement": "An exploration of abstract forms in nature...",
+  "artist": "Arranged Nonspace",
+  "artistStatement": "An exploration of abstract forms in the digital space.",
   "artworks": [
     {
+      "title": "Banded Sky",
+      "description": "A visual exploration of layered skies over time.",
+      "medium": "Photography, Digital Camera",
+      "altText": "A banded sky with various shades of blue and orange layered on top of each other.",
+      "artsyAltText": "The sky seems to unfold like pages in a book, each layer more vibrant than the last.",
       "original_type": "image",
-      "transformed_type": "audio",
-      "file": {
-        "original": "image1.jpg",
-        "transformed": "audio1.mp3"
-      },
-      "title": "Sunset Over Waves",
-      "medium": "Oil on Canvas",
-      "description": "A vibrant representation of a sunset over the ocean.",
-      "altText": "An orange and red sunset over waves crashing on a shore.",
-      "artsyAltText": "A dramatic and fiery expression of the sun’s final moments over the ocean’s tumultuous waves."
+      "files": [
+        "banded-sky-1.jpg",
+        "banded-sky-2.jpg",
+        "banded-sky-3.jpg",
+        "banded-sky-4.jpg"
+      ]
     },
     {
-      "original_type": "audio",
-      "file": {
-        "original": "audio2.mp3"
-      },
-      "title": "Ocean Sounds",
-      "medium": "Field Recording",
-      "description": "The calming sound of waves crashing on the shore.",
-      "altText": "Audio of gentle ocean waves.",
-      "artsyAltText": "A soft, immersive blend of water caressing the sand, a lullaby from the ocean."
-    },
-    {
+      "title": "Randomization",
+      "description": "An experiment in controlled chaos through audio-visuals.",
+      "medium": "Digital Video, Custom Algorithm",
+      "altText": "A random shifting of colors and shapes in a chaotic dance.",
+      "artsyAltText": "Chaos organizes itself into an unexpected symphony of colors and motion.",
       "original_type": "video",
-      "file": {
-        "original": "video1.mp4"
-      },
-      "title": "Wave Motion",
-      "medium": "Video",
-      "description": "Slow-motion video of waves crashing on rocks.",
-      "altText": "A video showing waves crashing on rocks in slow motion.",
-      "artsyAltText": "A surreal, fluid dance of water embracing stone, frozen in time."
+      "files": [
+        "cascade.mp4",
+        "high-noise-factor.mp4"
+      ]
+    },
+    {
+      "title": "Text Rain",
+      "description": "The Full Text of Frankenstein by Mary Shelley rains down from the top of the screen.",
+      "medium": "P5.js",
+      "altText": "The Full Text of Frankenstein by Mary Shelley rains down from the top of the screen.",
+      "artsyAltText": "An alternative way to envision the text of a book as words rain down from the top of the screen. Each word comes in an unexpected place.",
+      "original_type": "video",
+      "files": [
+        "text-rain.mp4"
+      ]
+    },
+    {
+      "title": "Arranged Soundspace",
+      "description": "3D renders over a reflective plane. The shapes and size of the shapes is determined by audio inputs.",
+      "medium": "OpenFrameworks",
+      "altText": "A mess of sharp-angled geometries hovers slightly above a reflective surface.",
+      "artsyAltText": "Pulsing and pounding with the changes in ambient noise, a sharp shape shifts and shimmers above a sleek surface. Skies from other worlds lie beyond.",
+      "original_type": "image",
+      "files": [
+        "arranged-soundspace-1.jpg",
+        "arranged-soundspace-2.jpg",
+        "arranged-soundspace-3.jpg",
+        "arranged-soundspace-4.jpg",
+        "arranged-soundspace-5.jpg",
+        "arranged-soundspace-6.jpg",
+        "arranged-soundspace-7.jpg"
+      ]
     }
   ]
 }

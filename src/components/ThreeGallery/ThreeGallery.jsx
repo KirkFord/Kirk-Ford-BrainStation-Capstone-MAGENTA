@@ -81,60 +81,57 @@ const GalleryModel = ({ setHoveredArt, exhibitsData }) => {
   useEffect(() => {
     if (loadedTextures.length === 0) return;
 
-    let artworkIndex = 0;
-    let appliedArtworkCount = 0; // Track how many artworks have been applied
-    const frameNamePrefix = "painting_frame"; // Assuming frames have some unique names
+    const placeholderTexture = new TextureLoader().load('/assets/placeholder.jpg');
+    placeholderTexture.wrapS = placeholderTexture.wrapT = ClampToEdgeWrapping;
+    placeholderTexture.repeat.set(1, 1); // Prevent scaling issues
 
-    requestAnimationFrame(() => {
-      console.log('Applying textures to the scene objects...');
-      scene.traverse((child) => {
-        if (!child.isMesh) return;
+    console.log("Loaded textures:", loadedTextures);
+    console.log("Scene objects:", scene);
 
-        // Detect specific frames by matching their name or other unique identifiers
-        if (child.name.startsWith(frameNamePrefix) || child.name.includes('painting')) {
-          console.log(`Found a painting frame: ${child.name}`);
+    // Apply the textures to corresponding frames (frame_1 to frame_18)
+    scene.traverse((child) => {
+      if (!child.isMesh) return;
 
-          const artwork = exhibitsData.artworks[artworkIndex];
-          const artworkTexture = loadedTextures[artworkIndex];
+      // Extract frame index from name
+      const frameIndexMatch = child.name.match(/frame_(\d+)/);
+      if (frameIndexMatch) {
+        const frameIndex = parseInt(frameIndexMatch[1], 10) - 1; // Adjust for 0-based indexing
 
-          // Apply texture to each frame once and skip subsequent frames
-          if (artwork && artworkTexture && appliedArtworkCount === 0) {
+        console.log(`Processing frame: ${child.name}, expected artwork index: ${frameIndex}`);
+
+        // Check if the frame index corresponds to an artwork
+        if (frameIndex >= 0 && frameIndex < exhibitsData.artworks.length) {
+          const artwork = exhibitsData.artworks[frameIndex];
+          const artworkTexture = loadedTextures[frameIndex];
+
+          if (artwork && artworkTexture) {
+            console.log(`Applying texture for artwork: ${artwork.title}, to frame: ${child.name}`);
+
             if (artwork.original_type === 'image') {
-              console.log(`Processing image artwork for index ${artworkIndex}, Title: ${artwork.title}`);
-
-              // Create a canvas for drawing the image
-              const canvas = document.createElement('canvas');
-              const context = canvas.getContext('2d');
-
-              canvas.width = artworkTexture.image.width;
-              canvas.height = artworkTexture.image.height;
-              context.drawImage(artworkTexture.image, 0, 0, canvas.width, canvas.height);
-
-              // Create a new texture from the canvas and apply it to the mesh
-              const updatedTexture = new CanvasTexture(canvas);
-              updatedTexture.needsUpdate = true;
-
-              // Apply texture mapping
-              updatedTexture.wrapS = updatedTexture.wrapT = ClampToEdgeWrapping;
-              updatedTexture.repeat.set(1, 1);
-              updatedTexture.offset.set(0, 0);
-
-              child.material.map = updatedTexture;
-              child.material.needsUpdate = true;
-
-              console.log(`Texture successfully applied to ${child.name} for artwork ${artwork.title}`);
-              appliedArtworkCount++; // Increment applied artwork count to ensure it's applied once
-              artworkIndex++;
-            } else if (artwork.original_type === 'video') {
-              console.log(`Applying video texture for artwork: ${artwork.title}`);
+              artworkTexture.wrapS = artworkTexture.wrapT = ClampToEdgeWrapping;
+              artworkTexture.repeat.set(1, 1); // Prevents the texture from repeating
               child.material.map = artworkTexture;
               child.material.needsUpdate = true;
-              appliedArtworkCount++;
-              artworkIndex++;
+            } else if (artwork.original_type === 'video') {
+              console.log(`Applying video texture to ${child.name} for artwork ${artwork.title}`);
+              artworkTexture.repeat.set(1, 1); // Prevents video from repeating across multiple frames
+              artworkTexture.offset.set(0, 0);
+              child.material.map = artworkTexture;
+              child.material.needsUpdate = true;
             }
+          } else {
+            console.warn(`No texture found for frame ${child.name} with expected artwork ${artwork?.title || 'unknown'}`);
+            // Apply the placeholder texture if no valid artwork texture is found
+            child.material.map = placeholderTexture;
+            child.material.needsUpdate = true;
           }
+        } else {
+          console.warn(`No artwork for frame ${child.name}, applying placeholder.`);
+          // Apply the placeholder texture for any extra frames
+          child.material.map = placeholderTexture;
+          child.material.needsUpdate = true;
         }
-      });
+      }
     });
   }, [scene, loadedTextures]);
 
@@ -169,6 +166,13 @@ const GalleryModel = ({ setHoveredArt, exhibitsData }) => {
     </>
   );
 };
+
+
+
+
+
+
+
 
 
 

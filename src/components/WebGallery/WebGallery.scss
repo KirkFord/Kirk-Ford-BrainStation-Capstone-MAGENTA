@@ -27,6 +27,7 @@
     }
 
     .gallery-artpieces {
+
         margin: 2.5rem;
         display: flex;
         flex-direction: column;
@@ -34,53 +35,56 @@
     }
 
     .artpiece {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 1.875rem;
+        
         padding: 1.25rem;
         background-color: transparent;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+        gap: 2rem; /* Adjust gap between items */
 
         .art-content {
+            padding-top: 3rem;
             border-top: solid 2px $accent-color;
-            padding-top: 2rem;
-            display: flex;
-            justify-content: space-evenly;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Grid layout for media */
+            justify-items: center;
             align-items: center;
-            flex: 1;
-            max-width: 50%;
-            flex-direction: column;
+            gap: 2rem; /* Gap between media */
+            box-sizing: border-box; /* Ensure border does not affect grid layout */
+
 
             img,
-            audio,
             video {
-                max-width: 100%;
+                width: 300px; /* Thumbnail size */
                 height: auto;
-                border-radius: 0.5rem;
+                cursor: pointer;
+                // border-radius: 0.5rem;
                 box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
             }
 
-            audio {
-                width: 50%;
-                min-width: 18.75rem;
-                height: 2.5rem;
-                margin-top: 0.625rem;
-            }
-
-            h4{
-                margin: 2rem 0;
-                color: $accent-color;
+            img.enlarged,
+            video.enlarged {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%); /* Enlarged media */
+                z-index: 1000;
+                width: auto; /* Original full size */
+                max-width: 90%; /* Make sure it doesn't overflow screen */
+                max-height: 90%;
+                box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
             }
         }
 
         .art-description {
             border-top: solid 2px $accent-color;
-            padding-top: 2rem;
-            flex: 1;
+            padding-top: 1rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            max-width: 50%;
+            box-sizing: border-box; /* Ensure border does not affect layout */
+
 
             h3 {
                 margin-bottom: 0.625rem;
@@ -101,15 +105,4 @@
             }
         }
     }
-
-    // @include tablet {
-    //     .artpiece {
-    //         flex-direction: column;
-    //     }
-
-    //     .art-content,
-    //     .art-description {
-    //         max-width: 100%;
-    //     }
-    // }
 }

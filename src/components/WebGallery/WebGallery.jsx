@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Header/Header'; // Assuming you have a Header component
-import Footer from '../Footer/Footer'; // Assuming you have a Footer component
+import Header from '../Header/Header'; 
+import Footer from '../Footer/Footer'; 
 import './WebGallery.scss';
 import { useCursor } from '../../scripts/UseCursor';
-
 
 const WebGallery = () => {
     useCursor();
     const [exhibit, setExhibit] = useState(null);
+    const [enlargedMedia, setEnlargedMedia] = useState(null); // Track enlarged media (images/videos)
 
     useEffect(() => {
         fetch('/assets/exhibits/exhibits.json')
             .then((response) => response.json())
-            .then((data) => setExhibit(data));
+            .then((data) => {
+                console.log(data); // Debugging
+                setExhibit(data);
+            });
     }, []);
+
+    const handleMediaClick = (mediaSrc) => {
+        if (enlargedMedia === mediaSrc) {
+            setEnlargedMedia(null); // If already enlarged, shrink it
+        } else {
+            setEnlargedMedia(mediaSrc); // Enlarge the clicked media
+        }
+    };
 
     if (!exhibit) return <div>Loading...</div>;
 
@@ -30,46 +41,34 @@ const WebGallery = () => {
                 {exhibit.artworks.map((artwork, index) => (
                     <div key={index} className="artpiece" role="listitem">
                         <div className="art-content">
-                            {/* Display the original media */}
-                            {artwork.original_type === 'image' && (
-                                <img src={`/assets/exhibits/${exhibit.id}/${artwork.file.original}`} alt={artwork.altText} />
-                            )}
-                            {artwork.original_type === 'audio' && (
-                                <audio controls aria-label={`Audio artwork: ${artwork.title}`}>
-                                    <source src={`/assets/exhibits/${exhibit.id}/${artwork.file.original}`} type="audio/mpeg" />
-                                </audio>
-                            )}
-                            {artwork.original_type === 'video' && (
-                                <video controls aria-label={`Video artwork: ${artwork.title}`}>
-                                    <source src={`/assets/exhibits/${exhibit.id}/${artwork.file.original}`} type="video/mp4" />
-                                </video>
-                            )}
-
-                            {/* Display the transformed media if it exists */}
-                            {artwork.transformed_type && (
-                                <>
-                                    <h4>Accessible Transformation:</h4>
-                                    {artwork.transformed_type === 'image' && (
-                                        <img src={`/assets/exhibits/${exhibit.id}/${artwork.file.transformed}`} alt={artwork.altText} />
+                            {/* Handle media display */}
+                            {artwork.files.map((file, idx) => (
+                                <React.Fragment key={idx}>
+                                    {artwork.original_type === 'image' && (
+                                        <img 
+                                            src={`/assets/exhibits/${exhibit.id}/${file}`} 
+                                            alt={artwork.altText} 
+                                            className={enlargedMedia === `/assets/exhibits/${exhibit.id}/${file}` ? 'enlarged' : ''}
+                                            onClick={() => handleMediaClick(`/assets/exhibits/${exhibit.id}/${file}`)}
+                                        />
                                     )}
-                                    {artwork.transformed_type === 'audio' && (
-                                        <audio controls aria-label={`Transformed audio artwork: ${artwork.title}`}>
-                                            <source src={`/assets/exhibits/${exhibit.id}/${artwork.file.transformed}`} type="audio/mpeg" />
-                                        </audio>
-                                    )}
-                                    {artwork.transformed_type === 'video' && (
-                                        <video controls aria-label={`Transformed video artwork: ${artwork.title}`}>
-                                            <source src={`/assets/exhibits/${exhibit.id}/${artwork.file.transformed}`} type="video/mp4" />
+                                    {artwork.original_type === 'video' && (
+                                        <video 
+                                            controls 
+                                            aria-label={`Video artwork: ${artwork.title}`}
+                                            className={enlargedMedia === `/assets/exhibits/${exhibit.id}/${file}` ? 'enlarged' : ''}
+                                            onClick={() => handleMediaClick(`/assets/exhibits/${exhibit.id}/${file}`)}
+                                        >
+                                            <source src={`/assets/exhibits/${exhibit.id}/${file}`} type="video/mp4" />
                                         </video>
                                     )}
-                                </>
-                            )}
+                                </React.Fragment>
+                            ))}
                         </div>
 
                         <div className="art-description">
                             <h3>{artwork.title}</h3>
-                            {/* Conditionally display "Medium/Tools/Transformation Process" if transformed_type exists */}
-                            <p><strong>{artwork.transformed_type ? 'Medium/Tools/Transformation Process' : 'Medium/Tools'}:</strong> {artwork.medium}</p>
+                            <p><strong>Medium/Tools:</strong> {artwork.medium}</p>
                             <p><strong>Description:</strong> {artwork.description}</p>
                             <p><strong>Literal Description:</strong> {artwork.altText}</p>
                             <p><strong>Artist's Description:</strong> {artwork.artsyAltText}</p>
