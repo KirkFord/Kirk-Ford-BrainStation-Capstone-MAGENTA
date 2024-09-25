@@ -1,5 +1,5 @@
 import React from 'react';
-import './Tooltip.scss';
+import './ToolTip.scss';
 
 const Tooltip = ({ hoveredArt }) => {
     if (!hoveredArt) return null;
