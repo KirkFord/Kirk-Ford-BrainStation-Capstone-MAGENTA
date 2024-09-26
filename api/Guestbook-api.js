@@ -24,6 +24,9 @@ export default async function handler(req, res) {
                 await kv.set(`guestbook_${userToken}`, { text, drawing, timestamp });
 
                 console.log(`Guestbook entry saved with ID: ${entryId}`);
+
+                res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate');
+
                 return res.status(201).json({ message: 'Guestbook entry saved.', entryId });
             } catch (error) {
                 console.error('Error saving guestbook entry:', error);
@@ -40,7 +43,7 @@ export default async function handler(req, res) {
                         return { id: key, ...entry };
                     })
                 );
-                entries.sort((a, b) => b.timestamp - a.timestamp);
+                // entries.sort((a, b) => b.timestamp - a.timestamp);
 
                 res.setHeader('Cache-Control', 'no-store');
                 console.log('Fetched guestbook entries:', entries);
