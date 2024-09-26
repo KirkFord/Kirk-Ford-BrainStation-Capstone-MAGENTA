@@ -40,6 +40,7 @@ export default async function handler(req, res) {
                         return { id: key, ...entry };
                     })
                 );
+                res.setHeader('Cache-Control', 'no-store');
                 console.log('Fetched guestbook entries:', entries);
                 return res.status(200).json({ entries });
             } catch (error) {
