@@ -40,6 +40,8 @@ export default async function handler(req, res) {
                         return { id: key, ...entry };
                     })
                 );
+                entries.sort((a, b) => b.timestamp - a.timestamp);
+
                 res.setHeader('Cache-Control', 'no-store');
                 console.log('Fetched guestbook entries:', entries);
                 return res.status(200).json({ entries });
