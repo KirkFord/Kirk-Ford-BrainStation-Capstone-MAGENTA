@@ -25,16 +25,24 @@ const AccessibilityModal = ({ isOpen, closeModal, settings, setSettings }) => {
     const applySettings = (settings) => {
         // Mouse and Effects
         document.body.style.cursor = settings.cursorOn ? 'default' : 'none';
-        document.body.classList.toggle('disable-animations', settings.animationsDisabled); // Updated
+        document.body.classList.toggle('disable-animations', settings.animationsDisabled);
+
+        // Handle cursor animation visibility
+        const pointer1 = document.getElementById('g-pointer-1');
+        const pointer2 = document.getElementById('g-pointer-2');
+        if (pointer1 && pointer2) {
+            pointer1.style.display = settings.cursorAnimationOn ? 'block' : 'none';
+            pointer2.style.display = settings.cursorAnimationOn ? 'block' : 'none';
+        }
 
         // Apply fontSize globally
         const defaultFontSize = 16;
         const newFontSize = settings.fontSize ? settings.fontSize / 10 : defaultFontSize;
         document.documentElement.style.fontSize = `${newFontSize}px`;
 
-        // Screen Reader Hints (Remove aria-hidden on <body>)
+        // Screen Reader Hints
         const screenReaderElements = document.querySelectorAll('[data-screen-reader-hints]');
-        screenReaderElements.forEach(el => el.setAttribute('aria-hidden', settings.screenReaderHints ? 'false' : 'true')); // Apply aria-hidden selectively
+        screenReaderElements.forEach(el => el.setAttribute('aria-hidden', settings.screenReaderHints ? 'false' : 'true'));
 
         // Simplified Mode
         document.body.classList.toggle('simplified-mode', settings.simplifiedMode);
@@ -129,6 +137,12 @@ const AccessibilityModal = ({ isOpen, closeModal, settings, setSettings }) => {
                             aria-label="Toggle Animations"
                         >
                             {settings.animationsDisabled ? 'Enable Animations' : 'Disable Animations'}
+                        </button>
+                        <button
+                            onClick={() => handleSettingChange(() => setSettings((prev) => ({ ...prev, cursorAnimationOn: !settings.cursorAnimationOn })))}
+                            aria-label="Toggle Cursor Animation"
+                        >
+                            {settings.cursorAnimationOn ? 'Turn Cursor Animation Off' : 'Turn Cursor Animation On'}
                         </button>
                     </section>
 

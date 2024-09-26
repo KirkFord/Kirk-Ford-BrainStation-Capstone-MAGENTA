@@ -1,157 +1,101 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { PointerLockControls, useGLTF } from '@react-three/drei'; // Import useGLTF from drei
+import { PointerLockControls, useGLTF } from '@react-three/drei';
 import { Physics, usePlane } from '@react-three/cannon';
-import { PositionalAudio, VideoTexture, TextureLoader, CanvasTexture, AudioListener, ClampToEdgeWrapping } from 'three';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import Tooltip from '../ToolTip/ToolTip';
 import './ThreeGallery.scss';
 
-const GalleryModel = ({ setHoveredArt, exhibitsData }) => {
-  const { scene } = useGLTF('/assets/models/scene.gltf'); // Load the GLTF gallery model
-  const [loadedTextures, setLoadedTextures] = useState([]);
-  const listenerRef = useRef(null); // Ref for AudioListener
-  const [userInteracted, setUserInteracted] = useState(false); // Track if user interacted
+const GalleryModel = ({ setHoveredArt, exhibitsData, setTooltipPosition }) => {
+  const { scene } = useGLTF('/assets/models/magenta.gltf');
+  const raycasterRef = useRef(new THREE.Raycaster());
+  const { camera, mouse } = useThree();
+  const previousHoveredRef = useRef(null);
 
-  useEffect(() => {
-    console.log('Loaded exhibitsData:', exhibitsData);
+  useFrame(() => {
+    if (!scene || !exhibitsData) return;
 
-    // Load image, audio, and video textures for artworks
-    const textures = exhibitsData.artworks.map((artwork, index) => {
-      if (artwork?.original_type === 'image') {
-        return new Promise((resolve) => {
-          const loader = new TextureLoader();
-          loader.load(
-            `/assets/exhibits/exhibit-1/${artwork.files.original[0]}`, // Use the first image as texture
-            (texture) => {
-              console.log(`Loaded image texture for artwork: ${artwork.files.original[0]}`);
-              resolve(texture);
-            },
-            undefined,
-            (err) => {
-              console.error(`Error loading image texture for artwork at index ${index}:`, err);
-              resolve(null);
-            }
-          );
-        });
-      } else if (artwork?.original_type === 'video') {
-        const video = document.createElement('video');
-        video.src = `/assets/exhibits/exhibit-1/${artwork.files.original[0]}`; // Use the first video
-        video.loop = true;
-        video.muted = true;
-        video.setAttribute('playsinline', true);
+    raycasterRef.current.setFromCamera(mouse, camera);
+    const intersects = raycasterRef.current.intersectObjects(scene.children, true);
 
-        const videoTexture = new VideoTexture(video);
-        videoTexture.wrapS = videoTexture.wrapT = ClampToEdgeWrapping;
+    if (intersects.length > 0) {
+      const hoveredObject = intersects[0].object;
+      // console.log('Raycasting hit:', hoveredObject.name);
 
-        // Wait for user interaction to play the video
-        video.play().catch(() => {
-          console.warn(`Video play failed; waiting for user interaction.`);
+      if (hoveredObject.name.startsWith('frame_') && hoveredObject.material && hoveredObject.material.map) {
+        // console.log('Material map found on frame:', hoveredObject.name);
+
+        const textureName = hoveredObject.material.map.name || '';
+        // console.log('Texture name:', textureName);
+
+        const hoveredArtwork = exhibitsData.artworks.find((artwork) => {
+          return artwork.files.original.some((file) => {
+            const baseFileName = file.split('.')[0];
+            return textureName.startsWith(baseFileName);
+          });
         });
 
-        return videoTexture;
-      }
-      return null;
-    });
+        if (hoveredArtwork) {
+          // console.log('Matched hovered artwork:', hoveredArtwork);
 
-    // Wait for all textures to load and then store them in state
-    Promise.all(textures).then((loadedTextures) => {
-      console.log("All textures loaded:", loadedTextures);
-      setLoadedTextures(loadedTextures);
-    });
-  }, [exhibitsData, userInteracted]);
+          // Set hovered artwork details to state
+          setHoveredArt({
+            title: hoveredArtwork.title,
+            description: hoveredArtwork.description,
+            medium: hoveredArtwork.medium,
+            altText: hoveredArtwork.altText,
+            artsyAltText: hoveredArtwork.artsyAltText,
+          });
 
-  useEffect(() => {
-    if (loadedTextures.length === 0) return;
+          const canvasRect = document.querySelector('canvas').getBoundingClientRect();
+          setTooltipPosition({
+            left: `${mouse.x * canvasRect.width / 2 + canvasRect.width / 2}px`,
+            top: `${-mouse.y * canvasRect.height / 2 + canvasRect.height / 2}px`,
+          });
 
-    const placeholderTexture = new TextureLoader().load('/assets/placeholder.jpg');
-    placeholderTexture.wrapS = placeholderTexture.wrapT = ClampToEdgeWrapping;
-    placeholderTexture.repeat.set(1, 1);
-
-    console.log("Loaded textures:", loadedTextures);
-    console.log("Scene objects:", scene);
-
-    // Apply the textures to corresponding frames
-    scene.traverse((child) => {
-      if (!child.isMesh) return;
-
-      const frameIndexMatch = child.name.match(/frame_(\d+)/);
-      if (frameIndexMatch) {
-        const frameIndex = parseInt(frameIndexMatch[1], 10) - 1; // Frame index adjustment
-
-        console.log(`Processing frame: ${child.name}, expected artwork index: ${frameIndex}`);
-
-        // Only apply textures if the frame index is within the artworks range
-        if (frameIndex >= 0 && frameIndex < exhibitsData.artworks.length) {
-          const artwork = exhibitsData.artworks[frameIndex];
-          const artworkTexture = loadedTextures[frameIndex];
-
-          if (artwork && artworkTexture) {
-            console.log(`Applying texture for artwork: ${artwork.title}, to frame: ${child.name}`);
-
-            if (artwork.original_type === 'image') {
-              artworkTexture.wrapS = artworkTexture.wrapT = ClampToEdgeWrapping;
-              child.material.map = artworkTexture;
-              child.material.needsUpdate = true;
-            } else if (artwork.original_type === 'video') {
-              child.material.map = artworkTexture;
-              child.material.needsUpdate = true;
-            }
-          }
+          // if (previousHoveredRef.current) {
+          //   previousHoveredRef.current.material.color.set(0xffffff);
+          // }
+          // hoveredObject.material.color.set(0xff0000);
+          previousHoveredRef.current = hoveredObject;
         } else {
-          // Apply placeholder texture for frames that don't have corresponding artworks
-          console.warn(`No artwork for frame ${child.name}, applying placeholder.`);
-          child.material.map = placeholderTexture;
-          child.material.needsUpdate = true;
+          setHoveredArt(null);
         }
+      } else {
+        setHoveredArt(null);
       }
-    });
-  }, [scene, loadedTextures]);
+    } else {
+      setHoveredArt(null);
+    }
+  });
 
-  // Handle resuming the AudioContext after user gesture
-  useEffect(() => {
-    const handleUserGesture = () => {
-      setUserInteracted(true);
-
-      if (!listenerRef.current) {
-        listenerRef.current = new AudioListener();
-      }
-
-      if (listenerRef.current.context.state !== 'running') {
-        listenerRef.current.context.resume().then(() => {
-          console.log('AudioContext resumed after user interaction.');
-        });
-      }
-    };
-
-    window.addEventListener('click', handleUserGesture);
-
-    return () => {
-      window.removeEventListener('click', handleUserGesture);
-    };
-  }, []);
-
-  return (
-    <>
-      <primitive object={scene} />
-      {listenerRef.current && <primitive object={listenerRef.current} />}
-    </>
-  );
+  return <primitive object={scene} />;
 };
 
+const Tooltip = ({ artwork, position = { top: '0px', left: '0px' } }) => {
+  if (!artwork) return null;
+  // console.log('Rendering tooltip with artwork:', artwork); // Log to ensure it's rendering
 
-
-
-
-
-
-
-
-
-
-
+  return (
+    <div
+      className="tooltip"
+      style={{
+        top: position.top,
+        left: position.left,
+        position: 'absolute',
+        zIndex: 10000, // Updated z-index
+        pointerEvents: 'none',
+      }}
+    >
+      <h3>{artwork.title}</h3>
+      <p><strong>Medium/Tools/Transformative Process:</strong> {artwork.medium}</p>
+      <p><strong>Description:</strong> {artwork.description}</p>
+      <p><strong>Literal Description:</strong> {artwork.altText}</p>
+      <p><strong>Artist's Description:</strong> {artwork.artsyAltText}</p>
+    </div>
+  );
+};
 
 const Floor = () => {
   const [ref] = usePlane(() => ({
@@ -168,7 +112,7 @@ const Floor = () => {
 
 const PlayerMovement = () => {
   const { camera } = useThree();
-  camera.position.y = 2; // Set initial y position
+  camera.position.y = 2;
 
   const [movement, setMovement] = useState({
     forward: false,
@@ -177,9 +121,6 @@ const PlayerMovement = () => {
     right: false,
     canJump: false,
   });
-
-  const velocity = new THREE.Vector3();
-  const direction = new THREE.Vector3();
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -201,7 +142,6 @@ const PlayerMovement = () => {
           setMovement((prev) => ({ ...prev, right: true }));
           break;
         case 'Space':
-          if (movement.canJump) velocity.y += 350;
           setMovement((prev) => ({ ...prev, canJump: false }));
           break;
       }
@@ -238,30 +178,25 @@ const PlayerMovement = () => {
   }, [movement]);
 
   useFrame((_, delta) => {
-    // Create a forward vector based on the camera's direction but only in the XZ plane (ignores Y-axis)
     const forwardVector = new THREE.Vector3();
     camera.getWorldDirection(forwardVector);
-    forwardVector.y = 0; // Zero out the y component to lock vertical movement
+    forwardVector.y = 0;
     forwardVector.normalize();
 
-    // Create a side vector (left/right movement) only in the XZ plane
     const sideVector = new THREE.Vector3();
-    sideVector.crossVectors(forwardVector, camera.up).normalize(); // Cross product to get side vector
+    sideVector.crossVectors(forwardVector, camera.up).normalize();
 
-    // Handle forward/backward movement along the horizontal plane
     if (movement.forward || movement.backward) {
-      const moveZ = movement.forward ? 1 : -1; // 1 for forward, -1 for backward
-      camera.position.add(forwardVector.multiplyScalar(moveZ * delta * 5)); // Adjust speed here
+      const moveZ = movement.forward ? 1 : -1;
+      camera.position.add(forwardVector.multiplyScalar(moveZ * delta * 5));
     }
 
-    // Handle left/right movement along the horizontal plane
     if (movement.left || movement.right) {
-      const moveX = movement.left ? -1 : 1; // Correct the direction: -1 for left, 1 for right
-      camera.position.add(sideVector.multiplyScalar(moveX * delta * 5)); // Adjust speed here
+      const moveX = movement.left ? -1 : 1;
+      camera.position.add(sideVector.multiplyScalar(moveX * delta * 5));
     }
 
-    // Lock the y position to 2 to prevent falling below or rising above a fixed height
-    camera.position.y = 2; // You can adjust this height if needed
+    camera.position.y = 2;
   });
 
   return null;
@@ -269,6 +204,7 @@ const PlayerMovement = () => {
 
 const ThreeGalleryCanvas = ({ hideBlocker }) => {
   const [hoveredArt, setHoveredArt] = useState(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ top: '0px', left: '0px' });
   const [exhibitsData, setExhibitsData] = useState(null);
   const controlsRef = useRef();
 
@@ -278,45 +214,53 @@ const ThreeGalleryCanvas = ({ hideBlocker }) => {
       .then((data) => setExhibitsData(data));
   }, []);
 
+  // useEffect(() => {
+  //   console.log(hoveredArt ? 'Hovered artwork data:' : 'No artwork hovered', hoveredArt);
+  //   console.log('Tooltip position:', tooltipPosition);
+  // }, [hoveredArt, tooltipPosition]);
+
   if (!exhibitsData) return <div>Loading...</div>;
 
   return (
-    <Canvas
-      onClick={() => hideBlocker()} // Hide blocker when Canvas is clicked
-      style={{ pointerEvents: hideBlocker ? 'auto' : 'none' }} // Disable pointer events when blocker is visible
-    >
-      <PointerLockControls ref={controlsRef} />
-      <ambientLight intensity={1.0} />
-      <Physics>
-        <GalleryModel setHoveredArt={setHoveredArt} exhibitsData={exhibitsData} />
-        <PlayerMovement />
-        <Floor />
-      </Physics>
-    </Canvas>
+    <>
+      <Canvas onClick={() => hideBlocker()} style={{ pointerEvents: hideBlocker ? 'auto' : 'none' }}>
+        <PointerLockControls ref={controlsRef} />
+        <ambientLight intensity={1.0} />
+        <Physics>
+          <GalleryModel setHoveredArt={setHoveredArt} exhibitsData={exhibitsData} setTooltipPosition={setTooltipPosition} />
+          <PlayerMovement />
+          <Floor />
+        </Physics>
+      </Canvas>
+      {hoveredArt && <Tooltip artwork={hoveredArt} position={tooltipPosition} />}
+    </>
   );
 };
 
 const ThreeGallery = () => {
   const [blockerVisible, setBlockerVisible] = useState(true);
+  const [hoveredArt, setHoveredArt] = useState(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ top: '0px', left: '0px' });
 
   const hideBlocker = () => {
     setBlockerVisible(false);
   };
 
+  // useEffect(() => {
+  //   console.log('hoveredArt updated:', hoveredArt);
+  // }, [hoveredArt]);
+
   return (
     <div className="three-gallery-container">
       <Header />
       {blockerVisible && (
-        <div id="blocker" onClick={hideBlocker}> {/* Dismiss blocker on click */}
+        <div id="blocker" onClick={hideBlocker}>
           <div id="instructions">
             <p style={{ fontSize: '36px' }}>Click to play</p>
-            <p>Move: WASD<br />Jump: SPACE<br />Look: MOUSE</p>
+            <p>Move: WASD<br />Look: MOUSE<br />Lock Mouse: LEFT CLICK<br />Free Mouse: ESCAPE KEY</p>
           </div>
         </div>
       )}
-      <div className="tooltip-container">
-        <Tooltip />
-      </div>
       <div className="normal-render" style={{ backgroundColor: 'lightgray' }}>
         <ThreeGalleryCanvas hideBlocker={hideBlocker} />
       </div>
