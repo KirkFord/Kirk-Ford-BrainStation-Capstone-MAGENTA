@@ -27,7 +27,6 @@
     }
 
     .gallery-artpieces {
-
         margin: 2.5rem;
         display: flex;
         flex-direction: column;
@@ -35,7 +34,6 @@
     }
 
     .artpiece {
-        
         padding: 1.25rem;
         background-color: transparent;
         display: grid;
@@ -45,22 +43,32 @@
         .art-content {
             padding-top: 3rem;
             border-top: solid 2px $accent-color;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Grid layout for media */
-            justify-items: center;
-            align-items: center;
-            gap: 2rem; /* Gap between media */
-            box-sizing: border-box; /* Ensure border does not affect grid layout */
+            display: flex;
+            flex-direction: column;
+            
 
+            .media-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Dynamically fit columns */
+                justify-content: center; /* Center content */
+                gap: 2rem; /* Gap between media */
+                width: 100%;
+
+                /* For single item, force centering */
+                &.single-item {
+                    grid-template-columns: 1fr; /* Single column */
+                    justify-items: center; /* Center the single item horizontally */
+                }
+            }
 
             img,
             video {
                 width: 300px; /* Thumbnail size */
                 height: auto;
                 cursor: pointer;
-                // border-radius: 0.5rem;
                 box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
                 transition: transform 0.3s ease, box-shadow 0.3s ease;
+                justify-self: center;
             }
 
             img.enlarged,
@@ -75,6 +83,32 @@
                 max-height: 90%;
                 box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
             }
+
+            .transformation-section {
+                margin-top: 2rem;
+                text-align: center;
+
+                h4 {
+                    color: $neutral-light;
+                    margin-bottom: 1rem;
+                }
+
+                img,
+                video,
+                audio {
+                    width: 300px;
+                    height: auto;
+                    max-width: 100%;
+                    margin-top: 1rem;
+                    box-shadow: none;
+                    border: none;
+                }
+
+                audio {
+                    width: 300px;
+                    height: 32px; /* Explicitly set the height for the audio element */
+                }
+            }
         }
 
         .art-description {
@@ -84,7 +118,6 @@
             flex-direction: column;
             justify-content: center;
             box-sizing: border-box; /* Ensure border does not affect layout */
-
 
             h3 {
                 margin-bottom: 0.625rem;
@@ -100,7 +133,7 @@
 
                 strong {
                     font-weight: bold;
-                    color: $emerald-complement;
+                    color: $emerald-light;
                 }
             }
         }

@@ -11,12 +11,16 @@
       "altText": "A banded sky with various shades of blue and orange layered on top of each other.",
       "artsyAltText": "The sky seems to unfold like pages in a book, each layer more vibrant than the last.",
       "original_type": "image",
-      "files": [
-        "banded-sky-1.jpg",
-        "banded-sky-2.jpg",
-        "banded-sky-3.jpg",
-        "banded-sky-4.jpg"
-      ]
+      "transformed_type": "audio",
+      "files": {
+        "original": [
+          "banded-sky-1.jpg",
+          "banded-sky-2.jpg",
+          "banded-sky-3.jpg",
+          "banded-sky-4.jpg"
+        ],
+        "transformed": "audio1.mp3"
+      }
     },
     {
       "title": "Randomization",
@@ -25,10 +29,14 @@
       "altText": "A random shifting of colors and shapes in a chaotic dance.",
       "artsyAltText": "Chaos organizes itself into an unexpected symphony of colors and motion.",
       "original_type": "video",
-      "files": [
-        "cascade.mp4",
-        "high-noise-factor.mp4"
-      ]
+      "transformed_type": "audio",
+      "files": {
+        "original": [
+          "cascade.mp4",
+          "high-noise-factor.mp4"
+        ],
+        "transformed": "audio2.mp3"
+      }
     },
     {
       "title": "Text Rain",
@@ -37,9 +45,13 @@
       "altText": "The Full Text of Frankenstein by Mary Shelley rains down from the top of the screen.",
       "artsyAltText": "An alternative way to envision the text of a book as words rain down from the top of the screen. Each word comes in an unexpected place.",
       "original_type": "video",
-      "files": [
-        "text-rain.mp4"
-      ]
+      "transformed_type": "audio",
+      "files": {
+        "original": [
+          "text-rain.mp4"
+        ],
+        "transformed": "audio3.mp3"
+      }
     },
     {
       "title": "Arranged Soundspace",
@@ -48,15 +60,19 @@
       "altText": "A mess of sharp-angled geometries hovers slightly above a reflective surface.",
       "artsyAltText": "Pulsing and pounding with the changes in ambient noise, a sharp shape shifts and shimmers above a sleek surface. Skies from other worlds lie beyond.",
       "original_type": "image",
-      "files": [
-        "arranged-soundspace-1.jpg",
-        "arranged-soundspace-2.jpg",
-        "arranged-soundspace-3.jpg",
-        "arranged-soundspace-4.jpg",
-        "arranged-soundspace-5.jpg",
-        "arranged-soundspace-6.jpg",
-        "arranged-soundspace-7.jpg"
-      ]
+      "transformed_type": "audio",
+      "files": {
+        "original": [
+          "arranged-soundspace-1.jpg",
+          "arranged-soundspace-2.jpg",
+          "arranged-soundspace-3.jpg",
+          "arranged-soundspace-4.jpg",
+          "arranged-soundspace-5.jpg",
+          "arranged-soundspace-6.jpg",
+          "arranged-soundspace-7.jpg"
+        ],
+        "transformed": "audio4.mp3"
+      }
     }
   ]
 }
