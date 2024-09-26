@@ -24,9 +24,9 @@ const GalleryModel = ({ setHoveredArt, exhibitsData }) => {
         return new Promise((resolve) => {
           const loader = new TextureLoader();
           loader.load(
-            `/assets/exhibits/exhibit-1/${artwork.file.original}`,
+            `/assets/exhibits/exhibit-1/${artwork.files.original[0]}`, // Use the first image as texture
             (texture) => {
-              console.log(`Loaded image texture for artwork: ${artwork.file.original}`);
+              console.log(`Loaded image texture for artwork: ${artwork.files.original[0]}`);
               resolve(texture);
             },
             undefined,
@@ -38,10 +38,10 @@ const GalleryModel = ({ setHoveredArt, exhibitsData }) => {
         });
       } else if (artwork?.original_type === 'video') {
         const video = document.createElement('video');
-        video.src = `/assets/exhibits/exhibit-1/${artwork.file.original}`;
+        video.src = `/assets/exhibits/exhibit-1/${artwork.files.original[0]}`; // Use the first video
         video.loop = true;
         video.muted = true;
-        video.setAttribute('playsinline', true); // Ensures the video plays inline on mobile
+        video.setAttribute('playsinline', true);
 
         const videoTexture = new VideoTexture(video);
         videoTexture.wrapS = videoTexture.wrapT = ClampToEdgeWrapping;
@@ -52,21 +52,6 @@ const GalleryModel = ({ setHoveredArt, exhibitsData }) => {
         });
 
         return videoTexture;
-      } else if (artwork?.original_type === 'audio' && userInteracted) {
-        const audio = new Audio(`/assets/exhibits/exhibit-1/${artwork.file.original}`);
-        audio.loop = true;
-
-        // Create positional audio
-        const positionalAudio = new PositionalAudio(listenerRef.current); // Use ref for the listener
-        positionalAudio.setMediaElementSource(audio);
-        positionalAudio.setRefDistance(20); // Distance the audio starts fading
-
-        // Play audio after user interaction
-        audio.play().catch(() => {
-          console.warn(`Audio play failed; waiting for user interaction.`);
-        });
-
-        return positionalAudio;
       }
       return null;
     });
@@ -83,23 +68,22 @@ const GalleryModel = ({ setHoveredArt, exhibitsData }) => {
 
     const placeholderTexture = new TextureLoader().load('/assets/placeholder.jpg');
     placeholderTexture.wrapS = placeholderTexture.wrapT = ClampToEdgeWrapping;
-    placeholderTexture.repeat.set(1, 1); // Prevent scaling issues
+    placeholderTexture.repeat.set(1, 1);
 
     console.log("Loaded textures:", loadedTextures);
     console.log("Scene objects:", scene);
 
-    // Apply the textures to corresponding frames (frame_1 to frame_18)
+    // Apply the textures to corresponding frames
     scene.traverse((child) => {
       if (!child.isMesh) return;
 
-      // Extract frame index from name
       const frameIndexMatch = child.name.match(/frame_(\d+)/);
       if (frameIndexMatch) {
-        const frameIndex = parseInt(frameIndexMatch[1], 10) - 1; // Adjust for 0-based indexing
+        const frameIndex = parseInt(frameIndexMatch[1], 10) - 1; // Frame index adjustment
 
         console.log(`Processing frame: ${child.name}, expected artwork index: ${frameIndex}`);
 
-        // Check if the frame index corresponds to an artwork
+        // Only apply textures if the frame index is within the artworks range
         if (frameIndex >= 0 && frameIndex < exhibitsData.artworks.length) {
           const artwork = exhibitsData.artworks[frameIndex];
           const artworkTexture = loadedTextures[frameIndex];
@@ -109,25 +93,16 @@ const GalleryModel = ({ setHoveredArt, exhibitsData }) => {
 
             if (artwork.original_type === 'image') {
               artworkTexture.wrapS = artworkTexture.wrapT = ClampToEdgeWrapping;
-              artworkTexture.repeat.set(1, 1); // Prevents the texture from repeating
               child.material.map = artworkTexture;
               child.material.needsUpdate = true;
             } else if (artwork.original_type === 'video') {
-              console.log(`Applying video texture to ${child.name} for artwork ${artwork.title}`);
-              artworkTexture.repeat.set(1, 1); // Prevents video from repeating across multiple frames
-              artworkTexture.offset.set(0, 0);
               child.material.map = artworkTexture;
               child.material.needsUpdate = true;
             }
-          } else {
-            console.warn(`No texture found for frame ${child.name} with expected artwork ${artwork?.title || 'unknown'}`);
-            // Apply the placeholder texture if no valid artwork texture is found
-            child.material.map = placeholderTexture;
-            child.material.needsUpdate = true;
           }
         } else {
+          // Apply placeholder texture for frames that don't have corresponding artworks
           console.warn(`No artwork for frame ${child.name}, applying placeholder.`);
-          // Apply the placeholder texture for any extra frames
           child.material.map = placeholderTexture;
           child.material.needsUpdate = true;
         }
@@ -138,10 +113,10 @@ const GalleryModel = ({ setHoveredArt, exhibitsData }) => {
   // Handle resuming the AudioContext after user gesture
   useEffect(() => {
     const handleUserGesture = () => {
-      setUserInteracted(true); // Update state on user interaction
+      setUserInteracted(true);
 
       if (!listenerRef.current) {
-        listenerRef.current = new AudioListener(); // Create AudioListener after interaction
+        listenerRef.current = new AudioListener();
       }
 
       if (listenerRef.current.context.state !== 'running') {
@@ -151,7 +126,7 @@ const GalleryModel = ({ setHoveredArt, exhibitsData }) => {
       }
     };
 
-    window.addEventListener('click', handleUserGesture); // Ensure a user click resumes AudioContext
+    window.addEventListener('click', handleUserGesture);
 
     return () => {
       window.removeEventListener('click', handleUserGesture);
@@ -161,11 +136,11 @@ const GalleryModel = ({ setHoveredArt, exhibitsData }) => {
   return (
     <>
       <primitive object={scene} />
-      {/* Attach the listener after user gesture */}
       {listenerRef.current && <primitive object={listenerRef.current} />}
     </>
   );
 };
+
 
 
 

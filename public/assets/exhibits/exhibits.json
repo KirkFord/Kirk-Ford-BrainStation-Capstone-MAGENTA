@@ -1,8 +1,8 @@
 {
   "id": "exhibit-1",
-  "name": "Abstract Visions",
-  "artist": "Arranged Nonspace",
-  "artistStatement": "An exploration of abstract forms in the digital space.",
+  "name": "Pattern in the Process",
+  "artist": "Arranged Nonspace (He/Him)",
+  "artistStatement": "I am fascinated by the regularity in processes. Flocks, herds, boids, stampedes, and growth seem to operate in random patterns but in fact in the randomness there is knowledge and regularity. Where one expects nature to be unorganized, we instead find Chaos. Chaos isn't unorganized however, but is governed by unpredictable regularity. The various pieces in this exhibit are attempts to document and create these processes by various means. Algorithms like Perlin and Simplex noise can be used to simulate these processes, but we can also transform and measure what we experience in the world to find these beautiful patterns. I hope that these pieces stain your mind, and on your next evening walk you can take a moment to look at the abundance of mathematical joy in the world around you.",
   "artworks": [
     {
       "title": "Banded Sky",
