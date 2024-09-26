@@ -43,11 +43,11 @@ export default async function handler(req, res) {
                         return { id: key, ...entry };
                     })
                 );
-                // entries.sort((a, b) => b.timestamp - a.timestamp);
+                const sortedEntries = entries.sort((a, b) => b.timestamp - a.timestamp);
 
                 res.setHeader('Cache-Control', 'no-store');
-                console.log('Fetched guestbook entries:', entries);
-                return res.status(200).json({ entries });
+                console.log('Fetched guestbook entries:', sortedEntries);
+                return res.status(200).json({ entries: sortedEntries });
             } catch (error) {
                 console.error('Error fetching guestbook entries:', error);
                 return res.status(500).json({ error: 'Error fetching entries.' });

@@ -29,7 +29,7 @@ const Guestbook = () => {
         try {
             const response = await fetch('/api/Guestbook-api');
             const data = await response.json();
-            setEntries(data.entries.reverse());
+            setEntries(data.entries);
         } catch (error) {
             console.error('Error fetching guestbook entries:', error);
         }
