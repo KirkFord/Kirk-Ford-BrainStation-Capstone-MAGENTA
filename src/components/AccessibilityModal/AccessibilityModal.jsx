@@ -189,7 +189,7 @@ const AccessibilityModal = ({ isOpen, closeModal, settings, setSettings }) => {
                     <section>
                         <h3>Simplified Mode</h3>
                         <button
-                            onClick={() => handleSettingChange(() => setSettings((prev) => ({ ...prev, simplifiedMode: !settings.simplifiedMode })))}
+                            onClick={() => handleSettingChange(() => setSettings((prev) => ({ ...prev, simplifiedMode: !settings.simplifiedMode, cursorAnimationOn: !settings.cursorAnimationOn })))}
                             aria-label="Toggle Simplified Mode"
                         >
                             {settings.simplifiedMode ? 'Disable Simplified Mode' : 'Enable Simplified Mode'}
