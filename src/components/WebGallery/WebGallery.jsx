@@ -12,7 +12,6 @@ const WebGallery = () => {
         fetch('/assets/exhibits/exhibits.json')
             .then((response) => response.json())
             .then((data) => {
-                // console.log(data);
                 setExhibit(data);
             });
     }, []);

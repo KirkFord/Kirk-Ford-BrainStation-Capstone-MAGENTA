@@ -37,9 +37,6 @@ const GalleryModel = ({ setHoveredArt, exhibitsData, setTooltipPosition }) => {
         });
 
         if (hoveredArtwork) {
-          // console.log('Matched hovered artwork:', hoveredArtwork);
-
-          // Set hovered artwork details to state
           setHoveredArt({
             title: hoveredArtwork.title,
             description: hoveredArtwork.description,
@@ -54,10 +51,6 @@ const GalleryModel = ({ setHoveredArt, exhibitsData, setTooltipPosition }) => {
             top: `${-mouse.y * canvasRect.height / 2 + canvasRect.height / 2}px`,
           });
 
-          // if (previousHoveredRef.current) {
-          //   previousHoveredRef.current.material.color.set(0xffffff);
-          // }
-          // hoveredObject.material.color.set(0xff0000);
           previousHoveredRef.current = hoveredObject;
         } else {
           setHoveredArt(null);
@@ -75,7 +68,6 @@ const GalleryModel = ({ setHoveredArt, exhibitsData, setTooltipPosition }) => {
 
 const Tooltip = ({ artwork, position = { top: '0px', left: '0px' } }) => {
   if (!artwork) return null;
-  // console.log('Rendering tooltip with artwork:', artwork); // Log to ensure it's rendering
 
   return (
     <div
@@ -84,7 +76,7 @@ const Tooltip = ({ artwork, position = { top: '0px', left: '0px' } }) => {
         top: position.top,
         left: position.left,
         position: 'absolute',
-        zIndex: 10000, // Updated z-index
+        zIndex: 10000,
         pointerEvents: 'none',
       }}
     >
@@ -214,11 +206,6 @@ const ThreeGalleryCanvas = ({ hideBlocker }) => {
       .then((data) => setExhibitsData(data));
   }, []);
 
-  // useEffect(() => {
-  //   console.log(hoveredArt ? 'Hovered artwork data:' : 'No artwork hovered', hoveredArt);
-  //   console.log('Tooltip position:', tooltipPosition);
-  // }, [hoveredArt, tooltipPosition]);
-
   if (!exhibitsData) return <div>Loading...</div>;
 
   return (
@@ -245,10 +232,6 @@ const ThreeGallery = () => {
   const hideBlocker = () => {
     setBlockerVisible(false);
   };
-
-  // useEffect(() => {
-  //   console.log('hoveredArt updated:', hoveredArt);
-  // }, [hoveredArt]);
 
   return (
     <div className="three-gallery-container">
