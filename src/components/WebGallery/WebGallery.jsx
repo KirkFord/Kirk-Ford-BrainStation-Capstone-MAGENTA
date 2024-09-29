@@ -7,22 +7,21 @@ import { useCursor } from '../../scripts/UseCursor';
 const WebGallery = () => {
     useCursor();
     const [exhibit, setExhibit] = useState(null);
-    const [enlargedMedia, setEnlargedMedia] = useState(null); // Track enlarged media (images/videos)
-
+    const [enlargedMedia, setEnlargedMedia] = useState(null);
     useEffect(() => {
         fetch('/assets/exhibits/exhibits.json')
             .then((response) => response.json())
             .then((data) => {
-                console.log(data); // Debugging
+                // console.log(data);
                 setExhibit(data);
             });
     }, []);
 
     const handleMediaClick = (mediaSrc) => {
         if (enlargedMedia === mediaSrc) {
-            setEnlargedMedia(null); // If already enlarged, shrink it
+            setEnlargedMedia(null); 
         } else {
-            setEnlargedMedia(mediaSrc); // Enlarge the clicked media
+            setEnlargedMedia(mediaSrc); 
         }
     };
 
